@@ -5,7 +5,7 @@ buildscript {
         mavenCentral()
     }
     dependencies {
-        classpath 'com.android.tools.build:gradle:0.14.2'
+        classpath 'com.android.tools.build:gradle:1.1.0'
     }
 }
 apply plugin: 'android'
@@ -80,15 +80,15 @@ android {
     buildTypes {
         debug {
             applicationIdSuffix '.debug'
-            runProguard false
+            minifyEnabled false
             // zipAlign false // this is default for debug
         }
         release {
-            // runProguard true
+            // minifyEnabled true
             // proguardFile '..\proguard.cfg'
             // signingConfig signingConfigs.release
             // zipAlign true // this is default for release
-            // testPackageName 'com.donnfelker.android.bootstrap.tests'
+            // testPackageName 'org.starfishrespect.myconsumption.android.tests'
             // testInstrumentationRunner 'android.test.InstrumentationTestRunner' // this is the default
         }
     }

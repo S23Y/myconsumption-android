@@ -7,4 +7,4 @@
           android:divider="@color/navigation_drawer_item_separator"
           android:dividerHeight="1dp"
           android:background="#1f1f1f"
-          tools:context="com.donnfelker.android.bootstrap.ui.NavigationDrawerFragment" />
+          tools:context="org.starfishrespect.myconsumption.android.ui.NavigationDrawerFragment" />
