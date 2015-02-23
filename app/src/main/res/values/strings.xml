@@ -11,4 +11,63 @@
     <string name="action_example">Example action</string>
 
     <string name="action_settings">Settings</string>
+
+
+    <string name="action_refresh">Refresh</string>
+    <!--    <string name="action_disconnect">Disconnect</string>-->
+    <string name="action_delete">Delete</string>
+    <string name="action_edit_sensor">Edit sensor</string>
+    <!--    <string name="action_add_sensor">Add sensor</string>-->
+
+    <string name="button_yes">Yes</string>
+    <string name="button_no">No</string>
+    <string name="button_ok">Ok</string>
+    <string name="button_create_sensor">Create sensor</string>
+    <string name="button_edit_sensor">Edit sensor</string>
+
+    <string name="chart_text_no_sensor">This user doesn\'t own any sensor, please add one from the menu</string>
+    <string name="chart_text_no_data">Please choose dataset to display</string>
+
+    <string name="dialog_title_error">Error</string>
+    <string name="dialog_title_warning">Warning</string>
+    <string name="dialog_title_confirmation">Confirmation</string>
+    <string name="dialog_title_information">Information</string>
+    <string name="dialog_title_loading">Loading</string>
+
+    <string name="dialog_message_confirmation_delete_sensor">Are you sure that you want to delete sensor %s? This can\'t be cancelled</string>
+    <string name="dialog_message_information_sensor_deleted">The sensor has been deleted!</string>
+    <string name="dialog_message_loading_creating_sensor">Adding sensor, please wait…</string>
+    <string name="dialog_message_loading_editing_sensor">Updating sensor, please wait…</string>
+    <string name="dialog_message_information_sensor_added">Sensor added successfully!</string>
+    <string name="dialog_message_information_sensor_edited">Sensor edited successfully!</string>
+    <string name="dialog_message_information_user_added">User successfully added, you can now login</string>
+    <string name="dialog_message_error_sensor_not_added">Cannot add this sensor, please check the information</string>
+    <string name="dialog_message_error_user_already_exists">This username already exists</string>
+    <string name="dialog_message_error_password_must_match">Both passwords must match in order to register</string>
+    <string name="dialog_message_error_must_fill_all_fields">You must fill all the fields in order to register</string>
+    <string name="dialog_message_information_no_sensor_for_this_user">This user doesn\'t own any sensor, please add one from the menu</string>
+    <string name="dialog_message_error_when_loading_please_reconnect">Error when loading local user or sensor data. Please reconnect</string>
+    <string name="dialog_error_update_data_error">An error occurred when retrieving your data. Is your internet connection working?</string>
+
+    <string name="hint_edit_not_changeable">This value cannot be edited</string>
+    <string name="hint_edit_type_value_not_changed">Not changed</string>
+
+    <string name="label_sensor_type">Sensor Type</string>
+    <string name="label_sensor_name">Sensor name</string>
+    <string name="label_title_sensor_specific_settings">Sensor-specific settings</string>
+    <string name="label_title_global_settings">Global Settings</string>
+
+    <string name="login_title">StarfishR MyConsumption</string>
+    <string name="login_login">Login</string>
+    <string name="login_username">username</string>
+    <string name="login_pwd">password</string>
+    <string name="login_no_account">You don\'t have an account?</string>
+    <string name="login_create_account">Create account</string>
+
+    <string name="textview_display_interval">Display interval</string>
+    <string name="textview_date">Date</string>
+    <string name="textview_precision">Precision</string>
+    <string name="textview_user_name">User Name</string>
+    <string name="textview_smoothing">Smoothing</string>
+
 </resources>

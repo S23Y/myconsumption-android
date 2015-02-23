@@ -22,4 +22,18 @@ android {
 dependencies {
     compile fileTree(dir: 'libs', include: ['*.jar'])
     compile 'com.android.support:appcompat-v7:21.0.3'
+
+    // Ormlite
+    compile 'com.j256.ormlite:ormlite-android:4.48'
+
+    // Spring
+    compile 'org.springframework.android:spring-android-core:1.0.1.RELEASE'
+    compile 'org.springframework.android:spring-android-rest-template:1.0.1.RELEASE'
+
+    // achartengine
+    compile 'org.achartengine:achartengine:1.2.0'
+
+
+
+
 }
