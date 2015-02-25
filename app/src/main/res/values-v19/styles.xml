@@ -1,8 +1,7 @@
 <resources>
-
     <!-- Base application theme. -->
     <style name="AppTheme" parent="Theme.AppCompat.Light.NoActionBar">
+        <!-- Customize your theme here. -->
+        <item name="android:windowTranslucentStatus">true</item>
     </style>
-
-    <style name="label_add_sensor_title"><item name="android:textSize">24dp</item></style>
 </resources>

@@ -80,7 +80,7 @@ public class FragmentController {
     private void replaceFragmentTransaction(Fragment fragment, int position) {
         if (!fragment.equals(getCurrentFragment())) {
             FragmentManager fragmentManager = SingleInstance.getMainActivity().getFragmentManager();
-            fragmentManager.beginTransaction().replace(R.id.content_frame, fragment).commit();
+            //@TODO fragmentManager.beginTransaction().replace(R.id.content_frame, fragment).commit();
             setCurrentFragment(fragment);
         }
 
@@ -93,9 +93,9 @@ public class FragmentController {
         // pass the Intent's extras to the fragment as arguments
         getChartFragment().setArguments(extras);
 
+
         // Add the fragment to the 'fragment_container' FrameLayout
-        SingleInstance.getMainActivity().getFragmentManager().beginTransaction()
-                .add(R.id.content_frame, getChartFragment()).commit();
+        // @TODO SingleInstance.getMainActivity().getFragmentManager().beginTransaction().add(R.id.content_frame, getChartFragment()).commit();
         setCurrentFragment(getChartFragment());
 
         SingleInstance.getMainActivity().updateTitle(0);
