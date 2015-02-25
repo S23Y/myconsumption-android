@@ -69,5 +69,6 @@
     <string name="textview_precision">Precision</string>
     <string name="textview_user_name">User Name</string>
     <string name="textview_smoothing">Smoothing</string>
-
+    <string name="text_warning">Warning</string>
+    <string name="dummy_section_text">Section %1d is just a dummy stat section.</string>
 </resources>

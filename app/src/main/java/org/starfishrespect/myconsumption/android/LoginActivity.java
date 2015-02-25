@@ -1,13 +1,27 @@
 package org.starfishrespect.myconsumption.android;
 
 import android.app.Activity;
+import android.app.AlertDialog;
+import android.content.DialogInterface;
+import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.Toast;
 import org.starfishrespect.myconsumption.android.asynctasks.GetUserAsyncTask;
 import org.starfishrespect.myconsumption.android.dao.DatabaseHelper;
+import org.starfishrespect.myconsumption.android.dao.SensorValuesDao;
 import org.starfishrespect.myconsumption.android.data.KeyValueData;
+import org.starfishrespect.myconsumption.android.data.UserData;
+import org.starfishrespect.myconsumption.android.misc.MiscFunctions;
+/*import com.google.android.gms.common.ConnectionResult;
+import com.google.android.gms.common.GooglePlayServicesUtil;*/
+import org.codehaus.jackson.map.ObjectMapper;
+
+import java.io.IOException;
+import java.sql.SQLException;
 
 /**
  * Login Activity

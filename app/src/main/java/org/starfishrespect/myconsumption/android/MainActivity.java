@@ -13,9 +13,24 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.support.v4.widget.DrawerLayout;
 
+import org.starfishrespect.myconsumption.android.adapters.SensorListAdapter;
+import org.starfishrespect.myconsumption.android.asynctasks.GetUserAsyncTask;
+import org.starfishrespect.myconsumption.android.dao.SensorValuesUpdater;
+import org.starfishrespect.myconsumption.android.dao.StatValuesUpdater;
+import org.starfishrespect.myconsumption.android.data.SensorData;
+import org.starfishrespect.myconsumption.android.data.UserData;
+
+import java.util.Date;
+
 
 public class MainActivity extends ActionBarActivity
-        implements NavigationDrawerFragment.NavigationDrawerCallbacks {
+        implements NavigationDrawerFragment.NavigationDrawerCallbacks,
+        SensorListAdapter.SensorChangeCallback, SensorValuesUpdater.UpdateFinishedCallback,
+        GetUserAsyncTask.GetUserCallback, GraphChoiceFragment.GraphOptionChangeCallback,
+        StatValuesUpdater.StatUpdateFinishedCallback {
+
+    // Static
+    public static final String EXTRA_FIRST_LAUNCH = "firstLaunch";
 
     /**
      * Fragment managing the behaviors, interactions and presentation of the navigation drawer.
@@ -26,6 +41,7 @@ public class MainActivity extends ActionBarActivity
      * Used to store the last screen title. For use in {@link #restoreActionBar()}.
      */
     private CharSequence mTitle;
+    private boolean firstLaunchEver;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -99,6 +115,73 @@ public class MainActivity extends ActionBarActivity
         }
 
         return super.onOptionsItemSelected(item);
+    }
+
+    @Override
+    public void userFound(UserData user) {
+
+    }
+
+    @Override
+    public void userRetrieveError(Exception e) {
+
+    }
+
+    @Override
+    public void dateChanged(Date newDate, int dateDelay, int valueDelay) {
+
+    }
+
+    @Override
+    public void visibilityChanged(SensorData sensor) {
+
+    }
+
+    @Override
+    public void colorChanged(SensorData sensor) {
+
+    }
+
+    @Override
+    public void onStatUpdateFinished() {
+
+    }
+
+    @Override
+    public void onUpdateFinished() {
+
+    }
+
+    public void updateTitle(int position) {
+
+    }
+
+    public void launchStatActivity() {
+
+    }
+
+    public void launchAddSensorActivity() {
+
+    }
+
+    public void disconnect() {
+
+    }
+
+    public void refreshData() {
+
+    }
+
+    public void setFirstLaunchEver(boolean firstLaunchEver) {
+        this.firstLaunchEver = firstLaunchEver;
+    }
+
+    public boolean isFirstLaunchEver() {
+        return firstLaunchEver;
+    }
+
+    public void buildAlert() {
+
     }
 
     /**
