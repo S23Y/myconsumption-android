@@ -49,9 +49,9 @@ public class MainActivity extends ActionBarActivity
         dlDrawer.setupDrawerConfiguration((ListView) findViewById(R.id.lvDrawer), toolbar,
                 R.layout.drawer_nav_item, R.id.flContent);
         // Add nav items
-        dlDrawer.addNavItem("First", "First Fragment", FirstFragment.class);
-        dlDrawer.addNavItem("Second", "Second Fragment", SecondFragment.class);
-        dlDrawer.addNavItem("Third", "Third Fragment", ThirdFragment.class);
+        dlDrawer.addNavItem("First", R.drawable.ic_action_warning, "First Fragment", FirstFragment.class);
+        dlDrawer.addNavItem("Second", R.drawable.ic_action_warning, "Second Fragment", SecondFragment.class);
+        dlDrawer.addNavItem("Third", R.drawable.ic_action_warning, "Third Fragment", ThirdFragment.class);
         // Select default
         if (savedInstanceState == null) {
             dlDrawer.selectDrawerItem(0);
