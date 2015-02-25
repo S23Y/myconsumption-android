@@ -33,7 +33,7 @@ dependencies {
     // achartengine
     compile 'org.achartengine:achartengine:1.2.0'
 
-
-
+    // MyConsumption server API
+    compile 'biz.manex.sr.myconsumption:my-consumption-api:1.0.0-SNAPSHOT'
 
 }

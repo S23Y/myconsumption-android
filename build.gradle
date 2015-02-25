@@ -16,6 +16,7 @@ allprojects {
     repositories {
         jcenter()
         mavenCentral()
+        mavenLocal()
         maven {
             url "https://repository-achartengine.forge.cloudbees.com/snapshot/"
         }
