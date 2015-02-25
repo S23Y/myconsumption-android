@@ -8,8 +8,6 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
-import org.starfishrespect.myconsumption.android.ChartViewFragment;
-import org.starfishrespect.myconsumption.android.GraphChoiceFragment;
 import org.starfishrespect.myconsumption.android.R;
 import org.starfishrespect.myconsumption.android.dao.SingleInstance;
 import org.starfishrespect.myconsumption.android.data.SensorData;
@@ -22,6 +20,8 @@ import java.util.Date;
 public class ChartFragment extends Fragment {
     private GraphChoiceFragment mGraphChoiceFragment;
     private ChartViewFragment mChartViewFragment;
+/*    private boolean chartViewFragmentReady;
+    private boolean graphChoiceFragmentReady;*/
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -42,10 +42,13 @@ public class ChartFragment extends Fragment {
 
         // add
         FragmentTransaction ft = fm.beginTransaction();
-        ft.add(R.id.choice_container, new GraphChoiceFragment());
-        ft.add(R.id.chart_container, new ChartViewFragment());
+        ft.add(R.id.choice_container, mGraphChoiceFragment);
+        ft.add(R.id.chart_container, mChartViewFragment);
 
         ft.commit();
+
+        // Reload the user
+        SingleInstance.getFragmentController().reloadUser(SingleInstance.getMainActivity().isFirstLaunchEver());
 
         return inflatedView;
     }
@@ -77,7 +80,7 @@ public class ChartFragment extends Fragment {
         mChartViewFragment.setSensorColor(sensor, sensor.getColor());
     }
 
-/*    public void fragmentsReady(android.app.Fragment fragment) {
+/*    public void fragmentsReady(Fragment fragment) {
         if (fragment.getClass().equals(ChartViewFragment.class))
             chartViewFragmentReady = true;
         else if (fragment.getClass().equals(GraphChoiceFragment.class))
@@ -90,7 +93,7 @@ public class ChartFragment extends Fragment {
                 return;
 
             // Reload the user
-            SingleInstance.getUserController().reloadUser(SingleInstance.getMainActivity().isFirstLaunchEver());
+            SingleInstance.getFragmentController().reloadUser(SingleInstance.getMainActivity().isFirstLaunchEver());
 
             // Reset variables
             chartViewFragmentReady = false;

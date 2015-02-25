@@ -1,5 +1,8 @@
 package org.starfishrespect.myconsumption.android.ui;
 
+import android.app.AlertDialog;
+import android.content.DialogInterface;
+import android.content.Intent;
 import android.content.res.Configuration;
 import android.support.v7.app.ActionBarActivity;
 import android.os.Bundle;
@@ -10,16 +13,21 @@ import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.widget.ListView;
 
-import org.starfishrespect.myconsumption.android.GraphChoiceFragment;
+import org.starfishrespect.myconsumption.android.AddSensorActivity;
+import org.starfishrespect.myconsumption.android.LoginActivity;
 import org.starfishrespect.myconsumption.android.R;
 import org.starfishrespect.myconsumption.android.adapters.SensorListAdapter;
 import org.starfishrespect.myconsumption.android.asynctasks.GetUserAsyncTask;
+import org.starfishrespect.myconsumption.android.dao.SensorValuesDao;
 import org.starfishrespect.myconsumption.android.dao.SensorValuesUpdater;
 import org.starfishrespect.myconsumption.android.dao.SingleInstance;
 import org.starfishrespect.myconsumption.android.dao.StatValuesUpdater;
+import org.starfishrespect.myconsumption.android.data.KeyValueData;
 import org.starfishrespect.myconsumption.android.data.SensorData;
 import org.starfishrespect.myconsumption.android.data.UserData;
+import org.starfishrespect.myconsumption.android.misc.MiscFunctions;
 
+import java.sql.SQLException;
 import java.util.Date;
 
 
@@ -32,7 +40,7 @@ public class MainActivity extends ActionBarActivity
     // Static
     public static final String EXTRA_FIRST_LAUNCH = "firstLaunch";
     private static final String TAG = "Main";
-
+    public static final int REQUEST_ADD_SENSOR = 42;
 
     private boolean mFirstLaunchEver;
 
@@ -55,7 +63,7 @@ public class MainActivity extends ActionBarActivity
         // Load the user
         SingleInstance.getUserController().loadUser();
 
-        // Set a ToolBar to replace the ActionBar.
+        // Set a Toolbar to replace the ActionBar.
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
@@ -122,55 +130,100 @@ public class MainActivity extends ActionBarActivity
 
 
 
+    // from callback of GetUserAsyncTask
     @Override
     public void userFound(UserData user) {
-
+        new SensorValuesDao(SingleInstance.getDatabaseHelper()).updateSensorList(user.getSensors());
+        SensorValuesUpdater updater = new SensorValuesUpdater();
+        updater.setUpdateFinishedCallback(this);
+        updater.refreshDB();
     }
 
+    // from callback of GetUserAsyncTask
     @Override
     public void userRetrieveError(Exception e) {
-
+        new AlertDialog.Builder(this)
+                .setTitle(R.string.dialog_title_error)
+                .setMessage(getString(R.string.dialog_error_update_data_error))
+                .setPositiveButton(R.string.button_ok, new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        dialog.dismiss();
+                    }
+                })
+                .show();
+        showReloadLayout(false);
     }
 
+    private void showReloadLayout(boolean visible) {
+        // todo
+/*        if (visible) {
+            findViewById(R.id.layoutGlobalReloading).setVisibility(View.VISIBLE);
+        } else {
+            findViewById(R.id.layoutGlobalReloading).setVisibility(View.GONE);
+        }*/
+    }
+
+
+    // from callback of GraphChoiceFragment
     @Override
     public void dateChanged(Date newDate, int dateDelay, int valueDelay) {
-
+        SingleInstance.getFragmentController().getChartFragment().dateChanged(newDate, dateDelay, valueDelay);
     }
 
+
+    // from SensorChangeCallback
     @Override
     public void visibilityChanged(SensorData sensor) {
-
+        SingleInstance.getFragmentController().getChartFragment().visibilityChanged(sensor, sensor.isVisible());
     }
 
+    // from SensorChangeCallback
     @Override
     public void colorChanged(SensorData sensor) {
-
+        SingleInstance.getFragmentController().getChartFragment().colorChanged(sensor, sensor.getColor());
     }
 
     @Override
     public void onStatUpdateFinished() {
-
+        if (SingleInstance.getFragmentController().getStatsFragment() == null)
+            return;
+        SingleInstance.getFragmentController().getStatsFragment().updateStat();
     }
 
     @Override
     public void onUpdateFinished() {
-
-    }
-
-    public void updateTitle(int position) {
-
-    }
-
-    public void launchStatActivity() {
-
+        showReloadLayout(false);
+        //SingleInstance.getUserController().loadUser(false);
+        SingleInstance.getFragmentController().reloadUser(false);
     }
 
     public void launchAddSensorActivity() {
-
+        if (!MiscFunctions.isOnline(SingleInstance.getMainActivity())) {
+            MiscFunctions.makeOfflineDialog(this).show();
+            return;
+        }
+        startActivityForResult(new Intent(this, AddSensorActivity.class), REQUEST_ADD_SENSOR);
     }
 
+    // removes all the data of the current user and go back to the login
     public void disconnect() {
+        KeyValueData userKey = SingleInstance.getDatabaseHelper().getValueForKey("user");
+        try {
+            if (userKey != null) {
+                SingleInstance.getDatabaseHelper().getKeyValueDao().delete(userKey);
+            }
+            SensorValuesDao sensorValuesDao = new SensorValuesDao(SingleInstance.getDatabaseHelper());
+            for (SensorData s : SingleInstance.getDatabaseHelper().getSensorDao().queryForAll()) {
+                sensorValuesDao.removeSensor(s.getSensorId());
+            }
+            SingleInstance.getDatabaseHelper().clearTable("sensors");
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
 
+        startActivity(new Intent(this, LoginActivity.class));
+        finish();
     }
 
     public void refreshData() {

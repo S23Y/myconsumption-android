@@ -1,4 +1,4 @@
-package org.starfishrespect.myconsumption.android;
+package org.starfishrespect.myconsumption.android.ui;
 
 import android.graphics.Color;
 import android.os.AsyncTask;
@@ -12,6 +12,8 @@ import android.view.ViewGroup;
 import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
+
+import org.starfishrespect.myconsumption.android.R;
 import org.starfishrespect.myconsumption.android.dao.SingleInstance;
 import org.starfishrespect.myconsumption.android.dao.SensorValuesDao;
 import org.starfishrespect.myconsumption.android.data.FrequencyData;
@@ -86,7 +88,7 @@ public class ChartViewFragment extends Fragment {
         reset();
 
         // Notify the ChartFragment that the view is created
-        //todo SingleInstance.getFragmentController().getChartFragment().fragmentsReady(this);
+        // todo ?? SingleInstance.getFragmentController().getChartFragment().fragmentsReady(this);
 
         return view;
     }

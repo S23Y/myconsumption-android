@@ -101,6 +101,10 @@ public class StatsFragment extends FragmentActivity implements ActionBar.TabList
     public void onTabReselected(ActionBar.Tab tab, FragmentTransaction fragmentTransaction) {
     }
 
+    public void reloadUser(boolean refreshData) {
+        // todo
+    }
+
     /**
      * A {@link android.support.v4.app.FragmentPagerAdapter} that returns a fragment corresponding to one of the primary
      * sections of the app.

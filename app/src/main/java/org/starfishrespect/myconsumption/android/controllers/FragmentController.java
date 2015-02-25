@@ -1,14 +1,7 @@
 package org.starfishrespect.myconsumption.android.controllers;
 
-import android.os.Bundle;
-import android.support.v4.app.Fragment;
-
 import org.starfishrespect.myconsumption.android.*;
-import org.starfishrespect.myconsumption.android.dao.SingleInstance;
 import org.starfishrespect.myconsumption.android.ui.ChartFragment;
-
-import java.util.ArrayList;
-import java.util.List;
 
 /**
  * Created by thibaud on 11.02.15.
@@ -17,11 +10,11 @@ public class FragmentController {
     private ChartFragment mChartFragment;
     private StatsFragment mStatsFragment;
 
-    private Fragment mCurrentFragment;
+/*    private Fragment mCurrentFragment;*/
 
     public FragmentController() {}
 
-    // @todo: FragmentController should keep a list of all fragments instead of one member for each fragm.
+/*    // @todo: FragmentController should keep a list of all fragments instead of one member for each fragm.
     // This list should not be build here.
     public List<Fragment> getAllFragments() {
         List<Fragment> lFrags = new ArrayList<>();
@@ -29,10 +22,22 @@ public class FragmentController {
         if (mChartFragment != null)
             lFrags.add(mChartFragment);
 
-/*        if (mStatsFragment != null)
-            lFrags.add(mStatsFragment);*/
+*//*        if (mStatsFragment != null)
+            lFrags.add(mStatsFragment);*//*
 
         return lFrags;
+    }*/
+
+    /**
+     * Notify the fragments that the user has been modified so they can reload it.
+     * @param refreshData if the data need to be refreshed.
+     */
+    public void reloadUser(boolean refreshData) {
+        if (mChartFragment != null)
+            mChartFragment.reloadUser(refreshData);
+
+        if (mStatsFragment != null)
+            mStatsFragment.reloadUser(refreshData);
     }
 
     public ChartFragment getChartFragment() {
@@ -46,14 +51,16 @@ public class FragmentController {
             mStatsFragment = new StatsFragment();
         return mStatsFragment;
     }
-
+/*
     public Fragment getCurrentFragment() {
         return mCurrentFragment;
     }
 
     public void setCurrentFragment(Fragment currentFragment) {
         mCurrentFragment = currentFragment;
-    }
+    }*/
+
+
 /*
 
     public void replaceFragment(int position) {
@@ -93,7 +100,7 @@ public class FragmentController {
     }
 */
 
-    public void addFragment(Bundle extras) {
+/*    public void addFragment(Bundle extras) {
         // In case the main activity was started with special instructions from an Intent,
         // pass the Intent's extras to the fragment as arguments
         getChartFragment().setArguments(extras);
@@ -104,7 +111,7 @@ public class FragmentController {
         setCurrentFragment(getChartFragment());
 
         SingleInstance.getMainActivity().updateTitle(0);
-    }
+    }*/
 
 /*    public void destroyFragments() {
         for(Fragment f : getAllFragments())

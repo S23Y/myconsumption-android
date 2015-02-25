@@ -1,4 +1,4 @@
-package org.starfishrespect.myconsumption.android;
+package org.starfishrespect.myconsumption.android.ui;
 
 import android.app.Activity;
 import android.app.AlertDialog;
@@ -12,6 +12,9 @@ import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.*;
+
+import org.starfishrespect.myconsumption.android.AddSensorActivity;
+import org.starfishrespect.myconsumption.android.R;
 import org.starfishrespect.myconsumption.android.adapters.SensorListAdapter;
 import org.starfishrespect.myconsumption.android.adapters.SpinnerDateAdapter;
 import org.starfishrespect.myconsumption.android.adapters.SpinnerFrequencyAdapter;
@@ -119,7 +122,7 @@ public class GraphChoiceFragment extends Fragment {
         });
 
         // Notify the ChartFragment that the view is created
-        // todo SingleInstance.getFragmentController().getChartFragment().fragmentsReady(this);
+        // todo ? SingleInstance.getFragmentController().getChartFragment().fragmentsReady(this);
 
         return view;
     }
@@ -174,7 +177,7 @@ public class GraphChoiceFragment extends Fragment {
                                             @Override
                                             public void onClick(DialogInterface dialog, int which) {
                                                 //SingleInstance.getUserController().loadUser(false);
-                                                SingleInstance.getUserController().reloadUser(false);
+                                                SingleInstance.getFragmentController().reloadUser(false);
                                                 dialog.dismiss();
                                             }
                                         }).show();

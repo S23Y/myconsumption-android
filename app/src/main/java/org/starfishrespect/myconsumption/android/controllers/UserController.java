@@ -1,5 +1,7 @@
 package org.starfishrespect.myconsumption.android.controllers;
 
+import android.support.v4.app.Fragment;
+
 import org.starfishrespect.myconsumption.android.MainFragment;
 import org.starfishrespect.myconsumption.android.dao.DatabaseHelper;
 import org.starfishrespect.myconsumption.android.dao.SingleInstance;
@@ -42,15 +44,6 @@ public class UserController {
         } catch (IOException| SQLException e) {
             SingleInstance.getMainActivity().buildAlert();
         }
-    }
-
-    /**
-     * Notify the fragments that the user has been modified so they can reload it.
-     * @param refreshData if the data need to be refreshed.
-     */
-    public void reloadUser(boolean refreshData) {
-/*        for(Fragment f : SingleInstance.getFragmentController().getAllFragments())
-            f.reloadUser(refreshData);*/
     }
 
     public UserData getUser() {
