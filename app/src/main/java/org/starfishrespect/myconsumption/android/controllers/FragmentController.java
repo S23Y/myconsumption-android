@@ -1,10 +1,11 @@
 package org.starfishrespect.myconsumption.android.controllers;
 
-import android.app.Fragment;
-import android.app.FragmentManager;
 import android.os.Bundle;
+import android.support.v4.app.Fragment;
+
 import org.starfishrespect.myconsumption.android.*;
 import org.starfishrespect.myconsumption.android.dao.SingleInstance;
+import org.starfishrespect.myconsumption.android.ui.ChartFragment;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -22,8 +23,8 @@ public class FragmentController {
 
     // @todo: FragmentController should keep a list of all fragments instead of one member for each fragm.
     // This list should not be build here.
-    public List<MainFragment> getAllFragments() {
-        List<MainFragment> lFrags = new ArrayList<>();
+    public List<Fragment> getAllFragments() {
+        List<Fragment> lFrags = new ArrayList<>();
 
         if (mChartFragment != null)
             lFrags.add(mChartFragment);
@@ -53,6 +54,7 @@ public class FragmentController {
     public void setCurrentFragment(Fragment currentFragment) {
         mCurrentFragment = currentFragment;
     }
+/*
 
     public void replaceFragment(int position) {
         switch (position) {
@@ -76,7 +78,9 @@ public class FragmentController {
                 break;
         }
     }
+*/
 
+/*
     private void replaceFragmentTransaction(Fragment fragment, int position) {
         if (!fragment.equals(getCurrentFragment())) {
             FragmentManager fragmentManager = SingleInstance.getMainActivity().getFragmentManager();
@@ -87,6 +91,7 @@ public class FragmentController {
         // Update title, then close the drawer
         SingleInstance.getMainActivity().updateTitle(position);
     }
+*/
 
     public void addFragment(Bundle extras) {
         // In case the main activity was started with special instructions from an Intent,
@@ -101,12 +106,12 @@ public class FragmentController {
         SingleInstance.getMainActivity().updateTitle(0);
     }
 
-    public void destroyFragments() {
-        for(MainFragment f : getAllFragments())
+/*    public void destroyFragments() {
+        for(Fragment f : getAllFragments())
             f.destroyFragment();
 
         mChartFragment = null;
         mStatsFragment = null;
         mCurrentFragment = null;
-    }
+    }*/
 }

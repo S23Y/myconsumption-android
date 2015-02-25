@@ -49,8 +49,8 @@ public class UserController {
      * @param refreshData if the data need to be refreshed.
      */
     public void reloadUser(boolean refreshData) {
-        for(MainFragment f : SingleInstance.getFragmentController().getAllFragments())
-            f.reloadUser(refreshData);
+/*        for(Fragment f : SingleInstance.getFragmentController().getAllFragments())
+            f.reloadUser(refreshData);*/
     }
 
     public UserData getUser() {

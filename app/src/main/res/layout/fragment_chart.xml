@@ -6,6 +6,7 @@
     android:orientation="horizontal" >
 
     <FrameLayout
+
         android:id="@+id/chart_container"
         android:layout_width="0dp"
         android:layout_weight="3"

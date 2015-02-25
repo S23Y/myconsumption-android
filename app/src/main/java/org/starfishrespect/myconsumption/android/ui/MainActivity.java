@@ -4,6 +4,7 @@ import android.content.res.Configuration;
 import android.support.v7.app.ActionBarActivity;
 import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
@@ -14,6 +15,7 @@ import org.starfishrespect.myconsumption.android.R;
 import org.starfishrespect.myconsumption.android.adapters.SensorListAdapter;
 import org.starfishrespect.myconsumption.android.asynctasks.GetUserAsyncTask;
 import org.starfishrespect.myconsumption.android.dao.SensorValuesUpdater;
+import org.starfishrespect.myconsumption.android.dao.SingleInstance;
 import org.starfishrespect.myconsumption.android.dao.StatValuesUpdater;
 import org.starfishrespect.myconsumption.android.data.SensorData;
 import org.starfishrespect.myconsumption.android.data.UserData;
@@ -29,7 +31,10 @@ public class MainActivity extends ActionBarActivity
 
     // Static
     public static final String EXTRA_FIRST_LAUNCH = "firstLaunch";
-    private boolean firstLaunchEver;
+    private static final String TAG = "Main";
+
+
+    private boolean mFirstLaunchEver;
 
     private FragmentNavigationDrawer dlDrawer;
 
@@ -38,6 +43,17 @@ public class MainActivity extends ActionBarActivity
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+
+        SingleInstance.setMainActivity(this);
+        SingleInstance.getDatabaseHelper();
+
+        if (getIntent().getExtras() != null) {
+            mFirstLaunchEver = getIntent().getExtras().getBoolean(EXTRA_FIRST_LAUNCH, false);
+        }
+        Log.d(TAG, "first launch " + mFirstLaunchEver);
+
+        // Load the user
+        SingleInstance.getUserController().loadUser();
 
         // Set a ToolBar to replace the ActionBar.
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
@@ -49,7 +65,7 @@ public class MainActivity extends ActionBarActivity
         dlDrawer.setupDrawerConfiguration((ListView) findViewById(R.id.lvDrawer), toolbar,
                 R.layout.drawer_nav_item, R.id.flContent);
         // Add nav items
-        dlDrawer.addNavItem("Chart", R.drawable.ic_chart, "MyConsumption - Chart", FirstFragment.class);
+        dlDrawer.addNavItem("Chart", R.drawable.ic_chart, "MyConsumption - Chart", ChartFragment.class);
         dlDrawer.addNavItem("Second", R.drawable.ic_stat, "Second Fragment", SecondFragment.class);
         dlDrawer.addNavItem("Third", R.drawable.ic_add, "Third Fragment", ThirdFragment.class);
         dlDrawer.addNavItem("Fourth", R.drawable.ic_disconnect, "Fourth Fragment", FourthFragment.class);
@@ -161,12 +177,12 @@ public class MainActivity extends ActionBarActivity
 
     }
 
-    public void setFirstLaunchEver(boolean firstLaunchEver) {
-        this.firstLaunchEver = firstLaunchEver;
+    public void setFirstLaunchEver(boolean mFirstLaunchEver) {
+        this.mFirstLaunchEver = mFirstLaunchEver;
     }
 
     public boolean isFirstLaunchEver() {
-        return firstLaunchEver;
+        return mFirstLaunchEver;
     }
 
     public void buildAlert() {

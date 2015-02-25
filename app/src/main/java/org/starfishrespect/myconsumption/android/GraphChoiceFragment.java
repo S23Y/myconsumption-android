@@ -2,11 +2,11 @@ package org.starfishrespect.myconsumption.android;
 
 import android.app.Activity;
 import android.app.AlertDialog;
-import android.app.Fragment;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.AsyncTask;
 import android.os.Bundle;
+import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.MenuItem;
 import android.view.View;
@@ -119,7 +119,7 @@ public class GraphChoiceFragment extends Fragment {
         });
 
         // Notify the ChartFragment that the view is created
-        SingleInstance.getFragmentController().getChartFragment().fragmentsReady(this);
+        // todo SingleInstance.getFragmentController().getChartFragment().fragmentsReady(this);
 
         return view;
     }

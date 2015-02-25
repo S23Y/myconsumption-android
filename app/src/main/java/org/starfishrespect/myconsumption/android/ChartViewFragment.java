@@ -1,9 +1,9 @@
 package org.starfishrespect.myconsumption.android;
 
-import android.app.Fragment;
 import android.graphics.Color;
 import android.os.AsyncTask;
 import android.os.Bundle;
+import android.support.v4.app.Fragment;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.MotionEvent;
@@ -86,7 +86,7 @@ public class ChartViewFragment extends Fragment {
         reset();
 
         // Notify the ChartFragment that the view is created
-        SingleInstance.getFragmentController().getChartFragment().fragmentsReady(this);
+        //todo SingleInstance.getFragmentController().getChartFragment().fragmentsReady(this);
 
         return view;
     }

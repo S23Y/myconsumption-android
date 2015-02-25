@@ -1,26 +1,27 @@
-package org.starfishrespect.myconsumption.android;
+package org.starfishrespect.myconsumption.android.ui;
 
-import android.app.Fragment;
-import android.app.FragmentManager;
-import android.app.FragmentTransaction;
 import android.os.Bundle;
+import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentManager;
+import android.support.v4.app.FragmentTransaction;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+
+import org.starfishrespect.myconsumption.android.ChartViewFragment;
+import org.starfishrespect.myconsumption.android.GraphChoiceFragment;
+import org.starfishrespect.myconsumption.android.R;
 import org.starfishrespect.myconsumption.android.dao.SingleInstance;
 import org.starfishrespect.myconsumption.android.data.SensorData;
 
 import java.util.Date;
 
 /**
- * Created by thibaud on 24.11.14.
+ * Created by thibaud on 25.02.15.
  */
-public class ChartFragment extends MainFragment {
-    private ChartViewFragment mChartViewFragment = null;
-    private GraphChoiceFragment mGraphChoiceFragment = null;
-    private boolean chartViewFragmentReady = false;
-    private boolean graphChoiceFragmentReady = false;
-
+public class ChartFragment extends Fragment {
+    private GraphChoiceFragment mGraphChoiceFragment;
+    private ChartViewFragment mChartViewFragment;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -41,19 +42,19 @@ public class ChartFragment extends MainFragment {
 
         // add
         FragmentTransaction ft = fm.beginTransaction();
-        ft.add(R.id.choice_container, mGraphChoiceFragment);
-        ft.add(R.id.chart_container, mChartViewFragment);
+        ft.add(R.id.choice_container, new GraphChoiceFragment());
+        ft.add(R.id.chart_container, new ChartViewFragment());
 
         ft.commit();
 
         return inflatedView;
     }
-
+/*
     @Override
     public void onDestroyView() {
         super.onDestroyView();
         this.destroyFragment();
-    }
+    }*/
 
     @Override
     public void onResume() {
@@ -76,7 +77,7 @@ public class ChartFragment extends MainFragment {
         mChartViewFragment.setSensorColor(sensor, sensor.getColor());
     }
 
-    public void fragmentsReady(Fragment fragment) {
+/*    public void fragmentsReady(android.app.Fragment fragment) {
         if (fragment.getClass().equals(ChartViewFragment.class))
             chartViewFragmentReady = true;
         else if (fragment.getClass().equals(GraphChoiceFragment.class))
@@ -96,17 +97,16 @@ public class ChartFragment extends MainFragment {
             graphChoiceFragmentReady = false;
             SingleInstance.getMainActivity().setFirstLaunchEver(false);
         }
-    }
+    }*/
 
-    @Override
+/*    @Override
     public void destroyFragment() {
         mChartViewFragment = null;
         mGraphChoiceFragment = null;
         chartViewFragmentReady = false;
         graphChoiceFragmentReady = false;
-    }
+    }*/
 
-    @Override
     public void reloadUser(boolean refreshData) {
         if (mChartViewFragment == null || mGraphChoiceFragment == null)
             return;
