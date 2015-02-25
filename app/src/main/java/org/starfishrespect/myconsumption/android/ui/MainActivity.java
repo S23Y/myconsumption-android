@@ -1,4 +1,4 @@
-package org.starfishrespect.myconsumption.android;
+package org.starfishrespect.myconsumption.android.ui;
 
 import android.app.Activity;
 import android.support.v7.app.ActionBarActivity;
@@ -13,6 +13,8 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.support.v4.widget.DrawerLayout;
 
+import org.starfishrespect.myconsumption.android.GraphChoiceFragment;
+import org.starfishrespect.myconsumption.android.R;
 import org.starfishrespect.myconsumption.android.adapters.SensorListAdapter;
 import org.starfishrespect.myconsumption.android.asynctasks.GetUserAsyncTask;
 import org.starfishrespect.myconsumption.android.dao.SensorValuesUpdater;

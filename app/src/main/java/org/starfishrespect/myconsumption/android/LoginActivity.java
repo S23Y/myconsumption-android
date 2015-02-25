@@ -19,6 +19,7 @@ import org.starfishrespect.myconsumption.android.misc.MiscFunctions;
 /*import com.google.android.gms.common.ConnectionResult;
 import com.google.android.gms.common.GooglePlayServicesUtil;*/
 import org.codehaus.jackson.map.ObjectMapper;
+import org.starfishrespect.myconsumption.android.ui.MainActivity;
 
 import java.io.IOException;
 import java.sql.SQLException;

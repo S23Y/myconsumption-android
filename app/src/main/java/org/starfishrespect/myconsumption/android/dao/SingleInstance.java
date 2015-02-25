@@ -1,6 +1,6 @@
 package org.starfishrespect.myconsumption.android.dao;
 
-import org.starfishrespect.myconsumption.android.MainActivity;
+import org.starfishrespect.myconsumption.android.ui.MainActivity;
 import org.starfishrespect.myconsumption.android.controllers.FragmentController;
 import org.starfishrespect.myconsumption.android.controllers.UserController;
 import org.starfishrespect.myconsumption.android.data.UserData;
