@@ -34,7 +34,7 @@ import java.util.Date;
 public class MainActivity extends ActionBarActivity
         implements
         SensorListAdapter.SensorChangeCallback, SensorValuesUpdater.UpdateFinishedCallback,
-        GetUserAsyncTask.GetUserCallback, GraphChoiceFragment.GraphOptionChangeCallback,
+        GetUserAsyncTask.GetUserCallback,
         StatValuesUpdater.StatUpdateFinishedCallback {
 
     // Static
@@ -165,11 +165,11 @@ public class MainActivity extends ActionBarActivity
     }
 
 
-    // from callback of GraphChoiceFragment
+/*    // from callback of GraphChoiceFragment
     @Override
     public void dateChanged(Date newDate, int dateDelay, int valueDelay) {
         SingleInstance.getFragmentController().getChartFragment().dateChanged(newDate, dateDelay, valueDelay);
-    }
+    }*/
 
 
     // from SensorChangeCallback
