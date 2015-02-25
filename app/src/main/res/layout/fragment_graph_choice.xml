@@ -1,0 +1,91 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:baselineAligned="false">
+
+    <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/textview_user_name"
+            android:id="@+id/textViewUsername"
+            android:layout_margin="2dp"
+            android:textSize="16sp"
+            android:textStyle="bold"
+            android:layout_alignParentTop="true"/>
+
+    <ListView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/listViewSensors"
+            android:layout_below="@+id/textViewUsername"
+            android:layout_alignParentLeft="true"
+            android:layout_above="@+id/linearLayoutDateSelectionItems"/>
+
+        <LinearLayout
+                android:orientation="vertical"
+                android:id="@+id/linearLayoutDateSelectionItems"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_alignParentBottom="true">
+
+            <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/textview_display_interval"
+                    android:layout_margin="1dp"
+                    android:textStyle="bold"
+                    android:id="@+id/textView2"/>
+
+
+            <Spinner
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:id="@+id/spinnerFrequency"/>
+
+            <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Precision"
+                    android:layout_margin="1dp"
+                    android:textStyle="bold"
+                    android:id="@+id/textView3"/>
+
+            <Spinner
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:id="@+id/spinnerPrecision"
+                    />
+
+            <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/textview_date"
+                    android:textStyle="bold"
+                    android:layout_margin="1dp"
+                    android:id="@+id/textView"/>
+
+            <Spinner
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:id="@+id/spinnerDate"
+                    />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/textview_smoothing"
+                android:textStyle="bold"
+                android:layout_margin="1dp"
+                android:id="@+id/textViewSmoothing"/>
+
+            <SeekBar
+                android:id="@+id/seekBar"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="10dp"
+                android:layout_marginBottom="10dp"
+                android:max="40"/>
+        </LinearLayout>
+</RelativeLayout>

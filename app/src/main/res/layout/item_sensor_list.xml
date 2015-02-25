@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+                android:layout_width="match_parent"
+                android:layout_height="60dp">
+
+    <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="60dp"/>
+
+    <CheckBox
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_vertical"
+            android:layout_centerVertical="true"
+
+            android:focusable="false"
+            android:focusableInTouchMode="false"
+            android:id="@+id/checkBox_sensor_item"
+            android:checked="false"
+            android:layout_alignParentLeft="true"
+            />
+    <TextView
+            android:id="@+id/textView_sensor_item"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="sensor_name"
+            android:layout_centerVertical="true"
+            android:layout_toRightOf="@+id/checkBox_sensor_item"
+            android:layout_toLeftOf="@+id/imageViewSensorWarning"/>/>
+    <View
+            android:id="@+id/colorView_sensor_item"
+            android:layout_width="20dp"
+            android:layout_height="20dp"
+            android:layout_marginRight="20dp"
+            android:layout_centerVertical="true"
+            android:layout_alignParentRight="true"
+            android:background="#FFAA00"/>
+
+    <ImageView
+            android:contentDescription="@string/text_warning"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:src="@drawable/ic_action_warning"
+            android:visibility="visible"
+            android:id="@+id/imageViewSensorWarning"
+            android:layout_centerVertical="true"
+            android:layout_toLeftOf="@+id/colorView_sensor_item"/>
+</RelativeLayout>

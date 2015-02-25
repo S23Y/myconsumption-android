@@ -1,0 +1,101 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent">
+
+    <LinearLayout
+            android:id="@+id/chartContainer"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical">
+
+    </LinearLayout>
+
+    <RelativeLayout
+            android:id="@+id/layoutPointData"
+            android:background="@drawable/background_point_data_layout"
+            android:visibility="invisible"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content">
+
+        <LinearLayout
+                android:id="@+id/layoutPointDataTexts"
+                android:orientation="vertical"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content">
+
+            <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="SENSOR_NAME"
+                    android:textStyle="bold"
+                    android:visibility="visible"
+                    android:id="@+id/textViewDataSensorName"
+                    android:layout_alignParentTop="true"
+                    android:layout_alignParentLeft="true"
+                    android:layout_toLeftOf="@+id/colorView_sensor_item"/>
+
+            <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="10/10/10 10:10:10"
+                    android:layout_below="@+id/textViewDataSensorName"
+                    android:visibility="visible"
+                    android:id="@+id/textViewDataDate"/>
+
+            <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="0000"
+                    android:layout_below="@+id/textViewDataDate"
+                    android:visibility="visible"
+                    android:id="@+id/textViewDataValue"/>
+        </LinearLayout>
+
+        <View
+                android:id="@+id/colorViewSelectedData"
+                android:layout_width="20dp"
+                android:layout_height="20dp"
+                android:background="#FFAA00"
+                android:layout_marginLeft="5dp"
+                android:layout_marginTop="5dp"
+
+                android:layout_alignParentTop="true"
+                android:layout_toRightOf="@+id/layoutPointDataTexts"/>
+    </RelativeLayout>
+
+    <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/dialog_message_information_no_sensor_for_this_user"
+            android:gravity="center"
+            android:layout_marginLeft="15dp"
+            android:layout_marginRight="15dp"
+            android:id="@+id/textViewNoData"
+            android:layout_gravity="center_horizontal"
+            android:layout_centerInParent="true"/>
+
+    <LinearLayout
+            android:id="@+id/layoutChartRefresh"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:layout_centerInParent="true"
+            android:visibility="gone"
+            >
+
+        <ProgressBar
+                style="?android:attr/progressBarStyleLarge"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_horizontal"/>
+
+        <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Refreshing data"/>
+    </LinearLayout>
+
+
+</RelativeLayout>

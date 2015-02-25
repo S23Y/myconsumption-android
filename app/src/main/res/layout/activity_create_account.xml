@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent">
+
+    <EditText
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:id="@+id/editTextUsername"
+            android:hint="Enter wanted Username"
+            />
+
+    <EditText
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:inputType="textPassword"
+            android:ems="10"
+            android:hint="Enter a password"
+            android:id="@+id/editTextPassword"
+            android:layout_below="@+id/editTextUsername"/>
+
+    <EditText
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:inputType="textPassword"
+            android:hint="Enter the same password again"
+            android:ems="10"
+            android:id="@+id/editTextPassword2"
+            android:layout_below="@+id/editTextPassword"
+            />
+
+    <Button
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Create Account"
+            android:id="@+id/buttonCreateAccount"
+            android:layout_below="@+id/editTextPassword2"
+            android:layout_centerHorizontal="true"/>
+</RelativeLayout>

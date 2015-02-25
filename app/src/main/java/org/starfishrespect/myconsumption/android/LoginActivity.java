@@ -6,6 +6,8 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import org.starfishrespect.myconsumption.android.asynctasks.GetUserAsyncTask;
+import org.starfishrespect.myconsumption.android.dao.DatabaseHelper;
+import org.starfishrespect.myconsumption.android.data.KeyValueData;
 
 /**
  * Login Activity

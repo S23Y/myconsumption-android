@@ -1,0 +1,107 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textAppearance="?android:attr/textAppearanceLarge"
+        android:text="@string/login_title"
+        android:id="@+id/textView"
+        android:layout_alignParentTop="true"
+        android:layout_alignParentLeft="true"
+        android:layout_margin="20dp"
+        android:textSize="42sp"
+        android:textColor="@color/green_manex_lt"/>
+
+    <LinearLayout
+        android:orientation="horizontal"
+        android:layout_width="fill_parent"
+        android:layout_height="fill_parent"
+        android:layout_alignParentLeft="true"
+        android:layout_below="@+id/textView">
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_weight="1">
+
+            <ImageView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:id="@+id/imageView"
+                android:src="@drawable/icon"
+                android:layout_centerVertical="true"
+                android:layout_centerHorizontal="true"/>
+        </RelativeLayout>
+
+        <RelativeLayout
+            android:layout_width="fill_parent"
+            android:layout_height="fill_parent"
+            android:layout_weight="1">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/login_login"
+                android:textSize="24sp"
+                android:layout_margin="10dp"
+                android:id="@+id/textView2"
+                android:layout_alignParentTop="true"
+                android:layout_centerHorizontal="true"/>
+
+            <EditText
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:hint="@string/login_username"
+                android:ems="10"
+                android:id="@+id/editTextUsername"
+                android:layout_below="@+id/textView2"
+                android:layout_alignParentLeft="true"
+                android:layout_marginLeft="10dp"
+                android:layout_marginTop="25dp"
+                android:imeOptions="actionNext"
+                android:inputType="text"/>
+
+            <EditText
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:inputType="textPassword"
+                android:ems="10"
+                android:hint="@string/login_pwd"
+                android:id="@+id/editTextPassword"
+                android:imeOptions="actionDone"
+                android:layout_below="@+id/editTextUsername"
+                android:layout_alignLeft="@+id/editTextUsername"/>
+
+            <Button
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/login_login"
+                android:id="@+id/buttonLogin"
+                android:layout_below="@+id/editTextPassword"
+                android:layout_alignLeft="@+id/editTextPassword"
+                android:layout_alignRight="@+id/editTextPassword"/>
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/login_no_account"
+                android:id="@+id/textView3"
+                android:layout_above="@+id/buttonCreateAccount"
+                android:layout_alignLeft="@+id/buttonCreateAccount"/>
+
+            <Button
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/login_create_account"
+                android:id="@+id/buttonCreateAccount"
+                android:layout_alignParentBottom="true"
+                android:layout_alignLeft="@+id/buttonLogin"
+                android:layout_marginBottom="15dp"
+                android:layout_alignRight="@+id/buttonLogin"/>
+        </RelativeLayout>
+    </LinearLayout>
+</RelativeLayout>
