@@ -205,6 +205,9 @@ public class GraphChoiceFragment extends Fragment {
     @Override
     public void onAttach(Activity activity) {
         super.onAttach(activity);
+
+        setUser();
+
         try {
             sensorChangeCallback = (SensorListAdapter.SensorChangeCallback) activity;
             graphOptionChangeCallback = (GraphOptionChangeCallback) activity;
@@ -218,13 +221,19 @@ public class GraphChoiceFragment extends Fragment {
     }
 
     public void setUser() {
-        mTextView.setText(SingleInstance.getUserController().getUser().getName());
+        if (mTextView != null)
+            mTextView.setText(SingleInstance.getUserController().getUser().getName());
+
         sensors = SingleInstance.getUserController().getUser().getSensors();
         sensorListAdapter = new SensorListAdapter(SingleInstance.getMainActivity(), sensors);
-        listViewSensor.setAdapter(sensorListAdapter);
+
+        if (listViewSensor != null)
+            listViewSensor.setAdapter(sensorListAdapter);
+
         sensorListAdapter.setSensorChangeCallback(sensorChangeCallback);
         if (sensors.size() == 0) {
-            mLinearLayout.setVisibility(View.GONE);
+            if (mLinearLayout != null)
+                mLinearLayout.setVisibility(View.GONE);
         }
     }
 
