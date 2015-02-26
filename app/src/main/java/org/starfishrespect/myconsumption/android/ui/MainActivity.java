@@ -69,8 +69,8 @@ public class MainActivity extends ActionBarActivity
         // Find our drawer view
         dlDrawer = (FragmentNavigationDrawer) findViewById(R.id.drawer_layout);
         // Setup drawer view
-        dlDrawer.setupDrawerConfiguration((ListView) findViewById(R.id.lvDrawer), toolbar,
-                R.layout.drawer_nav_item, R.id.flContent);
+        dlDrawer.setupDrawerConfiguration((ListView) findViewById(R.id.left_drawer), toolbar,
+                R.layout.drawer_nav_item, R.id.content_frame);
         // Add nav items
         dlDrawer.addNavItem("Chart", R.drawable.ic_chart, "MyConsumption - Chart", ChartFragment.class);
         dlDrawer.addNavItem("Second", R.drawable.ic_stat, "Second Fragment", SecondFragment.class);
