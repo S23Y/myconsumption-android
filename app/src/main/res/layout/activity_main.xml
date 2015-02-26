@@ -1,43 +1,44 @@
-<org.starfishrespect.myconsumption.android.ui.FragmentNavigationDrawer
-    xmlns:android="http://schemas.android.com/apk/res/android"
+<!--I use android:fitsSystemWindows because I am changing the color of the statusbar as well-->
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/main_parent_view"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:id="@+id/drawer_layout">
+    android:fitsSystemWindows="true"
+    android:orientation="vertical">
 
-
-    <!-- navigation drawer -->
-    <LinearLayout
-        android:orientation="vertical"
-        android:id="@+id/left_drawer"
-        android:layout_width="240dp"
-        android:layout_height="match_parent"
-        android:layout_gravity="start"
-        android:background="#F3F3F4">
-
-        <ListView
-            android:id="@+id/left_drawer_list"
-            android:layout_width="240dp"
-            android:layout_height="wrap_content"
-            android:layout_gravity="start"
-            android:choiceMode="singleChoice"
-            android:divider="@android:color/transparent"
-            android:dividerHeight="0dp" />
-    </LinearLayout>
-    
-    <FrameLayout
-        android:id="@+id/content_frame"
+    <include
+        layout="@layout/toolbar"
         android:layout_width="match_parent"
-        android:layout_height="match_parent" />
+        android:layout_height="wrap_content" />
 
-    <LinearLayout
-        android:layout_alignParentBottom="true"
+    <org.starfishrespect.myconsumption.android.ui.FragmentNavigationDrawer
+        android:id="@+id/drawer_layout"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content">
+        android:layout_height="match_parent">
 
-        <include layout="@layout/toolbar"
+        <!-- Main layout -->
+        <FrameLayout
+            android:id="@+id/content_frame"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content" />
-    </LinearLayout>
+            android:layout_height="match_parent" />
 
-</org.starfishrespect.myconsumption.android.ui.FragmentNavigationDrawer>
+        <!-- navigation drawer -->
+        <LinearLayout
+            android:id="@+id/left_drawer"
+            android:layout_width="240dp"
+            android:layout_height="match_parent"
+            android:layout_gravity="start"
+            android:background="#F3F3F4"
+            android:orientation="vertical">
 
+            <ListView
+                android:id="@+id/left_drawer_list"
+                android:layout_width="240dp"
+                android:layout_height="wrap_content"
+                android:layout_gravity="start"
+                android:choiceMode="singleChoice"
+                android:divider="@android:color/transparent"
+                android:dividerHeight="0dp" />
+        </LinearLayout>
+    </org.starfishrespect.myconsumption.android.ui.FragmentNavigationDrawer>
+</LinearLayout>
