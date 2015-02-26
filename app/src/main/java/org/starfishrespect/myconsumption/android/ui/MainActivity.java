@@ -13,6 +13,7 @@ import android.util.Log;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
+import android.view.View;
 import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.RelativeLayout;
@@ -75,9 +76,9 @@ public class MainActivity extends ActionBarActivity
                 (LinearLayout) findViewById(R.id.left_drawer), R.id.content_frame);
         // Add nav items
         dlDrawer.addNavItem("Chart", R.drawable.ic_chart, "MyConsumption - Chart", ChartFragment.class);
-        dlDrawer.addNavItem("Second", R.drawable.ic_stat, "Second Fragment", SecondFragment.class);
-        dlDrawer.addNavItem("Third", R.drawable.ic_add, "Third Fragment", ThirdFragment.class);
-        dlDrawer.addNavItem("Fourth", R.drawable.ic_disconnect, "Fourth Fragment", FourthFragment.class);
+        dlDrawer.addNavItem("Statistics", R.drawable.ic_stat, "Second Fragment", SecondFragment.class);
+        dlDrawer.addNavItem("Add sensor", R.drawable.ic_add, "Third Fragment", ThirdFragment.class);
+        dlDrawer.addNavItem("Disconnect", R.drawable.ic_disconnect, "Fourth Fragment", FourthFragment.class);
         // Select default
         if (savedInstanceState == null) {
             dlDrawer.selectDrawerItem(0);
@@ -90,7 +91,7 @@ public class MainActivity extends ActionBarActivity
         // If the nav drawer is open, hide action items related to the content
         if (dlDrawer.isDrawerOpen()) {
             // Uncomment to hide menu items
-            // menu.findItem(R.id.mi_test).setVisible(false);
+            //menu.findItem(R.id.mi_test).setVisible(false);
         }
         return super.onPrepareOptionsMenu(menu);
     }
@@ -99,7 +100,7 @@ public class MainActivity extends ActionBarActivity
     public boolean onCreateOptionsMenu(Menu menu) {
         MenuInflater inflater = getMenuInflater();
         // Uncomment to inflate menu items to Action Bar
-        // inflater.inflate(R.menu.main, menu);
+        inflater.inflate(R.menu.main, menu);
         return super.onCreateOptionsMenu(menu);
     }
 
@@ -107,9 +108,19 @@ public class MainActivity extends ActionBarActivity
     public boolean onOptionsItemSelected(MenuItem item) {
         // The action bar home/up action should open or close the drawer.
         // ActionBarDrawerToggle will take care of this.
+
+        // Pass the event to ActionBarDrawerToggle, if it returns
+        // true, then it has handled the app icon touch event
+
         if (dlDrawer.getDrawerToggle().onOptionsItemSelected(item)) {
             return true;
         }
+
+        if (item.getItemId() == R.id.action_refresh) {
+            refreshData();
+            return true;
+        }
+
 
         return super.onOptionsItemSelected(item);
     }
@@ -157,12 +168,11 @@ public class MainActivity extends ActionBarActivity
     }
 
     private void showReloadLayout(boolean visible) {
-        // todo
-/*        if (visible) {
+        if (visible) {
             findViewById(R.id.layoutGlobalReloading).setVisibility(View.VISIBLE);
         } else {
             findViewById(R.id.layoutGlobalReloading).setVisibility(View.GONE);
-        }*/
+        }
     }
 
     // from callback of GraphChoiceFragment

@@ -71,4 +71,5 @@
     <string name="textview_smoothing">Smoothing</string>
     <string name="text_warning">Warning</string>
     <string name="dummy_section_text">Section %1d is just a dummy stat section.</string>
+    <string name="text_reload">Reloading data</string>
 </resources>
