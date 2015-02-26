@@ -7,6 +7,7 @@ import org.starfishrespect.myconsumption.android.ui.ChartFragment;
  * Created by thibaud on 11.02.15.
  */
 public class FragmentController {
+    // @TODO remove those instances
     private ChartFragment mChartFragment;
     private StatsFragment mStatsFragment;
 

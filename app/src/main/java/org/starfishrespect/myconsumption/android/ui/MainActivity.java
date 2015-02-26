@@ -4,6 +4,8 @@ import android.app.AlertDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.res.Configuration;
+import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentManager;
 import android.support.v7.app.ActionBarActivity;
 import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
@@ -271,5 +273,13 @@ public class MainActivity extends ActionBarActivity
                     }
                 });
         builder.show();
+    }
+
+    public void test() {
+        FragmentManager manager = getSupportFragmentManager();
+        Fragment f = manager.findFragmentByTag(ChartFragment.TAG_CHOICE);
+        if (f instanceof GraphChoiceFragment)
+            ((GraphChoiceFragment) f).getDate();
+
     }
 }

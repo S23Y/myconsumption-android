@@ -13,7 +13,7 @@ public class SingleInstance {
     private static DatabaseHelper databaseHelper;
     private static FragmentController fragmentController;
     private static UserController userController;
-    private static MainActivity mainActivity;
+    private static MainActivity mainActivity; // @TODO do not keep this, it should not be done this way
 
     //private static String serverAddress = "pahe.manex.biz";
     private static String serverAddress = "172.20.1.209"; // @manex (bridged)
