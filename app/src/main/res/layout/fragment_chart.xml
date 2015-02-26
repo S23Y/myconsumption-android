@@ -6,21 +6,15 @@
     android:orientation="horizontal" >
 
     <FrameLayout
+        android:id="@+id/chart_container"
         android:layout_width="0dp"
         android:layout_weight="3"
-        android:layout_height="match_parent">
-
-        <include layout="@layout/chart_view"/>
-
-    </FrameLayout>
+        android:layout_height="match_parent"/>
 
     <FrameLayout
+        android:id="@+id/choice_container"
         android:layout_width="0dp"
         android:layout_weight="1"
-        android:layout_height="match_parent">
-
-        <include layout="@layout/graph_choice"/>
-
-    </FrameLayout>
+        android:layout_height="match_parent"/>
 
 </LinearLayout>

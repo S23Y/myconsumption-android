@@ -1,8 +1,5 @@
 package org.starfishrespect.myconsumption.android.controllers;
 
-import android.support.v4.app.Fragment;
-
-import org.starfishrespect.myconsumption.android.MainFragment;
 import org.starfishrespect.myconsumption.android.dao.DatabaseHelper;
 import org.starfishrespect.myconsumption.android.dao.SingleInstance;
 import org.starfishrespect.myconsumption.android.data.SensorData;

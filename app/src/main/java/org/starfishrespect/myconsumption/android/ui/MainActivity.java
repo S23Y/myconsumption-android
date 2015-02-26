@@ -34,7 +34,7 @@ import java.util.Date;
 public class MainActivity extends ActionBarActivity
         implements
         SensorListAdapter.SensorChangeCallback, SensorValuesUpdater.UpdateFinishedCallback,
-        GetUserAsyncTask.GetUserCallback,
+        GetUserAsyncTask.GetUserCallback, GraphChoiceFragment.GraphOptionChangeCallback,
         StatValuesUpdater.StatUpdateFinishedCallback {
 
     // Static
@@ -164,12 +164,11 @@ public class MainActivity extends ActionBarActivity
         }*/
     }
 
-
-/*    // from callback of GraphChoiceFragment
+    // from callback of GraphChoiceFragment
     @Override
     public void dateChanged(Date newDate, int dateDelay, int valueDelay) {
         SingleInstance.getFragmentController().getChartFragment().dateChanged(newDate, dateDelay, valueDelay);
-    }*/
+    }
 
 
     // from SensorChangeCallback
@@ -226,8 +225,30 @@ public class MainActivity extends ActionBarActivity
         finish();
     }
 
+    /**
+     * Refresh data from server (?).
+     */
     public void refreshData() {
+        if (!MiscFunctions.isOnline(this)) {
+            MiscFunctions.makeOfflineDialog(this).show();
+            return;
+        }
 
+        showReloadLayout(true);
+        /*PingTask.ping(Controller.getServerAddress(), new PingTask.PingResultCallback() {
+            @Override
+            public void pingResult(String url, boolean accessible) {
+                if (accessible) {*/
+        GetUserAsyncTask getUserAsyncTask = new GetUserAsyncTask(SingleInstance.getUserController().getUser().getName());
+        getUserAsyncTask.setGetUserCallback(MainActivity.this);
+        getUserAsyncTask.execute();
+                /*}
+                else {
+                    showReloadLayout(false);
+                    Toast.makeText(MainActivity.this, "Cannot ping server", Toast.LENGTH_SHORT).show();
+                }
+            }
+        });*/
     }
 
     public void setFirstLaunchEver(boolean mFirstLaunchEver) {
@@ -239,7 +260,16 @@ public class MainActivity extends ActionBarActivity
     }
 
     public void buildAlert() {
-
+        AlertDialog.Builder builder = new AlertDialog.Builder(this);
+        builder.setTitle(R.string.dialog_title_error)
+                .setMessage(getString(R.string.dialog_message_error_when_loading_please_reconnect))
+                .setPositiveButton(R.string.button_ok, new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        dialog.dismiss();
+                        disconnect();
+                    }
+                });
+        builder.show();
     }
-
 }
