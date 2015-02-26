@@ -22,9 +22,6 @@ public class ChartFragment extends Fragment {
     private boolean chartViewFragmentReady = false;
     private boolean graphChoiceFragmentReady = false;
 
-    public static final String TAG_CHOICE = "GRAPH_CHOICE_FRAGMENT";
-    public static final String TAG_CHART = "CHART_VIEW_FRAGMENT";
-
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -37,10 +34,13 @@ public class ChartFragment extends Fragment {
         // get fragment manager
         FragmentManager fm = getFragmentManager();
 
+        // todo: remove this
+        System.out.println("graphchoicclasss: " + GraphChoiceFragment.class.toString() + "\n"
+                + "chartviewclass: " + ChartViewFragment.class.toString());
         // add
         FragmentTransaction ft = fm.beginTransaction();
-        ft.add(R.id.choice_container, new GraphChoiceFragment(), TAG_CHOICE);
-        ft.add(R.id.chart_container, new ChartViewFragment(), TAG_CHART);
+        ft.add(R.id.choice_container, new GraphChoiceFragment(), GraphChoiceFragment.class.toString());
+        ft.add(R.id.chart_container, new ChartViewFragment(), ChartViewFragment.class.toString());
 
         ft.commit();
 
@@ -52,38 +52,20 @@ public class ChartFragment extends Fragment {
         super.onResume();
     }
 
-    private ChartViewFragment getChartViewFragment() {
-        FragmentManager manager = getChildFragmentManager();
-        Fragment f = manager.findFragmentByTag(TAG_CHART);
-        if (f instanceof ChartViewFragment)
-            return (ChartViewFragment) f;
-        else
-            return null;
-    }
-
-    private GraphChoiceFragment getGraphChoiceFragment() {
-        FragmentManager manager = getChildFragmentManager();
-        Fragment f = manager.findFragmentByTag(TAG_CHOICE);
-        if (f instanceof GraphChoiceFragment)
-            return (GraphChoiceFragment) f;
-        else
-            return null;
-    }
-
     public void dateChanged(Date newDate, int dateDelay, int valueDelay) {
         if (newDate == null) {
             return;
         }
         long date = newDate.getTime() / 1000;
-        getChartViewFragment().showAllGraphicsWithPrecision((int) date, dateDelay, valueDelay);
+        SingleInstance.getFragmentController().getChartViewFragment().showAllGraphicsWithPrecision((int) date, dateDelay, valueDelay);
     }
 
     public void visibilityChanged(SensorData sensor, boolean visible) {
-        getChartViewFragment().setSensorVisibility(sensor, sensor.isVisible());
+        SingleInstance.getFragmentController().getChartViewFragment().setSensorVisibility(sensor, sensor.isVisible());
     }
 
     public void colorChanged(SensorData sensor, int color) {
-        getChartViewFragment().setSensorColor(sensor, sensor.getColor());
+        SingleInstance.getFragmentController().getChartViewFragment().setSensorColor(sensor, sensor.getColor());
     }
     
     public void fragmentsReady(Fragment fragment) {
@@ -93,12 +75,6 @@ public class ChartFragment extends Fragment {
             graphChoiceFragmentReady = true;
 
         if (chartViewFragmentReady && graphChoiceFragmentReady) {
-            SingleInstance.getMainActivity().test();
-            // @TODO getGraphChoiceFragment() & getChartViewFragment() ne devraient pas être nuls quand on arrive
-            // ici. C'est un bug lié au chgmt d'orientation, à corriger. Corrigé ?
-            if (getGraphChoiceFragment() == null || getChartViewFragment() == null)
-                return;
-
             // Reload the user
             SingleInstance.getFragmentController().reloadUser(SingleInstance.getMainActivity().isFirstLaunchEver());
 
@@ -110,33 +86,36 @@ public class ChartFragment extends Fragment {
     }
 
     public void reloadUser(boolean refreshData) {
-        if (getChartViewFragment() == null || getGraphChoiceFragment() == null)
+        ChartViewFragment chartView = SingleInstance.getFragmentController().getChartViewFragment();
+        GraphChoiceFragment graphChoice = SingleInstance.getFragmentController().getGraphChoiceFragment();
+
+        if (chartView == null || graphChoice == null)
             return;
 
-        getGraphChoiceFragment().setUser();
-        getGraphChoiceFragment().refreshSpinnerFrequencies();
-        getGraphChoiceFragment().refreshSpinnerPrecision();
+        graphChoice.setUser();
+        graphChoice.refreshSpinnerFrequencies();
+        graphChoice.refreshSpinnerPrecision();
 
         if (SingleInstance.getUserController().getUser().getSensors().size() == 0) {
-            getGraphChoiceFragment().refreshSpinnerDate();
-            getChartViewFragment().reset();
+            graphChoice.refreshSpinnerDate();
+            chartView.reset();
         } else if (refreshData) {
             SingleInstance.getMainActivity().refreshData();
         } else {
-            getGraphChoiceFragment().refreshSpinnerDate();
-            getChartViewFragment().reset();
-            dateChanged(getGraphChoiceFragment().getDate(), getGraphChoiceFragment().getDateDelay(), getGraphChoiceFragment().getValueDelay());
+            graphChoice.refreshSpinnerDate();
+            chartView.reset();
+            dateChanged(graphChoice.getDate(), graphChoice.getDateDelay(), graphChoice.getValueDelay());
         }
     }
 
     public void updateMovingAverage(int n) {
-        if (getChartViewFragment() == null)
+        if (SingleInstance.getFragmentController().getChartViewFragment() == null)
             return;
 
-        getChartViewFragment().updateMovingAverage(n);
+        SingleInstance.getFragmentController().getChartViewFragment().updateMovingAverage(n);
     }
 
     public int getSmoothingValue() {
-        return getGraphChoiceFragment().getSmoothingValue();
+        return SingleInstance.getFragmentController().getGraphChoiceFragment().getSmoothingValue();
     }
 }

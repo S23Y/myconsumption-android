@@ -1,5 +1,8 @@
 package org.starfishrespect.myconsumption.android.dao;
 
+import android.app.Activity;
+import android.content.Context;
+
 import org.starfishrespect.myconsumption.android.ui.MainActivity;
 import org.starfishrespect.myconsumption.android.controllers.FragmentController;
 import org.starfishrespect.myconsumption.android.controllers.UserController;
@@ -13,7 +16,8 @@ public class SingleInstance {
     private static DatabaseHelper databaseHelper;
     private static FragmentController fragmentController;
     private static UserController userController;
-    private static MainActivity mainActivity; // @TODO do not keep this, it should not be done this way
+    //private static MainActivity mainActivity; // @TODO do not keep this, it should not be done this way
+    protected static Context context;
 
     //private static String serverAddress = "pahe.manex.biz";
     private static String serverAddress = "172.20.1.209"; // @manex (bridged)
@@ -22,12 +26,18 @@ public class SingleInstance {
     private static String protocol = "http://";
     private static String serverDir = "myconsumption/";
 
-    public static void setMainActivity(MainActivity a) {
-        mainActivity = a;
+    public static void init(Context c) {
+        context = c;
+
+        // Init database helper
+        SingleInstance.getDatabaseHelper();
+
+        // Load the user
+        SingleInstance.getUserController().loadUser();
     }
 
     public static MainActivity getMainActivity() {
-        return mainActivity;
+        return (MainActivity) context;
     }
 
     public static DatabaseHelper getDatabaseHelper() {

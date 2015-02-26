@@ -54,16 +54,13 @@ public class MainActivity extends ActionBarActivity
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        SingleInstance.setMainActivity(this);
-        SingleInstance.getDatabaseHelper();
-
         if (getIntent().getExtras() != null) {
             mFirstLaunchEver = getIntent().getExtras().getBoolean(EXTRA_FIRST_LAUNCH, false);
         }
         Log.d(TAG, "first launch " + mFirstLaunchEver);
 
-        // Load the user
-        SingleInstance.getUserController().loadUser();
+        // Initialize context, database helper, user and so on...
+        SingleInstance.init(this);
 
         // Set a Toolbar to replace the ActionBar.
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
@@ -273,13 +270,5 @@ public class MainActivity extends ActionBarActivity
                     }
                 });
         builder.show();
-    }
-
-    public void test() {
-        FragmentManager manager = getSupportFragmentManager();
-        Fragment f = manager.findFragmentByTag(ChartFragment.TAG_CHOICE);
-        if (f instanceof GraphChoiceFragment)
-            ((GraphChoiceFragment) f).getDate();
-
     }
 }

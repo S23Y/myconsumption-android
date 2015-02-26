@@ -1,15 +1,21 @@
 package org.starfishrespect.myconsumption.android.controllers;
 
+import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentManager;
+
 import org.starfishrespect.myconsumption.android.*;
+import org.starfishrespect.myconsumption.android.dao.SingleInstance;
 import org.starfishrespect.myconsumption.android.ui.ChartFragment;
+import org.starfishrespect.myconsumption.android.ui.ChartViewFragment;
+import org.starfishrespect.myconsumption.android.ui.GraphChoiceFragment;
 
 /**
  * Created by thibaud on 11.02.15.
  */
 public class FragmentController {
-    // @TODO remove those instances
+/*    // @TODO remove those instances
     private ChartFragment mChartFragment;
-    private StatsFragment mStatsFragment;
+    private StatsFragment mStatsFragment;*/
 
 /*    private Fragment mCurrentFragment;*/
 
@@ -34,24 +40,52 @@ public class FragmentController {
      * @param refreshData if the data need to be refreshed.
      */
     public void reloadUser(boolean refreshData) {
-        if (mChartFragment != null)
-            mChartFragment.reloadUser(refreshData);
+        if (getChartFragment() != null)
+            getChartFragment().reloadUser(refreshData);
 
-        if (mStatsFragment != null)
-            mStatsFragment.reloadUser(refreshData);
+        if (getStatsFragment() != null)
+            getStatsFragment().reloadUser(refreshData);
+    }
+
+    private Fragment getFragment(Class<?> fragmentClass) {
+        FragmentManager manager = SingleInstance.getMainActivity().getSupportFragmentManager();
+        Fragment f = manager.findFragmentByTag(fragmentClass.toString());
+        return f;
     }
 
     public ChartFragment getChartFragment() {
-        if (mChartFragment == null)
-            mChartFragment = new ChartFragment();
-        return mChartFragment;
+        Fragment f = getFragment(ChartFragment.class);
+        if (f instanceof ChartFragment)
+            return (ChartFragment) f;
+        else
+            return null;
     }
 
     public StatsFragment getStatsFragment() {
-        if (mStatsFragment == null)
-            mStatsFragment = new StatsFragment();
-        return mStatsFragment;
+        return null; //@TODO
+        /*Fragment f = getFragment(ChartFragment.class);
+        if (f instanceof StatsFragment)
+            return (StatsFragment) f;
+        else
+            return null;*/
     }
+
+    public ChartViewFragment getChartViewFragment() {
+        Fragment f = getFragment(ChartViewFragment.class);
+        if (f instanceof ChartViewFragment)
+            return (ChartViewFragment) f;
+        else
+            return null;
+    }
+
+    public GraphChoiceFragment getGraphChoiceFragment() {
+        Fragment f = getFragment(GraphChoiceFragment.class);
+        if (f instanceof GraphChoiceFragment)
+            return (GraphChoiceFragment) f;
+        else
+            return null;
+    }
+
 /*
     public Fragment getCurrentFragment() {
         return mCurrentFragment;
