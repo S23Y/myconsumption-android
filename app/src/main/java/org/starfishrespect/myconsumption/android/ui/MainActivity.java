@@ -13,7 +13,9 @@ import android.util.Log;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
+import android.widget.LinearLayout;
 import android.widget.ListView;
+import android.widget.RelativeLayout;
 
 import org.starfishrespect.myconsumption.android.AddSensorActivity;
 import org.starfishrespect.myconsumption.android.LoginActivity;
@@ -69,8 +71,8 @@ public class MainActivity extends ActionBarActivity
         // Find our drawer view
         dlDrawer = (FragmentNavigationDrawer) findViewById(R.id.drawer_layout);
         // Setup drawer view
-        dlDrawer.setupDrawerConfiguration((ListView) findViewById(R.id.left_drawer), toolbar,
-                R.layout.drawer_nav_item, R.id.content_frame);
+        dlDrawer.setupDrawerConfiguration((ListView) findViewById(R.id.left_drawer_list), toolbar,
+                (LinearLayout) findViewById(R.id.left_drawer), R.id.content_frame);
         // Add nav items
         dlDrawer.addNavItem("Chart", R.drawable.ic_chart, "MyConsumption - Chart", ChartFragment.class);
         dlDrawer.addNavItem("Second", R.drawable.ic_stat, "Second Fragment", SecondFragment.class);

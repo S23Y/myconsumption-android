@@ -19,7 +19,7 @@ import android.support.v7.widget.Toolbar;
 import android.util.AttributeSet;
 import android.view.View;
 import android.widget.AdapterView;
-import android.widget.ArrayAdapter;
+import android.widget.LinearLayout;
 import android.widget.ListView;
 
 import org.starfishrespect.myconsumption.android.NavDrawerItem;
@@ -36,6 +36,7 @@ public class FragmentNavigationDrawer extends DrawerLayout {
     private ArrayList<NavDrawerItem> navDrawerItems;
     private ArrayList<FragmentNavItem> drawerNavItems;
     private int drawerContainerRes;
+    private LinearLayout llDrawer;
 
     public FragmentNavigationDrawer(Context context, AttributeSet attrs, int defStyle) {
         super(context, attrs, defStyle);
@@ -50,13 +51,14 @@ public class FragmentNavigationDrawer extends DrawerLayout {
     }
 
     public void setupDrawerConfiguration(ListView drawerListView, Toolbar drawerToolbar,
-                                         int drawerItemRes, int drawerContainerResId) {
+                                         LinearLayout linearLDrawer, int drawerContainerResId) {
         // Setup navigation items array
         drawerNavItems = new ArrayList<FragmentNavigationDrawer.FragmentNavItem>();
         navDrawerItems = new ArrayList<NavDrawerItem>();
         drawerContainerRes = drawerContainerResId;
         // Setup drawer list view
         lvDrawer = drawerListView;
+        llDrawer = linearLDrawer;
         toolbar = drawerToolbar;
         // Setup item listener
         lvDrawer.setOnItemClickListener(new FragmentDrawerItemListener());
@@ -104,7 +106,7 @@ public class FragmentNavigationDrawer extends DrawerLayout {
         // Highlight the selected item, update the title, and close the drawer
         lvDrawer.setItemChecked(position, true);
         setTitle(navItem.getTitle());
-        closeDrawer(lvDrawer);
+        closeDrawer(llDrawer);
     }
 
 
@@ -165,6 +167,6 @@ public class FragmentNavigationDrawer extends DrawerLayout {
     }
 
     public boolean isDrawerOpen() {
-        return isDrawerOpen(lvDrawer);
+        return isDrawerOpen(llDrawer);
     }
 }
