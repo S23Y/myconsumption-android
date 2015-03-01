@@ -4,8 +4,6 @@ import android.app.AlertDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.res.Configuration;
-import android.support.v4.app.Fragment;
-import android.support.v4.app.FragmentManager;
 import android.support.v7.app.ActionBarActivity;
 import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
@@ -16,7 +14,6 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.LinearLayout;
 import android.widget.ListView;
-import android.widget.RelativeLayout;
 
 import org.starfishrespect.myconsumption.android.AddSensorActivity;
 import org.starfishrespect.myconsumption.android.LoginActivity;
@@ -77,7 +74,7 @@ public class MainActivity extends ActionBarActivity
         // Add nav items
         dlDrawer.addNavItem("Chart", R.drawable.ic_chart, "MyConsumption - Chart", ChartFragment.class);
         dlDrawer.addNavItem("Statistics", R.drawable.ic_stat, "MyConsumption - Stats", StatsFragment.class);
-        dlDrawer.addNavItem("Add sensor", R.drawable.ic_add, "Third Fragment", ThirdFragment.class);
+        dlDrawer.addNavItem("Add sensor", R.drawable.ic_add, "Third Fragment", AddSensorLauncherFragment.class);
         dlDrawer.addNavItem("Disconnect", R.drawable.ic_disconnect, "Fourth Fragment", FourthFragment.class);
         // Select default
         if (savedInstanceState == null) {
