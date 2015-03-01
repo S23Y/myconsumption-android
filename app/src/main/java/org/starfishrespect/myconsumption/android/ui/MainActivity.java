@@ -76,7 +76,7 @@ public class MainActivity extends ActionBarActivity
                 (LinearLayout) findViewById(R.id.left_drawer), R.id.content_frame);
         // Add nav items
         dlDrawer.addNavItem("Chart", R.drawable.ic_chart, "MyConsumption - Chart", ChartFragment.class);
-        dlDrawer.addNavItem("Statistics", R.drawable.ic_stat, "Second Fragment", SecondFragment.class);
+        dlDrawer.addNavItem("Statistics", R.drawable.ic_stat, "MyConsumption - Stats", StatsFragment.class);
         dlDrawer.addNavItem("Add sensor", R.drawable.ic_add, "Third Fragment", ThirdFragment.class);
         dlDrawer.addNavItem("Disconnect", R.drawable.ic_disconnect, "Fourth Fragment", FourthFragment.class);
         // Select default

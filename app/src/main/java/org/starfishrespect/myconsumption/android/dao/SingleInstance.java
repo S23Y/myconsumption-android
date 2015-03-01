@@ -3,10 +3,12 @@ package org.starfishrespect.myconsumption.android.dao;
 import android.app.Activity;
 import android.content.Context;
 
+import org.starfishrespect.myconsumption.android.controllers.StatsController;
 import org.starfishrespect.myconsumption.android.ui.MainActivity;
 import org.starfishrespect.myconsumption.android.controllers.FragmentController;
 import org.starfishrespect.myconsumption.android.controllers.UserController;
 import org.starfishrespect.myconsumption.android.data.UserData;
+import org.starfishrespect.myconsumption.server.api.dto.StatsOverPeriodsDTO;
 
 /**
  * Class used to store unique objects accessible everywhere in the app
@@ -25,6 +27,7 @@ public class SingleInstance {
     private static int port = 8081;
     private static String protocol = "http://";
     private static String serverDir = "myconsumption/";
+    private static StatsController statsController;
 
     public static void init(Context c) {
         context = c;
@@ -56,6 +59,12 @@ public class SingleInstance {
         if (fragmentController == null)
             fragmentController = new FragmentController();
         return fragmentController;
+    }
+
+    public static StatsController getStatsController() {
+        if (statsController == null)
+            statsController = new StatsController(databaseHelper);
+        return statsController;
     }
 
     public static String getServerUrl() {

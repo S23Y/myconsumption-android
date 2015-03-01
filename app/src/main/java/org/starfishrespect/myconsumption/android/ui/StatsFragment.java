@@ -8,10 +8,15 @@ import android.view.ViewGroup;
 import android.widget.TextView;
 
 import org.starfishrespect.myconsumption.android.R;
+import org.starfishrespect.myconsumption.android.controllers.StatsController;
 import org.starfishrespect.myconsumption.android.dao.*;
 import org.starfishrespect.myconsumption.android.data.SensorData;
+import org.starfishrespect.myconsumption.server.api.dto.Period;
+import org.starfishrespect.myconsumption.server.api.dto.StatDTO;
+import org.starfishrespect.myconsumption.server.api.dto.StatsOverPeriodsDTO;
 
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 /**
@@ -38,14 +43,20 @@ public class StatsFragment extends Fragment {
 
 
     public void updateStat() {
-        List<Integer> values = new ArrayList<>();
-        for (SensorData sensor : SingleInstance.getUserController().getUser().getSensors()) {
-            values = new StatValuesDao(SingleInstance.getDatabaseHelper()).getValues(sensor.getSensorId());
-        }
+        StatsOverPeriodsDTO stats = SingleInstance.getStatsController().getStats();
+        String text = "";
 
-        String text = "Average consumption (all time) : " + values.get(0) + " watts (" + w2kWh(values.get(0)) + " kWh).\n"
-            + "Maximum value (all time): " + values.get(1) + " watts (" + w2kWh(values.get(1)) + " kWh).\n"
-            + "Diff of consumption between yesterday and today: " + w2kWh(values.get(2)) + " kWh.";
+        for (Period p : Period.values()) {
+            StatDTO stat = stats.getStatDTOs().get(p.getValue());
+            text += "\n\n" + p.toString() + "\n"
+                    + "Consumption over period: " + stat.getConsumption() + "watts (" + w2kWh(stat.getConsumption()) +"kWh.\n"
+                    + "Average consumption: " + stat.getAverage() + " watts (" + w2kWh(stat.getAverage()) + " kWh).\n"
+                    + "Maximum value (" + timestamp2Date(stat.getMax().getTimestamp()) + ") : "
+                    + stat.getMax().getValue() + " watts (" + w2kWh(stat.getMax().getValue()) + " kWh).\n"
+                    + "Minimum value (" + timestamp2Date(stat.getMin().getTimestamp()) + ") : "
+                    + stat.getMin().getValue() + " watts (" + w2kWh(stat.getMin().getValue()) + " kWh).\n"
+                    + "Diff of consumption between last two periods: " + w2kWh(stat.getDiffLastTwo()) + " kWh.";
+        }
 
         mTextView.setText(text);
     }
@@ -54,9 +65,17 @@ public class StatsFragment extends Fragment {
      * Convert watt to kWh and round it up with two decimals.
      * @param watt the value you want to convert
      */
-    public double w2kWh(int watt) {
+    private double w2kWh(int watt) {
         double converted = (double)watt/(60*1000);
         return Math.round(converted * 100.0) / 100.0;
     }
 
+    /**
+     * Convert a linux timestamp to a Date time.
+     * @param timestamp
+     * @return a Java Date.
+     */
+    private Date timestamp2Date(int timestamp) {
+        return new java.util.Date((long) timestamp * 1000);
+    }
 }

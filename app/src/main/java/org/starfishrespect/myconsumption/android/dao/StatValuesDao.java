@@ -1,3 +1,4 @@
+/*
 package org.starfishrespect.myconsumption.android.dao;
 
 import android.content.ContentValues;
@@ -9,9 +10,11 @@ import org.starfishrespect.myconsumption.android.data.StatValue;
 import java.util.ArrayList;
 import java.util.List;
 
+*/
 /**
  * Created by thibaud on 27.01.15.
- */
+ *//*
+
 public class StatValuesDao {
     private static final String TAG = "StatValuesDao";
 
@@ -70,3 +73,4 @@ public class StatValuesDao {
         return db.getReadableDatabase().query(table, null, null, null, null, null, null, null);
     }
 }
+*/
