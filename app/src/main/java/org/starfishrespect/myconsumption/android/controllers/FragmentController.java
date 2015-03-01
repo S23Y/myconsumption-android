@@ -3,11 +3,11 @@ package org.starfishrespect.myconsumption.android.controllers;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 
-import org.starfishrespect.myconsumption.android.*;
 import org.starfishrespect.myconsumption.android.dao.SingleInstance;
 import org.starfishrespect.myconsumption.android.ui.ChartFragment;
 import org.starfishrespect.myconsumption.android.ui.ChartViewFragment;
 import org.starfishrespect.myconsumption.android.ui.GraphChoiceFragment;
+import org.starfishrespect.myconsumption.android.ui.StatsFragment;
 
 /**
  * Created by thibaud on 11.02.15.

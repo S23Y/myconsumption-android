@@ -12,7 +12,7 @@ import android.widget.EditText;
 import android.widget.Toast;
 import org.starfishrespect.myconsumption.android.dao.SingleInstance;
 import org.starfishrespect.myconsumption.android.misc.MiscFunctions;
-import biz.manex.sr.myconsumption.api.dto.SimpleResponseDTO;
+import org.starfishrespect.myconsumption.server.api.dto.SimpleResponseDTO;
 import org.codehaus.jackson.map.ObjectMapper;
 import org.springframework.http.converter.FormHttpMessageConverter;
 import org.springframework.http.converter.StringHttpMessageConverter;

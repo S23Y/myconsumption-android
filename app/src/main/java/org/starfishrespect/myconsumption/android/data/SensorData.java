@@ -1,7 +1,7 @@
 package org.starfishrespect.myconsumption.android.data;
 
 import org.starfishrespect.myconsumption.android.misc.GraphBaseColors;
-import biz.manex.sr.myconsumption.api.dto.SensorDTO;
+import org.starfishrespect.myconsumption.server.api.dto.SensorDTO;
 import com.j256.ormlite.field.DatabaseField;
 import com.j256.ormlite.table.DatabaseTable;
 
