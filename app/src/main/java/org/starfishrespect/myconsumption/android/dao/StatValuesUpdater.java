@@ -7,9 +7,7 @@ import android.util.Log;
 import org.codehaus.jackson.map.ObjectMapper;
 import org.starfishrespect.myconsumption.android.data.KeyValueData;
 import org.starfishrespect.myconsumption.android.data.SensorData;
-import org.starfishrespect.myconsumption.android.data.StatValue;
-import org.starfishrespect.myconsumption.server.api.dto.StatsOverPeriodsDTO;
-import org.starfishrespect.myconsumption.server.api.dto.UserDTO;
+import biz.manex.sr.myconsumption.api.dto.StatsOverPeriodsDTO;
 import org.springframework.http.converter.json.MappingJacksonHttpMessageConverter;
 import org.springframework.web.client.RestTemplate;
 
@@ -44,12 +42,13 @@ public class StatValuesUpdater {
                 template.getMessageConverters().add(new MappingJacksonHttpMessageConverter());
 
                 try {
-                    SQLiteDatabase writeDb = db.getWritableDatabase();
+/*                    SQLiteDatabase writeDb = db.getWritableDatabase();
                     if (writeDb == null) {
                         return null;
                     }
-                    /*writeDb.execSQL("CREATE TABLE IF NOT EXISTS stat(" +
-                                "key STRING PRIMARY KEY, value INTEGER)");*/
+                    writeDb.execSQL("CREATE TABLE IF NOT EXISTS stats(" +
+                                "key STRING PRIMARY KEY, value STRING)");*/
+
 
                     for (SensorData sensor : db.getSensorDao().queryForAll()) {
                         // Stats
@@ -61,15 +60,14 @@ public class StatValuesUpdater {
                         try {
                             String json = mapper.writeValueAsString(stats);
                             Log.d(TAG, "writing stat in local db: " + json);
-                            db.getKeyValueDao().create(new KeyValueData("stats", json));
+                            db.getKeyValueDao().createOrUpdate(new KeyValueData("stats", json));
                         } catch (IOException e) {
-                            // todo do I have to build an alert here?
-                            SingleInstance.getMainActivity().buildAlert();
+                            Log.d(TAG, "Cannot create stats " + stats.toString(), e);
                         }
 
                     }
                 } catch (SQLException e) {
-
+                    Log.d(TAG, "Cannot create user ", e);
                 }
                 return null;
             }

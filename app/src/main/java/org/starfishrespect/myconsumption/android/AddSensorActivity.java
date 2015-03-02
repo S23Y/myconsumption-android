@@ -17,7 +17,7 @@ import org.starfishrespect.myconsumption.android.data.UserData;
 import org.starfishrespect.myconsumption.android.misc.MiscFunctions;
 import org.starfishrespect.myconsumption.android.sensorviews.AbstractSensorView;
 import org.starfishrespect.myconsumption.android.sensorviews.SensorViewFactory;
-import org.starfishrespect.myconsumption.server.api.dto.SimpleResponseDTO;
+import biz.manex.sr.myconsumption.api.dto.SimpleResponseDTO;
 import org.codehaus.jackson.map.ObjectMapper;
 import org.springframework.http.converter.FormHttpMessageConverter;
 import org.springframework.http.converter.StringHttpMessageConverter;

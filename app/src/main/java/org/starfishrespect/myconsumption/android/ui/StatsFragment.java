@@ -11,9 +11,9 @@ import org.starfishrespect.myconsumption.android.R;
 import org.starfishrespect.myconsumption.android.controllers.StatsController;
 import org.starfishrespect.myconsumption.android.dao.*;
 import org.starfishrespect.myconsumption.android.data.SensorData;
-import org.starfishrespect.myconsumption.server.api.dto.Period;
-import org.starfishrespect.myconsumption.server.api.dto.StatDTO;
-import org.starfishrespect.myconsumption.server.api.dto.StatsOverPeriodsDTO;
+import biz.manex.sr.myconsumption.api.dto.Period;
+import biz.manex.sr.myconsumption.api.dto.StatDTO;
+import biz.manex.sr.myconsumption.api.dto.StatsOverPeriodsDTO;
 
 import java.util.ArrayList;
 import java.util.Date;
@@ -34,6 +34,11 @@ public class StatsFragment extends Fragment {
 
         mTextView =  (TextView) view.findViewById(R.id.textView);
 
+        // Fetch the data from the server
+        StatValuesUpdater updater = new StatValuesUpdater();
+        updater.setUpdateFinishedCallback(SingleInstance.getMainActivity());
+        updater.refreshDB();
+
         return view;
     }
 
@@ -43,8 +48,12 @@ public class StatsFragment extends Fragment {
 
 
     public void updateStat() {
+        SingleInstance.getStatsController().loadStats();
         StatsOverPeriodsDTO stats = SingleInstance.getStatsController().getStats();
+
         String text = "";
+
+        List<StatDTO> listStats = stats.getStatDTOs();
 
         for (Period p : Period.values()) {
             StatDTO stat = stats.getStatDTOs().get(p.getValue());

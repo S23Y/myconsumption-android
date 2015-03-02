@@ -62,12 +62,11 @@ public class FragmentController {
     }
 
     public StatsFragment getStatsFragment() {
-        return null; //@TODO
-        /*Fragment f = getFragment(ChartFragment.class);
+        Fragment f = getFragment(StatsFragment.class);
         if (f instanceof StatsFragment)
             return (StatsFragment) f;
         else
-            return null;*/
+            return null;
     }
 
     public ChartViewFragment getChartViewFragment() {

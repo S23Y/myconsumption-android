@@ -89,7 +89,7 @@ public class LoginActivity extends Activity implements View.OnClickListener, Get
             ObjectMapper mapper = new ObjectMapper();
             String json = mapper.writeValueAsString(user);
             Log.d(TAG, json);
-            db.getKeyValueDao().create(new KeyValueData("user", json));
+            db.getKeyValueDao().createOrUpdate(new KeyValueData("user", json));
             new SensorValuesDao(db).updateSensorList(user.getSensors());
         } catch (IOException e) {
             Log.d(TAG, "Cannot create user " + user.getName(), e);

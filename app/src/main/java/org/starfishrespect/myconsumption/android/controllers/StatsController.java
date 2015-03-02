@@ -4,7 +4,7 @@ import org.codehaus.jackson.map.ObjectMapper;
 import org.starfishrespect.myconsumption.android.dao.DatabaseHelper;
 import org.starfishrespect.myconsumption.android.dao.SingleInstance;
 import org.starfishrespect.myconsumption.android.data.SensorData;
-import org.starfishrespect.myconsumption.server.api.dto.StatsOverPeriodsDTO;
+import biz.manex.sr.myconsumption.api.dto.StatsOverPeriodsDTO;
 
 import java.io.IOException;
 import java.util.List;
@@ -25,13 +25,12 @@ public class StatsController {
      *  Load the stats from the local database.
      */
     public void loadStats() {
-        String userJson = db.getValueForKey("stats").getValue();
+        String statsJSON = db.getValueForKey("stats").getValue();
         ObjectMapper mapper = new ObjectMapper();
-        List<SensorData> sensors;
 
         try {
             // Read json
-            stats = mapper.readValue(userJson, StatsOverPeriodsDTO.class);
+            stats = mapper.readValue(statsJSON, StatsOverPeriodsDTO.class);
         } catch (IOException e) {
             SingleInstance.getMainActivity().buildAlert();
         }
