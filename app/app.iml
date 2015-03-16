@@ -90,23 +90,22 @@
     <orderEntry type="library" exported="" name="jcl-over-slf4j-1.7.10" level="project" />
     <orderEntry type="library" exported="" name="jul-to-slf4j-1.7.10" level="project" />
     <orderEntry type="library" exported="" name="jackson-mapper-asl-1.9.13" level="project" />
-    <orderEntry type="library" exported="" name="my-consumption-0.1.0" level="project" />
     <orderEntry type="library" exported="" name="ormlite-android-4.48" level="project" />
     <orderEntry type="library" exported="" name="tomcat-embed-websocket-8.0.20" level="project" />
-    <orderEntry type="library" exported="" name="spring-core-4.1.5.RELEASE" level="project" />
     <orderEntry type="library" exported="" name="spring-boot-1.2.2.RELEASE" level="project" />
+    <orderEntry type="library" exported="" name="spring-core-4.1.5.RELEASE" level="project" />
     <orderEntry type="library" exported="" name="spring-boot-autoconfigure-1.2.2.RELEASE" level="project" />
+    <orderEntry type="library" exported="" name="jackson-annotations-2.4.0" level="project" />
     <orderEntry type="library" exported="" name="spring-boot-starter-logging-1.2.2.RELEASE" level="project" />
     <orderEntry type="library" exported="" name="spring-beans-4.1.5.RELEASE" level="project" />
     <orderEntry type="library" exported="" name="tomcat-embed-core-8.0.20" level="project" />
     <orderEntry type="library" exported="" name="spring-web-4.1.5.RELEASE" level="project" />
     <orderEntry type="library" exported="" name="tomcat-embed-el-8.0.20" level="project" />
     <orderEntry type="library" exported="" name="support-v4-21.0.3" level="project" />
-    <orderEntry type="library" exported="" name="log4j-over-slf4j-1.7.10" level="project" />
     <orderEntry type="library" exported="" name="achartengine-1.2.0" level="project" />
+    <orderEntry type="library" exported="" name="log4j-over-slf4j-1.7.10" level="project" />
     <orderEntry type="library" exported="" name="spring-boot-starter-tomcat-1.2.2.RELEASE" level="project" />
     <orderEntry type="library" exported="" name="jackson-jaxrs-1.9.13" level="project" />
-    <orderEntry type="library" exported="" name="javax.ws.rs-api-2.0-m10" level="project" />
     <orderEntry type="library" exported="" name="spring-boot-starter-data-mongodb-1.2.2.RELEASE" level="project" />
     <orderEntry type="library" exported="" name="hibernate-validator-5.1.3.Final" level="project" />
     <orderEntry type="library" exported="" name="support-annotations-21.0.3" level="project" />
@@ -117,16 +116,17 @@
     <orderEntry type="library" exported="" name="jboss-logging-3.1.3.GA" level="project" />
     <orderEntry type="library" exported="" name="spring-tx-4.1.5.RELEASE" level="project" />
     <orderEntry type="library" exported="" name="spring-data-commons-1.9.2.RELEASE" level="project" />
-    <orderEntry type="library" exported="" name="logback-classic-1.1.2" level="project" />
     <orderEntry type="library" exported="" name="aopalliance-1.0" level="project" />
-    <orderEntry type="library" exported="" name="jackson-annotations-2.5.1" level="project" />
+    <orderEntry type="library" exported="" name="logback-classic-1.1.2" level="project" />
+    <orderEntry type="library" exported="" name="jsr311-api-1.1.1" level="project" />
     <orderEntry type="library" exported="" name="classmate-1.0.0" level="project" />
     <orderEntry type="library" exported="" name="spring-boot-starter-1.2.2.RELEASE" level="project" />
     <orderEntry type="library" exported="" name="spring-aop-4.1.5.RELEASE" level="project" />
     <orderEntry type="library" exported="" name="jackson-core-2.4.5" level="project" />
+    <orderEntry type="library" exported="" name="my-consumption-api-1.0.0-SNAPSHOT" level="project" />
     <orderEntry type="library" exported="" name="tomcat-embed-logging-juli-8.0.20" level="project" />
-    <orderEntry type="library" exported="" name="logback-core-1.1.2" level="project" />
     <orderEntry type="library" exported="" name="jackson-core-asl-1.9.13" level="project" />
+    <orderEntry type="library" exported="" name="logback-core-1.1.2" level="project" />
     <orderEntry type="library" exported="" name="spring-android-rest-template-1.0.1.RELEASE" level="project" />
     <orderEntry type="library" exported="" name="spring-context-4.1.5.RELEASE" level="project" />
     <orderEntry type="library" exported="" name="jackson-databind-2.4.5" level="project" />
