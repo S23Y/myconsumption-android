@@ -8,7 +8,7 @@ import org.starfishrespect.myconsumption.android.ui.MainActivity;
 import org.starfishrespect.myconsumption.android.controllers.FragmentController;
 import org.starfishrespect.myconsumption.android.controllers.UserController;
 import org.starfishrespect.myconsumption.android.data.UserData;
-import biz.manex.sr.myconsumption.api.dto.StatsOverPeriodsDTO;
+import org.starfishrespect.myconsumption.server.api.dto.StatsOverPeriodsDTO;
 
 /**
  * Class used to store unique objects accessible everywhere in the app
@@ -22,7 +22,7 @@ public class SingleInstance {
     protected static Context context;
 
     //private static String serverAddress = "pahe.manex.biz";
-    private static String serverAddress = "172.20.1.57"; // @manex (bridged)
+    private static String serverAddress = "172.20.1.64"; // @manex (bridged)
     //private static String serverAddress  = "192.168.154.133";  // @ans (nat)
     private static int port = 8081;
     private static String protocol = "http://";

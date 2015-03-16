@@ -7,7 +7,7 @@ import android.util.Log;
 import org.codehaus.jackson.map.ObjectMapper;
 import org.starfishrespect.myconsumption.android.data.KeyValueData;
 import org.starfishrespect.myconsumption.android.data.SensorData;
-import biz.manex.sr.myconsumption.api.dto.StatsOverPeriodsDTO;
+import org.starfishrespect.myconsumption.server.api.dto.StatsOverPeriodsDTO;
 import org.springframework.http.converter.json.MappingJacksonHttpMessageConverter;
 import org.springframework.web.client.RestTemplate;
 

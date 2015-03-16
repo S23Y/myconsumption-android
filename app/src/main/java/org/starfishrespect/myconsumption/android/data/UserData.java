@@ -1,6 +1,6 @@
 package org.starfishrespect.myconsumption.android.data;
 
-import biz.manex.sr.myconsumption.api.dto.UserDTO;
+import org.starfishrespect.myconsumption.server.api.dto.UserDTO;
 import org.codehaus.jackson.annotate.JsonIgnore;
 
 import java.io.Serializable;

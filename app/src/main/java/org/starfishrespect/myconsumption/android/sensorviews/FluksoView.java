@@ -6,7 +6,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.EditText;
 import org.starfishrespect.myconsumption.android.R;
-import biz.manex.sr.myconsumption.api.dto.FluksoSensorSettingsDTO;
+import org.starfishrespect.myconsumption.server.api.dto.FluksoSensorSettingsDTO;
 
 /**
  * View used to enter Flukso-specific settings

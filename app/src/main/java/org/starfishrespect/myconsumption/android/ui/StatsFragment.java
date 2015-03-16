@@ -11,9 +11,9 @@ import org.starfishrespect.myconsumption.android.R;
 import org.starfishrespect.myconsumption.android.controllers.StatsController;
 import org.starfishrespect.myconsumption.android.dao.*;
 import org.starfishrespect.myconsumption.android.data.SensorData;
-import biz.manex.sr.myconsumption.api.dto.Period;
-import biz.manex.sr.myconsumption.api.dto.StatDTO;
-import biz.manex.sr.myconsumption.api.dto.StatsOverPeriodsDTO;
+import org.starfishrespect.myconsumption.server.api.dto.Period;
+import org.starfishrespect.myconsumption.server.api.dto.StatDTO;
+import org.starfishrespect.myconsumption.server.api.dto.StatsOverPeriodsDTO;
 
 import java.util.ArrayList;
 import java.util.Date;

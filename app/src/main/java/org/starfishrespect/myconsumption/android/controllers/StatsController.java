@@ -4,7 +4,7 @@ import org.codehaus.jackson.map.ObjectMapper;
 import org.starfishrespect.myconsumption.android.dao.DatabaseHelper;
 import org.starfishrespect.myconsumption.android.dao.SingleInstance;
 import org.starfishrespect.myconsumption.android.data.SensorData;
-import biz.manex.sr.myconsumption.api.dto.StatsOverPeriodsDTO;
+import org.starfishrespect.myconsumption.server.api.dto.StatsOverPeriodsDTO;
 
 import java.io.IOException;
 import java.util.List;

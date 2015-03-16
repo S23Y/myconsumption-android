@@ -91,10 +91,7 @@ public class LoginActivity extends Activity implements View.OnClickListener, Get
             Log.d(TAG, json);
             db.getKeyValueDao().createOrUpdate(new KeyValueData("user", json));
             new SensorValuesDao(db).updateSensorList(user.getSensors());
-        } catch (IOException e) {
-            Log.d(TAG, "Cannot create user " + user.getName(), e);
-            return;
-        } catch (SQLException e) {
+        } catch (IOException | SQLException e) {
             Log.d(TAG, "Cannot create user " + user.getName(), e);
             return;
         }

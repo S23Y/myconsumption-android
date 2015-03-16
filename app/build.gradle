@@ -46,7 +46,7 @@ dependencies {
     // achartengine
     compile 'org.achartengine:achartengine:1.2.0'
 
-    // MyConsumption server API
-    compile 'biz.manex.sr.myconsumption:my-consumption-api:1.0.0-SNAPSHOT'
+    // MyConsumption server API // TODO API and not all server
+    compile 'org.starfishrespect.myconsumption:my-consumption:0.1.0'
 
 }
