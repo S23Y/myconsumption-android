@@ -22,11 +22,12 @@ public class SingleInstance {
     protected static Context context;
 
     //private static String serverAddress = "pahe.manex.biz";
-    private static String serverAddress = "172.20.1.64"; // @manex (bridged)
+    private static String serverAddress = "172.20.1.66"; // @manex (bridged)
     //private static String serverAddress  = "192.168.154.133";  // @ans (nat)
-    private static int port = 8081;
+    private static int port = 8080;
     private static String protocol = "http://";
-    private static String serverDir = "myconsumption/";
+    // TODO serverDir = "myconsumption"
+    private static String serverDir = "";
     private static StatsController statsController;
 
     public static void init(Context c) {
