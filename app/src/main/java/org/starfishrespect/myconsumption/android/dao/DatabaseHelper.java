@@ -5,6 +5,8 @@ import android.database.sqlite.SQLiteDatabase;
 import android.util.Log;
 import org.starfishrespect.myconsumption.android.data.KeyValueData;
 import org.starfishrespect.myconsumption.android.data.SensorData;
+import org.starfishrespect.myconsumption.android.data.StatData;
+
 import com.j256.ormlite.android.apptools.OrmLiteSqliteOpenHelper;
 import com.j256.ormlite.dao.Dao;
 import com.j256.ormlite.support.ConnectionSource;
@@ -26,6 +28,7 @@ public class DatabaseHelper extends OrmLiteSqliteOpenHelper {
 
     private Dao<KeyValueData, String> keyValueDao;
     private Dao<SensorData, String> sensorDao;
+    private Dao<StatData, String> statDao;
 
 
     public DatabaseHelper(Context context) {
@@ -37,6 +40,7 @@ public class DatabaseHelper extends OrmLiteSqliteOpenHelper {
         try {
             TableUtils.createTable(connectionSource, SensorData.class);
             TableUtils.createTable(connectionSource, KeyValueData.class);
+            TableUtils.createTable(connectionSource, StatData.class);
         } catch (SQLException e) {
             Log.e(DatabaseHelper.class.getName(), "Unable to create databases", e);
         }
@@ -47,6 +51,7 @@ public class DatabaseHelper extends OrmLiteSqliteOpenHelper {
         try {
             TableUtils.dropTable(connectionSource, SensorData.class, true);
             TableUtils.dropTable(connectionSource, KeyValueData.class, true);
+            TableUtils.dropTable(connectionSource, StatData.class, true);
             database.execSQL("DROP TABLE IF EXISTS sensor_values");
             onCreate(database, connectionSource);
         } catch (SQLException e) {
@@ -73,6 +78,13 @@ public class DatabaseHelper extends OrmLiteSqliteOpenHelper {
         return keyValueDao;
     }
 
+    public Dao<StatData, String> getStatDao() throws SQLException {
+        if (statDao == null) {
+            statDao = getDao(StatData.class);
+        }
+        return statDao;
+    }
+
     /**
      * Convenient way to get a value from the KeyValueDao
      *
@@ -82,6 +94,24 @@ public class DatabaseHelper extends OrmLiteSqliteOpenHelper {
     public KeyValueData getValueForKey(String key) {
         try {
             List<KeyValueData> data = getKeyValueDao().queryForEq("key", key);
+            if (data != null && data.size() > 0) {
+                return data.get(0);
+            }
+        } catch (SQLException e) {
+            return null;
+        }
+        return null;
+    }
+
+    /**
+     * Convenient way to get a value from StatData
+     *
+     * @param key the key we want to retrieve
+     * @return KeyValueData object, or null if there is no value associated
+     */
+    public StatData getStatForKey(String key) {
+        try {
+            List<StatData> data = getStatDao().queryForEq("key", key);
             if (data != null && data.size() > 0) {
                 return data.get(0);
             }
