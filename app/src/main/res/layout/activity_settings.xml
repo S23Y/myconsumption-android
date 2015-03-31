@@ -58,6 +58,76 @@
         </LinearLayout>
 
         <!--content goes here-->
+        <LinearLayout
+            android:orientation="vertical"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:paddingTop="?actionBarSize">>
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/textview_user_profile_iam"
+                android:layout_margin="1dp"
+                android:textStyle="bold"
+                android:id="@+id/textViewIam"/>
+
+            <Spinner
+                android:id="@+id/iam_spinner"
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/textview_user_profile_sim"
+                android:layout_margin="1dp"
+                android:textStyle="bold"
+                android:id="@+id/textViewSim"/>
+            <Spinner
+                android:id="@+id/sim_spinner"
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/textview_user_profile_code"
+                android:layout_margin="1dp"
+                android:textStyle="bold"
+                android:id="@+id/textViewCode"/>
+
+            <EditText
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:inputType="number"
+                android:ems="4"
+                android:id="@+id/codeEditText"
+                android:imeOptions="actionDone"/>
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/textview_user_profile_choose"
+                android:layout_margin="1dp"
+                android:textStyle="bold"
+                android:id="@+id/textViewChoose"/>
+
+            <ImageView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:id="@+id/imageView"
+                android:layout_gravity="center_vertical" />
+
+            <Button
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Save profile"
+                android:id="@+id/button_save"
+                android:layout_gravity="center_vertical" />
+
+
+        </LinearLayout>
 
         <!--Header bar-->
         <LinearLayout style="@style/HeaderBar"

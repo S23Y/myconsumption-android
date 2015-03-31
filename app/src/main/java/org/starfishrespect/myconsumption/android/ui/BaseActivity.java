@@ -507,7 +507,7 @@ public abstract class BaseActivity extends ActionBarActivity {
                 signInOrCreateAnAccount();
                 break;
             case NAVDRAWER_ITEM_SETTINGS:
-                intent = new Intent(this, HelloWorldActivity.class);
+                intent = new Intent(this, SettingsActivity.class);
                 startActivity(intent);
                 break;
 //            case NAVDRAWER_ITEM_VIDEO_LIBRARY:

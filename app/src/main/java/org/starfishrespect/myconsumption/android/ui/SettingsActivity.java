@@ -7,15 +7,15 @@ import android.support.v7.widget.Toolbar;
 
 import org.starfishrespect.myconsumption.android.R;
 
-public class HelloWorldActivity extends BaseActivity {
+public class SettingsActivity extends BaseActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_helloworld);
+        setContentView(R.layout.activity_settings);
 
         Toolbar toolbar = getActionBarToolbar();
-        toolbar.setTitle("HelloWorld");
+        toolbar.setTitle("MyConsumption - Settings");
 
         overridePendingTransition(0, 0);
     }
@@ -23,8 +23,7 @@ public class HelloWorldActivity extends BaseActivity {
     @Override
     protected int getSelfNavDrawerItem() {
         // set this to have a nav drawer associated with this activity
-        // TODO: change this
-        return NAVDRAWER_ITEM_CHART;
+        return NAVDRAWER_ITEM_SETTINGS;
     }
 
 }
