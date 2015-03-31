@@ -18,12 +18,13 @@ public class SingleInstance {
     private static DatabaseHelper databaseHelper;
     private static FragmentController fragmentController;
     private static UserController userController;
-    //private static MainActivity mainActivity; // @TODO do not keep this, it should not be done this way
+    //private static MainActivity mainActivity;
     protected static Context context;
 
     //private static String serverAddress = "pahe.manex.biz";
-    private static String serverAddress = "172.20.1.68"; // @manex (bridged)
+    //private static String serverAddress = "172.20.1.68"; // @manex (bridged)
     //private static String serverAddress  = "192.168.154.133";  // @ans (nat)
+    private static String serverAddress = "192.168.1.29";   // @lw (bridged)
     private static int port = 8080;
     private static String protocol = "http://";
     // TODO serverDir = "myconsumption"
