@@ -1,10 +1,11 @@
 package org.starfishrespect.myconsumption.android.controllers;
 
 import org.starfishrespect.myconsumption.android.dao.DatabaseHelper;
-import org.starfishrespect.myconsumption.android.dao.SingleInstance;
+import org.starfishrespect.myconsumption.android.SingleInstance;
 import org.starfishrespect.myconsumption.android.data.SensorData;
 import org.starfishrespect.myconsumption.android.data.UserData;
 import org.codehaus.jackson.map.ObjectMapper;
+import org.starfishrespect.myconsumption.android.util.AlertUtils;
 
 import java.io.IOException;
 import java.sql.SQLException;
@@ -15,18 +16,15 @@ import java.util.List;
  */
 public class UserController {
     private static final String TAG = "UserController";
-    private final DatabaseHelper db;
     private UserData user = null;
 
-    public UserController(DatabaseHelper databaseHelper) {
-        this.db = databaseHelper;
-    }
+    public UserController() {}
 
     /**
      *  Load the user from the database and set the sensors associated to him.
      */
     public void loadUser() {
-        String userJson = db.getValueForKey("user").getValue();
+        String userJson = SingleInstance.getDatabaseHelper().getValueForKey("user").getValue();
         ObjectMapper mapper = new ObjectMapper();
         List<SensorData> sensors;
 
@@ -34,13 +32,26 @@ public class UserController {
             // Read json
             user = mapper.readValue(userJson, UserData.class);
             // Get sensors
-            sensors = db.getSensorDao().queryForAll();
+            sensors = SingleInstance.getDatabaseHelper().getSensorDao().queryForAll();
             user.setSensors(sensors);
             //// Notify the fragments that the user has been modified
             //SingleInstance.getUserController().reloadUser(refreshData);
         } catch (IOException| SQLException e) {
-            SingleInstance.getMainActivity().buildAlert();
+            AlertUtils.buildAlert();
         }
+    }
+
+    /**
+     * Notify the activities that the user has been modified so they can reload it.
+     * @param refreshData if the data need to be refreshed.
+     */
+    public void reloadUser(boolean refreshData) {
+        if (SingleInstance.getChartActivity() != null)
+            SingleInstance.getChartActivity().reloadUser(refreshData);
+
+        // TODO
+//        if (getStatsFragment() != null)
+//            getStatsFragment().reloadUser(refreshData);
     }
 
     public UserData getUser() {

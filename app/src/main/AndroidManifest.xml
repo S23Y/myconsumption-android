@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    package="org.starfishrespect.myconsumption.android">
+    package="org.starfishrespect.myconsumption.android" >
 
     <uses-permission android:name="android.permission.INTERNET" />
     <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
@@ -8,18 +8,14 @@
     <uses-permission android:name="android.permission.WAKE_LOCK" />
     <uses-permission android:name="com.google.android.c2dm.permission.RECEIVE" />
 
-    <permission
-        android:name="com.example.gcm.permission.C2D_MESSAGE"
-        android:protectionLevel="signature" />
-    <uses-permission android:name="com.example.gcm.permission.C2D_MESSAGE" />
-
     <application
         android:allowBackup="true"
-        android:icon="@drawable/ic_launcher"
+        android:icon="@mipmap/ic_launcher"
         android:label="@string/app_name"
-        android:theme="@style/AppTheme">
+        android:theme="@style/Theme.MyConsumption.Base" >
+
         <activity
-            android:name=".LoginActivity"
+            android:name=".ui.LoginActivity"
             android:label="@string/app_name">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -29,15 +25,24 @@
         </activity>
 
         <activity
-            android:name=".ui.MainActivity"
+            android:name=".ui.ChartActivity"
             android:label="@string/app_name" />
 
         <activity
-            android:name="AddSensorActivity"
+            android:name=".ui.StatActivity"
+            android:label="@string/app_name" />
+
+        <activity
+            android:name=".ui.HelloWorldActivity"
+            android:label="@string/title_helloworld" />
+
+        <activity
+            android:name="ui.AddSensorActivity"
             android:label="Create Sensor"/>
 
         <activity
-            android:name="CreateAccountActivity"
+            android:name="ui.CreateAccountActivity"
             android:label="Create Account" />
     </application>
+
 </manifest>

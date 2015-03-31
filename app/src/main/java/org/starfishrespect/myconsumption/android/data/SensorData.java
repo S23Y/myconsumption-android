@@ -1,6 +1,6 @@
 package org.starfishrespect.myconsumption.android.data;
 
-import org.starfishrespect.myconsumption.android.misc.GraphBaseColors;
+import org.starfishrespect.myconsumption.android.SingleInstance;
 import org.starfishrespect.myconsumption.server.api.dto.SensorDTO;
 import com.j256.ormlite.field.DatabaseField;
 import com.j256.ormlite.table.DatabaseTable;
@@ -44,7 +44,7 @@ public class SensorData implements Serializable, Comparable<SensorData> {
         this.firstServerValue = from.getFirstValue();
         this.lastServerValue = from.getLastValue();
         this.dead = from.isDead();
-        color = GraphBaseColors.getRandomColor();
+        color = SingleInstance.getRandomColor();
     }
 
     public String getSensorId() {

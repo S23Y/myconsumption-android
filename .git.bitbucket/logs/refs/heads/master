@@ -1,0 +1,11 @@
+0000000000000000000000000000000000000000 8b1b4dfcc87e4ec86990577bf6c0b1fff9ab388d Thibaud Ledent <thibaudledent@gmail.com> 1426775200 +0100	commit (initial): adding first files
+8b1b4dfcc87e4ec86990577bf6c0b1fff9ab388d b0307832f1e58876ffdb3353a937d962e428ac82 Thibaud Ledent <thibaudledent@gmail.com> 1426779662 +0100	commit: adding files, trying to run with navdrawer
+b0307832f1e58876ffdb3353a937d962e428ac82 04c203801823f0da04d12f1a04d6a18a6f15781c Thibaud Ledent <thibaudledent@gmail.com> 1426780649 +0100	commit: trying to run with navdrawer: in progress, seems to have some trouble with base theme
+04c203801823f0da04d12f1a04d6a18a6f15781c 29f33b9cf707746db2f9b26c012a9aa2efc4467c Thibaud Ledent <thibaudledent@gmail.com> 1426847490 +0100	commit: trying to run with navdrawer: compile but white screen
+29f33b9cf707746db2f9b26c012a9aa2efc4467c a9e0863d1d23b8ef9ec07162a7c056e6418785a5 Thibaud Ledent <thibaudledent@gmail.com> 1426866507 +0100	commit: more IO-like activity_main.xml layout
+a9e0863d1d23b8ef9ec07162a7c056e6418785a5 37563ab0584447369200c903e40ccce1f2ff7672 Thibaud Ledent <thibaudledent@gmail.com> 1426867261 +0100	commit: DrawShadowFrameLayout
+37563ab0584447369200c903e40ccce1f2ff7672 00af68d9854e28c504e96cd0dba96a65a7b113b1 Thibaud Ledent <thibaudledent@gmail.com> 1426867756 +0100	commit: LinearLayout style=@style/HeaderBar
+00af68d9854e28c504e96cd0dba96a65a7b113b1 b35111da68c2d1578f13522c82c14bd1a793668b Thibaud Ledent <thibaudledent@gmail.com> 1426869597 +0100	commit: Toolbar
+b35111da68c2d1578f13522c82c14bd1a793668b 7819f33e5e134b667524c3761d4be23a89eb1624 Thibaud Ledent <thibaudledent@gmail.com> 1427115207 +0100	commit: expanding BaseActiviy.java
+7819f33e5e134b667524c3761d4be23a89eb1624 a29602b63596bc017e8816780b30bc70787f2e92 Thibaud Ledent <thibaudledent@gmail.com> 1427117606 +0100	commit: BaseActivity: onPostCreate but navdrawer does not show up anymore
+a29602b63596bc017e8816780b30bc70787f2e92 d730d68b2c9fd3d8d6eeb535303efaccd0736c7e Thibaud Ledent <thibaudledent@gmail.com> 1427120479 +0100	commit: MainActivity: navdrawer does show up

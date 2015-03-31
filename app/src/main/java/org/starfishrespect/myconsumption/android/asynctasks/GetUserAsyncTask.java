@@ -8,7 +8,7 @@ import org.starfishrespect.myconsumption.server.api.dto.UserDTO;
 import org.springframework.http.converter.json.MappingJacksonHttpMessageConverter;
 import org.springframework.web.client.RestClientException;
 import org.springframework.web.client.RestTemplate;
-import org.starfishrespect.myconsumption.android.dao.SingleInstance;
+import org.starfishrespect.myconsumption.android.SingleInstance;
 
 /**
  * Task that retrieves all the data of an user from the server

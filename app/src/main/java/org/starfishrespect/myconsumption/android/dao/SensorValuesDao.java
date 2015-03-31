@@ -106,7 +106,7 @@ public class SensorValuesDao {
         ContentValues values = new ContentValues();
         values.put("timestamp", value.getTimestamp());
         values.put("value", value.getValue());
-        db.getWritableDatabase().insert("sensor_" + sensorId, null, values);
+        db.getWritableDatabase().insertWithOnConflict("sensor_" + sensorId, null, values, SQLiteDatabase.CONFLICT_REPLACE);
     }
 
     public void insertSensorValues(String sensorId, List<SensorValue> values) {

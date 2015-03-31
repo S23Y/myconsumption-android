@@ -15,7 +15,7 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import org.starfishrespect.myconsumption.android.R;
-import org.starfishrespect.myconsumption.android.dao.SingleInstance;
+import org.starfishrespect.myconsumption.android.SingleInstance;
 import org.starfishrespect.myconsumption.android.dao.SensorValuesDao;
 import org.starfishrespect.myconsumption.android.data.FrequencyData;
 import org.starfishrespect.myconsumption.android.data.SensorData;
@@ -88,9 +88,6 @@ public class ChartViewFragment extends Fragment {
 
         reset();
 
-        // Notify the ChartFragment that the view is created
-        SingleInstance.getFragmentController().getChartFragment().fragmentsReady(this);
-
         return view;
     }
 
@@ -150,7 +147,7 @@ public class ChartViewFragment extends Fragment {
             originalChartDataset.addSeries(serie);
             currentChartDataset.addSeries(movingAverage(
                     serie,
-                    SingleInstance.getFragmentController().getChartFragment().getSmoothingValue()));
+                    SingleInstance.getChartActivity().getSmoothingValue()));
 
             // Add series to the renderer
             chartRenderer.addSeriesRenderer(serieRenderer);
@@ -159,7 +156,7 @@ public class ChartViewFragment extends Fragment {
             container.setSerie(serie);
 
             if (chart == null) {
-                chart = ChartFactory.getLineChartView(SingleInstance.getMainActivity(), currentChartDataset, chartRenderer);
+                chart = ChartFactory.getLineChartView(SingleInstance.getChartActivity(), currentChartDataset, chartRenderer);
                 chartLayout.addView(chart, new LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT,
                         LinearLayout.LayoutParams.MATCH_PARENT));
                 chart.setClickable(true);

@@ -1,38 +1,50 @@
 package org.starfishrespect.myconsumption.android.controllers;
 
+import android.app.AlertDialog;
+import android.content.DialogInterface;
+
 import org.codehaus.jackson.map.ObjectMapper;
+import org.starfishrespect.myconsumption.android.R;
 import org.starfishrespect.myconsumption.android.dao.DatabaseHelper;
-import org.starfishrespect.myconsumption.android.dao.SingleInstance;
-import org.starfishrespect.myconsumption.android.data.SensorData;
+import org.starfishrespect.myconsumption.android.SingleInstance;
+import org.starfishrespect.myconsumption.android.util.AlertUtils;
 import org.starfishrespect.myconsumption.server.api.dto.StatsOverPeriodsDTO;
 
 import java.io.IOException;
-import java.util.List;
+
+import static org.starfishrespect.myconsumption.android.util.LogUtils.LOGE;
+import static org.starfishrespect.myconsumption.android.util.LogUtils.makeLogTag;
 
 /**
  * Created by thibaud on 01.03.15.
  */
 public class StatsController {
-    private static final String TAG = "StatsController";
-    private final DatabaseHelper db;
+    private static final String TAG = makeLogTag(StatsController.class);
+
     private StatsOverPeriodsDTO stats = null;
 
-    public StatsController(DatabaseHelper databaseHelper) {
-        this.db = databaseHelper;
-    }
+    public StatsController() {}
 
     /**
      *  Load the stats from the local database.
      */
     public void loadStats() {
-        String statsJSON = db.getValueForKey("stats").getValue();
+        String statsJSON;
+
+        try {
+            statsJSON = SingleInstance.getDatabaseHelper().getValueForKey("stats").getValue();
+        } catch (NullPointerException e) {
+            LOGE(TAG, "cannot load stats from local db", e);
+            return;
+        }
+
         ObjectMapper mapper = new ObjectMapper();
 
         try {
             // Read json
             stats = mapper.readValue(statsJSON, StatsOverPeriodsDTO.class);
         } catch (IOException e) {
-            SingleInstance.getMainActivity().buildAlert();
+            AlertUtils.buildAlert();
         }
     }
 

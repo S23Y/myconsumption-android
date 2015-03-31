@@ -2,6 +2,8 @@ package org.starfishrespect.myconsumption.android.dao;
 
 import android.os.AsyncTask;
 import android.util.Log;
+
+import org.starfishrespect.myconsumption.android.SingleInstance;
 import org.starfishrespect.myconsumption.android.data.SensorData;
 import org.starfishrespect.myconsumption.android.data.SensorValue;
 import org.springframework.http.converter.json.MappingJacksonHttpMessageConverter;

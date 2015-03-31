@@ -14,7 +14,7 @@
         android:layout_alignParentLeft="true"
         android:layout_margin="20dp"
         android:textSize="42sp"
-        android:textColor="@color/green_manex_lt"/>
+        android:textColor="@color/theme_primary"/>
 
     <LinearLayout
         android:orientation="horizontal"
