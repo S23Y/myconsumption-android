@@ -1,7 +1,0 @@
-0000000000000000000000000000000000000000 c472f49900e30f6de6debe07b38918ad356d2453 Thibaud Ledent <thibaudledent@gmail.com> 1427471113 +0100	branch: Created from HEAD
-c472f49900e30f6de6debe07b38918ad356d2453 3bd71d166cb61bfa7026c46c036218d619ba7289 Thibaud Ledent <thibaudledent@gmail.com> 1427701135 +0200	commit: merging the app with the old one
-3bd71d166cb61bfa7026c46c036218d619ba7289 c36f49c29bb190aeebb647eeb76c38fe332f7fcd Thibaud Ledent <thibaudledent@gmail.com> 1427710488 +0200	commit: working: ChartActivity
-c36f49c29bb190aeebb647eeb76c38fe332f7fcd 398d013fc379fffe26a6626071e19a06d9679148 Thibaud Ledent <thibaudledent@gmail.com> 1427717390 +0200	commit: refresh seems to work, little bug fixed
-398d013fc379fffe26a6626071e19a06d9679148 b27beb6bd969b0f9fc47d2534ab7893b332dfc57 Thibaud Ledent <thibaudledent@gmail.com> 1427724870 +0200	commit: working: displaying stats but unable to scroll the textview
-b27beb6bd969b0f9fc47d2534ab7893b332dfc57 2cf2ea5a9eba266bb742c2f20a3190cf5e5ebd54 Thibaud Ledent <thibaudledent@gmail.com> 1427760109 +0200	commit: Trying to add a sliding thing to the StatActivity
-2cf2ea5a9eba266bb742c2f20a3190cf5e5ebd54 9302b48a799d77e802cbecad89dfa1ec2a024557 Thibaud Ledent <thibaudledent@gmail.com> 1427788856 +0200	commit: PageViewer for stats

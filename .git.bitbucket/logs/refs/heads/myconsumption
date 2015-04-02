@@ -1,4 +1,0 @@
-0000000000000000000000000000000000000000 d730d68b2c9fd3d8d6eeb535303efaccd0736c7e Thibaud Ledent <thibaudledent@gmail.com> 1427120608 +0100	branch: Created from HEAD
-d730d68b2c9fd3d8d6eeb535303efaccd0736c7e ebb8d8852f93d500a744cdefbc5bc8250866b02d Thibaud Ledent <thibaudledent@gmail.com> 1427123386 +0100	commit: refresh menu + debug log when clicked
-ebb8d8852f93d500a744cdefbc5bc8250866b02d c953f4c960b87e161a18108f774af18f574863a1 Thibaud Ledent <thibaudledent@gmail.com> 1427466799 +0100	commit: nav drawer now displays stat and chart
-c953f4c960b87e161a18108f774af18f574863a1 c472f49900e30f6de6debe07b38918ad356d2453 Thibaud Ledent <thibaudledent@gmail.com> 1427471024 +0100	commit: simplest main activity ever
