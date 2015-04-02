@@ -1,8 +1,8 @@
 # MyConsumption Android app
 
-This repository contains the source code for the S23Y MyConsumption Android app.
+[![MyConsumption Android](https://photos-2.dropbox.com/t/2/AAAWZCgE_-xebDKQ3PIYOV4KdVp--bzpy8Z4H784Oaow1g/12/22987083/png/1024x768/3/1427983200/0/2/banner-myconsumption-android.png/CMuC-wogASACIAMoASgC/C75M_yyWzc9Yv0kuwU54N8UXihoKZoTP7WzzKqTLQeE)](http://s23y.org)
 
-<div style="text-align:center" markdown="1">[![MyConsumption Android](https://photos-2.dropbox.com/t/2/AAAWZCgE_-xebDKQ3PIYOV4KdVp--bzpy8Z4H784Oaow1g/12/22987083/png/1024x768/3/1427983200/0/2/banner-myconsumption-android.png/CMuC-wogASACIAMoASgC/C75M_yyWzc9Yv0kuwU54N8UXihoKZoTP7WzzKqTLQeE)](http://s23y.org)</div>
+This repository contains the source code for the S23Y MyConsumption Android app.
 
 ## License
 
