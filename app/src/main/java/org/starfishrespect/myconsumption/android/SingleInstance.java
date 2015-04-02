@@ -27,9 +27,10 @@ public class SingleInstance {
     //private static MainActivity mainActivity;
     protected static Context context;
 
+    // TODO put those config in Config.java or in an xml file
     //private static String serverAddress = "pahe.manex.biz";
     //private static String serverAddress = "172.20.1.72"; // @manex (bridged)
-    private static String serverAddress  = "192.168.1.4";  // @ans (nat)
+    private static String serverAddress  = "192.168.242.129";  // @ans (nat)
     //private static String serverAddress = "192.168.1.29";   // @lw (bridged)
     private static int port = 8080;
     private static String protocol = "http://";
