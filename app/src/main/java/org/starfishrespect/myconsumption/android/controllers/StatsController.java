@@ -1,16 +1,13 @@
 package org.starfishrespect.myconsumption.android.controllers;
 
-import android.app.AlertDialog;
-import android.content.DialogInterface;
-
 import org.codehaus.jackson.map.ObjectMapper;
-import org.starfishrespect.myconsumption.android.R;
-import org.starfishrespect.myconsumption.android.dao.DatabaseHelper;
+import org.codehaus.jackson.type.TypeReference;
 import org.starfishrespect.myconsumption.android.SingleInstance;
 import org.starfishrespect.myconsumption.android.util.AlertUtils;
-import org.starfishrespect.myconsumption.server.api.dto.StatsOverPeriodsDTO;
+import org.starfishrespect.myconsumption.server.api.dto.StatDTO;
 
 import java.io.IOException;
+import java.util.List;
 
 import static org.starfishrespect.myconsumption.android.util.LogUtils.LOGE;
 import static org.starfishrespect.myconsumption.android.util.LogUtils.makeLogTag;
@@ -21,7 +18,7 @@ import static org.starfishrespect.myconsumption.android.util.LogUtils.makeLogTag
 public class StatsController {
     private static final String TAG = makeLogTag(StatsController.class);
 
-    private StatsOverPeriodsDTO stats = null;
+    private List<StatDTO> stats = null;
 
     public StatsController() {}
 
@@ -42,13 +39,13 @@ public class StatsController {
 
         try {
             // Read json
-            stats = mapper.readValue(statsJSON, StatsOverPeriodsDTO.class);
+            stats = mapper.readValue(statsJSON, new TypeReference<List<StatDTO>>(){});
         } catch (IOException e) {
             AlertUtils.buildAlert();
         }
     }
 
-    public StatsOverPeriodsDTO getStats() {
+    public List<StatDTO> getStats() {
         return stats;
     }
 }
