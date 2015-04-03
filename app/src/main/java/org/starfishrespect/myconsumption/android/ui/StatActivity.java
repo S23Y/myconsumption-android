@@ -1,9 +1,6 @@
 package org.starfishrespect.myconsumption.android.ui;
 
 import android.os.Bundle;
-import android.support.v4.app.Fragment;
-import android.support.v4.app.FragmentManager;
-import android.support.v4.app.FragmentStatePagerAdapter;
 import android.support.v4.view.PagerAdapter;
 import android.support.v4.view.ViewPager;
 import android.support.v7.widget.Toolbar;
@@ -18,9 +15,9 @@ import org.starfishrespect.myconsumption.android.SingleInstance;
 import org.starfishrespect.myconsumption.android.dao.StatValuesUpdater;
 import org.starfishrespect.myconsumption.server.api.dto.Period;
 import org.starfishrespect.myconsumption.server.api.dto.StatDTO;
-import org.starfishrespect.myconsumption.server.api.dto.StatsOverPeriodsDTO;
 
 import java.util.Date;
+import java.util.List;
 
 public class StatActivity extends BaseActivity
         implements StatValuesUpdater.StatUpdateFinishedCallback {
@@ -36,7 +33,7 @@ public class StatActivity extends BaseActivity
      */
     private PagerAdapter mPagerAdapter;
 
-    private StatsOverPeriodsDTO mStats;
+    private List<StatDTO> mStats;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -48,12 +45,7 @@ public class StatActivity extends BaseActivity
 
         overridePendingTransition(0, 0);
 
-        // Instantiate a ViewPager and a PagerAdapter.
         mPager = (ViewPager) findViewById(R.id.pager);
-//        mPagerAdapter = new ViewPagerAdapter(getSupportFragmentManager());
-//        mPager.setAdapter(mPagerAdapter);
-
-        //mTextView =  (TextView) findViewById(R.id.textViewStat);
 
         // Fetch the data from the server
         StatValuesUpdater updater = new StatValuesUpdater();
@@ -88,38 +80,18 @@ public class StatActivity extends BaseActivity
 
         @Override
         public Object instantiateItem(ViewGroup container, int position) {
-
-//            View view = View.inflate(StatActivity.this, R.layout.fragment_sliding_stat, null);
-//
-//            TextView textView = (TextView) view.findViewById(R.id.textViewStat);
-//
-//            StatDTO stat = mStats.getStatDTOs().get(position);
-//            String text = "\n\n" + Period.values()[position] + "\n"
-//                    + "Consumption over period: " + stat.getConsumption() + " watts (" + w2kWh(stat.getConsumption()) +"kWh).\n"
-//                    + "Average consumption: " + stat.getAverage() + " watts (" + w2kWh(stat.getAverage()) + " kWh).\n"
-//                    + "Maximum value (" + timestamp2Date(stat.getMax().getTimestamp()) + ") : "
-//                    + stat.getMax().getValue() + " watts (" + w2kWh(stat.getMax().getValue()) + " kWh).\n"
-//                    + "Minimum value (" + timestamp2Date(stat.getMin().getTimestamp()) + ") : "
-//                    + stat.getMin().getValue() + " watts (" + w2kWh(stat.getMin().getValue()) + " kWh).\n"
-//                    + "Diff of consumption between last two periods: " + w2kWh(stat.getDiffLastTwo()) + " kWh.";
-//
-//            textView.setText(text);
-//
-//            container.addView(view);
-//
-//            return view;
-
-
             TextView textView = new TextView(StatActivity.this);
             textView.setTextSize(30);
-            StatDTO stat = mStats.getStatDTOs().get(position);
-            String text = "Sensor: " + mStats.getSensorId() + "\n\n" + Period.values()[position] + "\n"
-                    + "Consumption over period: " + stat.getConsumption() + " watts (" + w2kWh(stat.getConsumption()) +" kWh).\n"
+            StatDTO stat = mStats.get(position);
+            String text = "Sensor: " + stat.getSensorId() + "\n\n" + Period.values()[position] + "\n"
+                    + "Consumption over this period: " + stat.getConsumption() + " watts (" + w2kWh(stat.getConsumption()) +" kWh).\n"
+                    + "Consumption over day(s) on this period: " + stat.getConsumptionDay() + " watts (" + w2kWh(stat.getConsumptionDay()) +" kWh).\n"
+                    + "Consumption over night(s) on this period: " + stat.getConsumptionNight() + " watts (" + w2kWh(stat.getConsumptionNight()) +" kWh).\n"
                     + "Average consumption: " + stat.getAverage() + " watts (" + w2kWh(stat.getAverage()) + " kWh).\n"
-                    + "Maximum value (" + timestamp2Date(stat.getMax().getTimestamp()) + "): "
-                    + stat.getMax().getValue() + " watts (" + w2kWh(stat.getMax().getValue()) + " kWh).\n"
-                    + "Minimum value (" + timestamp2Date(stat.getMin().getTimestamp()) + "): "
-                    + stat.getMin().getValue() + " watts (" + w2kWh(stat.getMin().getValue()) + " kWh).\n"
+                    + "Maximum value (" + timestamp2Date(stat.getMaxTimestamp()) + "): "
+                    + stat.getMaxValue() + " watts (" + w2kWh(stat.getMaxValue()) + " kWh).\n"
+                    + "Minimum value (" + timestamp2Date(stat.getMinTimestamp()) + "): "
+                    + stat.getMinValue() + " watts (" + w2kWh(stat.getMinValue()) + " kWh).\n"
                     + "Diff of consumption between last two periods: " + w2kWh(stat.getDiffLastTwo()) + " kWh.";
 
             textView.setText(text);
@@ -145,14 +117,9 @@ public class StatActivity extends BaseActivity
             return view == object;
         }
 
-//        @Override
-//        public Fragment getItem(int position) {
-//            return new SlidingStatFragment();
-//        }
-
         @Override
         public int getCount() {
-            return mStats.getStatDTOs().size();
+            return mStats.size();
         }
     }
 
@@ -161,24 +128,8 @@ public class StatActivity extends BaseActivity
         SingleInstance.getStatsController().loadStats();
         mStats = SingleInstance.getStatsController().getStats();
 
-//        String text = "";
-//
-//        for (Period p : Period.values()) {
-//            StatDTO stat = stats.getStatDTOs().get(p.getValue());
-//            text += "\n\n" + p.toString() + "\n"
-//                    + "Consumption over period: " + stat.getConsumption() + " watts (" + w2kWh(stat.getConsumption()) +"kWh).\n"
-//                    + "Average consumption: " + stat.getAverage() + " watts (" + w2kWh(stat.getAverage()) + " kWh).\n"
-//                    + "Maximum value (" + timestamp2Date(stat.getMax().getTimestamp()) + ") : "
-//                    + stat.getMax().getValue() + " watts (" + w2kWh(stat.getMax().getValue()) + " kWh).\n"
-//                    + "Minimum value (" + timestamp2Date(stat.getMin().getTimestamp()) + ") : "
-//                    + stat.getMin().getValue() + " watts (" + w2kWh(stat.getMin().getValue()) + " kWh).\n"
-//                    + "Diff of consumption between last two periods: " + w2kWh(stat.getDiffLastTwo()) + " kWh.";
-//        }
-
         mPagerAdapter = new ViewPagerAdapter();
         mPager.setAdapter(mPagerAdapter);
-
-//        mTextView.setText(text);
     }
 
     public void reloadUser(boolean refreshData) {
