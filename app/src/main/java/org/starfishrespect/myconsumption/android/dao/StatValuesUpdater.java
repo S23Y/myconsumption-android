@@ -8,12 +8,14 @@ import org.springframework.web.client.ResourceAccessException;
 import org.starfishrespect.myconsumption.android.SingleInstance;
 import org.starfishrespect.myconsumption.android.data.SensorData;
 import org.starfishrespect.myconsumption.android.data.StatData;
-import org.starfishrespect.myconsumption.server.api.dto.StatsOverPeriodsDTO;
 import org.springframework.http.converter.json.MappingJacksonHttpMessageConverter;
 import org.springframework.web.client.RestTemplate;
+import org.starfishrespect.myconsumption.server.api.dto.StatDTO;
 
 import java.io.IOException;
 import java.sql.SQLException;
+import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 import static org.starfishrespect.myconsumption.android.util.LogUtils.LOGD;
@@ -47,18 +49,12 @@ public class StatValuesUpdater {
                 template.getMessageConverters().add(new MappingJacksonHttpMessageConverter());
 
                 try {
-/*                    SQLiteDatabase writeDb = db.getWritableDatabase();
-                    if (writeDb == null) {
-                        return null;
-                    }
-                    writeDb.execSQL("CREATE TABLE IF NOT EXISTS stats(" +
-                                "key STRING PRIMARY KEY, value STRING)");*/
-
-
                     for (SensorData sensor : db.getSensorDao().queryForAll()) {
                         // Stats
                         String url = String.format(SingleInstance.getServerUrl() + "stats/sensor/%s", sensor.getSensorId());
-                        StatsOverPeriodsDTO stats = template.getForObject(url, StatsOverPeriodsDTO.class);
+
+                        StatDTO[] statsArray = template.getForObject(url, StatDTO[].class);
+                        List<StatDTO> stats = new ArrayList<>(Arrays.asList(statsArray));
 
                         ObjectMapper mapper = new ObjectMapper();
 
