@@ -57,25 +57,20 @@ tools:context=".ui.MainActivity">
             android:id="@+id/textView"/>
     </LinearLayout>
 
-    <!--<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"-->
-        <!--android:orientation="vertical"-->
-        <!--android:layout_width="match_parent"-->
-        <!--android:layout_height="match_parent"-->
-        <!--android:paddingTop="?actionBarSize">-->
-        <!--<TextView-->
-            <!--android:id="@+id/textViewStat"-->
-            <!--android:layout_width="fill_parent"-->
-            <!--android:layout_height="wrap_content"-->
-            <!--android:text="Hello World, StatFragment" />-->
-    <!--</LinearLayout>-->
-
-    <!-- Sliding stats -->
+    <!--Sliding stats-->
+    <com.astuetz.PagerSlidingTabStrip
+        android:id="@+id/tabs"
+        android:layout_width="match_parent"
+        android:layout_height="?attr/actionBarSize"
+        android:background="?attr/colorPrimary"
+        app:pstsPaddingMiddle="true" />
+    <!--Associated pager-->
     <android.support.v4.view.ViewPager
-        xmlns:android="http://schemas.android.com/apk/res/android"
         android:id="@+id/pager"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:paddingTop="?actionBarSize"/>
+        android:layout_height="0dp"
+        android:layout_weight="1"
+        tools:context=".ui.StatActivity"/>
 
     <!--Header bar-->
     <LinearLayout style="@style/HeaderBar"

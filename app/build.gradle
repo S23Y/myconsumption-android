@@ -44,4 +44,7 @@ dependencies {
 
     // MyConsumption server API
     compile 'org.starfishrespect.myconsumption:my-consumption-api:1.0.0-SNAPSHOT'
+
+    // Page slider
+    compile 'com.jpardogo.materialtabstrip:library:1.0.9'
 }
