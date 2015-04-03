@@ -23,18 +23,17 @@ public class StatActivity extends BaseActivity
         implements StatValuesUpdater.StatUpdateFinishedCallback {
 
     private List<StatDTO> mStats;
-    private Toolbar toolbar;
     private PagerSlidingTabStrip mTabs;
     private ViewPager mPager;
 
-    private MyPagerAdapter adapter;
+    private MyPagerAdapter mAdapter;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_stat);
 
-        toolbar = getActionBarToolbar();
+        Toolbar toolbar = getActionBarToolbar();
         toolbar.setTitle("My Consumption - Stats");
 
         overridePendingTransition(0, 0);
@@ -42,14 +41,14 @@ public class StatActivity extends BaseActivity
         mPager = (ViewPager) findViewById(R.id.pager);
         mTabs = (PagerSlidingTabStrip) findViewById(R.id.tabs);
 
-        // Fetch the data from the server
-        StatValuesUpdater updater = new StatValuesUpdater();
-        updater.setUpdateFinishedCallback(this);
-        updater.refreshDB();
+//        // Fetch the data from the server
+//        StatValuesUpdater updater = new StatValuesUpdater();
+//        updater.setUpdateFinishedCallback(this);
+//        updater.refreshDB();
 
 
-        adapter = new MyPagerAdapter(getSupportFragmentManager());
-        mPager.setAdapter(adapter);
+        mAdapter = new MyPagerAdapter(getSupportFragmentManager());
+        mPager.setAdapter(mAdapter);
         mTabs.setViewPager(mPager);
 
         final int pageMargin = (int) TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, 4, getResources()
