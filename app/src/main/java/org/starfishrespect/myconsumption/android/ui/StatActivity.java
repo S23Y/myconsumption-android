@@ -26,7 +26,7 @@ public class StatActivity extends BaseActivity {
         setContentView(R.layout.activity_stat);
         //toolbar = (Toolbar) findViewById(R.id.toolbar_actionbar);
         toolbar = getActionBarToolbar();
-        toolbar.setTitle("HelloWorld");
+        toolbar.setTitle("MyConsumption - Statistics");
         tabs = (PagerSlidingTabStrip) findViewById(R.id.tabs);
         pager = (ViewPager) findViewById(R.id.pager);
 
