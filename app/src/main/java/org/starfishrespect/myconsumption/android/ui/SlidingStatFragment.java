@@ -7,6 +7,7 @@ import android.support.v4.view.ViewCompat;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import org.starfishrespect.myconsumption.android.R;
@@ -81,6 +82,21 @@ public class SlidingStatFragment extends Fragment {
         textView = (TextView) rootView.findViewById(R.id.txtVwMinimumTimestamp);
         textView.setText(timestamp2Date(mStat.getMinTimestamp()).toString());
 
+        // Adding arrow
+        ImageView imgView = (ImageView) rootView.findViewById(R.id.imageView);
+        int diff = mStat.getDiffLastTwo();
+        String text = "";
+
+        if (diff > 0) {
+            imgView.setImageResource(R.drawable.ic_arrow_up);
+            text = "+";
+        } else if (diff < 0)
+            imgView.setImageResource(R.drawable.ic_arrow_down);
+        else
+            imgView.setImageResource(R.drawable.ic_arrow_stable);
+
+        textView = (TextView) rootView.findViewById(R.id.txtVwComparison);
+        textView.setText(text + " " + w2kWh(diff));
 
         return rootView;
     }

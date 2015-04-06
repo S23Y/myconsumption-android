@@ -124,6 +124,8 @@
 
     <string name="textview_stat_kWh">kWh</string>
     <string name="textview_stat_watts">watts</string>
-    <string name="textview_stat_weight">kg</string>
+    <string name="textview_stat_weight">kg of CO2</string>
     <string name="textview_stat_money">€</string>
+    <string name="textview_stat_high_peak">high peak</string>
+    <string name="textview_stat_off_peak">off peak</string>
 </resources>
