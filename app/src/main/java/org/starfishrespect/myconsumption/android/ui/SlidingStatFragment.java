@@ -21,8 +21,6 @@ public class SlidingStatFragment extends Fragment {
 
     private static final String STATDTO_KEY = "statdto_key";
 
-    TextView mTextView;
-
     private StatDTO mStat;
     //private int position;
 
@@ -47,7 +45,6 @@ public class SlidingStatFragment extends Fragment {
         mStat = (StatDTO) getArguments().getSerializable(
                 STATDTO_KEY);
 
-        mTextView = (TextView) rootView.findViewById(R.id.txtVwConsumption);
         ViewCompat.setElevation(rootView, 50);
 
 //        String text = "Sensor: " + mStat.getSensorId() + "\n\n" + Period.values()[position] + "\n"
@@ -62,7 +59,29 @@ public class SlidingStatFragment extends Fragment {
 //                + "Diff of consumption between last two periods: " + w2kWh(mStat.getDiffLastTwo()) + " kWh.";
 
         //mTextView.setText(text);
-        mTextView.setText(String.valueOf(w2kWh(mStat.getConsumption())));
+
+        TextView textView = (TextView) rootView.findViewById(R.id.txtVwConsumption);
+        textView.setText(String.valueOf(w2kWh(mStat.getConsumption())));
+
+        textView = (TextView) rootView.findViewById(R.id.txtVwAveragekWh);
+        textView.setText(String.valueOf(w2kWh(mStat.getAverage())));
+
+        textView = (TextView) rootView.findViewById(R.id.txtVwAverageWatts);
+        textView.setText(String.valueOf(mStat.getAverage()));
+
+        textView = (TextView) rootView.findViewById(R.id.txtVwMaximum);
+        textView.setText(String.valueOf(mStat.getMaxValue()));
+
+        textView = (TextView) rootView.findViewById(R.id.txtVwMaximumTimestamp);
+        textView.setText(timestamp2Date(mStat.getMaxTimestamp()).toString());
+
+        textView = (TextView) rootView.findViewById(R.id.txtVwMinimum);
+        textView.setText(String.valueOf(mStat.getMinValue()));
+
+        textView = (TextView) rootView.findViewById(R.id.txtVwMinimumTimestamp);
+        textView.setText(timestamp2Date(mStat.getMinTimestamp()).toString());
+
+
         return rootView;
     }
 
