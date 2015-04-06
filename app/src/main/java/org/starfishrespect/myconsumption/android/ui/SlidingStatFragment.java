@@ -10,7 +10,6 @@ import android.view.ViewGroup;
 import android.widget.TextView;
 
 import org.starfishrespect.myconsumption.android.R;
-import org.starfishrespect.myconsumption.server.api.dto.Period;
 import org.starfishrespect.myconsumption.server.api.dto.StatDTO;
 
 import java.util.Date;
@@ -20,21 +19,18 @@ import java.util.Date;
 */
 public class SlidingStatFragment extends Fragment {
 
-    private static final String ARG_POSITION = "position";
+    private static final String STATDTO_KEY = "statdto_key";
 
     TextView mTextView;
 
     private StatDTO mStat;
-    private int position;
+    //private int position;
 
-    public SlidingStatFragment(StatDTO stat) {
-        mStat = stat;
-    }
-
-    public static SlidingStatFragment newInstance(StatDTO stat, int position) {
-        SlidingStatFragment f = new SlidingStatFragment(stat);
+    public static SlidingStatFragment newInstance(StatDTO stat) {
+        SlidingStatFragment f = new SlidingStatFragment();
         Bundle b = new Bundle();
-        b.putInt(ARG_POSITION, position);
+        //b.putInt(ARG_POSITION, position);
+        b.putSerializable(STATDTO_KEY, stat);
         f.setArguments(b);
         return f;
     }
@@ -42,29 +38,31 @@ public class SlidingStatFragment extends Fragment {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        position = getArguments().getInt(ARG_POSITION);
     }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View rootView = inflater.inflate(R.layout.fragment_sliding_stat,container,false);
-        mTextView = (TextView) rootView.findViewById(R.id.textView);
+
+        mStat = (StatDTO) getArguments().getSerializable(
+                STATDTO_KEY);
+
+        mTextView = (TextView) rootView.findViewById(R.id.txtVwConsumption);
         ViewCompat.setElevation(rootView, 50);
 
-        String text = "Sensor: " + mStat.getSensorId() + "\n\n" + Period.values()[position] + "\n"
-                + "Consumption over this period: " + mStat.getConsumption() + " watts (" + w2kWh(mStat.getConsumption()) +" kWh).\n"
-                + "Consumption over day(s) on this period: " + mStat.getConsumptionDay() + " watts (" + w2kWh(mStat.getConsumptionDay()) +" kWh).\n"
-                + "Consumption over night(s) on this period: " + mStat.getConsumptionNight() + " watts (" + w2kWh(mStat.getConsumptionNight()) +" kWh).\n"
-                + "Average consumption: " + mStat.getAverage() + " watts (" + w2kWh(mStat.getAverage()) + " kWh).\n"
-                + "Maximum value (" + timestamp2Date(mStat.getMaxTimestamp()) + "): "
-                + mStat.getMaxValue() + " watts (" + w2kWh(mStat.getMaxValue()) + " kWh).\n"
-                + "Minimum value (" + timestamp2Date(mStat.getMinTimestamp()) + "): "
-                + mStat.getMinValue() + " watts (" + w2kWh(mStat.getMinValue()) + " kWh).\n"
-                + "Diff of consumption between last two periods: " + w2kWh(mStat.getDiffLastTwo()) + " kWh.";
+//        String text = "Sensor: " + mStat.getSensorId() + "\n\n" + Period.values()[position] + "\n"
+//                + "Consumption over this period: " + mStat.getConsumption() + " watts (" + w2kWh(mStat.getConsumption()) +" kWh).\n"
+//                + "Consumption over day(s) on this period: " + mStat.getConsumptionDay() + " watts (" + w2kWh(mStat.getConsumptionDay()) +" kWh).\n"
+//                + "Consumption over night(s) on this period: " + mStat.getConsumptionNight() + " watts (" + w2kWh(mStat.getConsumptionNight()) +" kWh).\n"
+//                + "Average consumption: " + mStat.getAverage() + " watts (" + w2kWh(mStat.getAverage()) + " kWh).\n"
+//                + "Maximum value (" + timestamp2Date(mStat.getMaxTimestamp()) + "): "
+//                + mStat.getMaxValue() + " watts (" + w2kWh(mStat.getMaxValue()) + " kWh).\n"
+//                + "Minimum value (" + timestamp2Date(mStat.getMinTimestamp()) + "): "
+//                + mStat.getMinValue() + " watts (" + w2kWh(mStat.getMinValue()) + " kWh).\n"
+//                + "Diff of consumption between last two periods: " + w2kWh(mStat.getDiffLastTwo()) + " kWh.";
 
-        mTextView.setText(text);
-
-        //mTextView.setText("CARD " + position);
+        //mTextView.setText(text);
+        mTextView.setText(String.valueOf(w2kWh(mStat.getConsumption())));
         return rootView;
     }
 

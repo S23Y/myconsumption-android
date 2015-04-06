@@ -98,7 +98,7 @@ public class StatActivity extends BaseActivity
 
         @Override
         public Fragment getItem(int position) {
-            return SlidingStatFragment.newInstance(mStats.get(position), position);
+            return SlidingStatFragment.newInstance(mStats.get(position));
         }
     }
 }

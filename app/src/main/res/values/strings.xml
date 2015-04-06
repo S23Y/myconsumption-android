@@ -116,4 +116,14 @@
     <string name="textview_user_profile_code">My postal code is:</string>
     <string name="textview_user_profile_choose">My electricity consumption profile is best described as follows:</string>
 
+    <string name="textview_stat_consumption">Consumption over this period:</string>
+    <string name="textview_stat_average">Average consumption:</string>
+    <string name="textview_stat_maximum">Maximum value:</string>
+    <string name="textview_stat_minimum">Minimum value:</string>
+    <string name="textview_stat_comparison">compared to previous period</string>
+
+    <string name="textview_stat_kWh">kWh</string>
+    <string name="textview_stat_watts">watts</string>
+    <string name="textview_stat_weight">kg</string>
+    <string name="textview_stat_money">€</string>
 </resources>
