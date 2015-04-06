@@ -10,6 +10,10 @@ import android.view.ViewGroup;
 import android.widget.TextView;
 
 import org.starfishrespect.myconsumption.android.R;
+import org.starfishrespect.myconsumption.server.api.dto.Period;
+import org.starfishrespect.myconsumption.server.api.dto.StatDTO;
+
+import java.util.Date;
 
 /**
 * Created by thibaud on 30.03.15.
@@ -20,10 +24,15 @@ public class SlidingStatFragment extends Fragment {
 
     TextView mTextView;
 
+    private StatDTO mStat;
     private int position;
 
-    public static SlidingStatFragment newInstance(int position) {
-        SlidingStatFragment f = new SlidingStatFragment();
+    public SlidingStatFragment(StatDTO stat) {
+        mStat = stat;
+    }
+
+    public static SlidingStatFragment newInstance(StatDTO stat, int position) {
+        SlidingStatFragment f = new SlidingStatFragment(stat);
         Bundle b = new Bundle();
         b.putInt(ARG_POSITION, position);
         f.setArguments(b);
@@ -42,21 +51,38 @@ public class SlidingStatFragment extends Fragment {
         mTextView = (TextView) rootView.findViewById(R.id.textView);
         ViewCompat.setElevation(rootView, 50);
 
-//        StatDTO stat = mStats.get(position);
-//        String text = "Sensor: " + stat.getSensorId() + "\n\n" + Period.values()[position] + "\n"
-//                + "Consumption over this period: " + stat.getConsumption() + " watts (" + w2kWh(stat.getConsumption()) +" kWh).\n"
-//                + "Consumption over day(s) on this period: " + stat.getConsumptionDay() + " watts (" + w2kWh(stat.getConsumptionDay()) +" kWh).\n"
-//                + "Consumption over night(s) on this period: " + stat.getConsumptionNight() + " watts (" + w2kWh(stat.getConsumptionNight()) +" kWh).\n"
-//                + "Average consumption: " + stat.getAverage() + " watts (" + w2kWh(stat.getAverage()) + " kWh).\n"
-//                + "Maximum value (" + timestamp2Date(stat.getMaxTimestamp()) + "): "
-//                + stat.getMaxValue() + " watts (" + w2kWh(stat.getMaxValue()) + " kWh).\n"
-//                + "Minimum value (" + timestamp2Date(stat.getMinTimestamp()) + "): "
-//                + stat.getMinValue() + " watts (" + w2kWh(stat.getMinValue()) + " kWh).\n"
-//                + "Diff of consumption between last two periods: " + w2kWh(stat.getDiffLastTwo()) + " kWh.";
-//
-//        textView.setText(text);
+        String text = "Sensor: " + mStat.getSensorId() + "\n\n" + Period.values()[position] + "\n"
+                + "Consumption over this period: " + mStat.getConsumption() + " watts (" + w2kWh(mStat.getConsumption()) +" kWh).\n"
+                + "Consumption over day(s) on this period: " + mStat.getConsumptionDay() + " watts (" + w2kWh(mStat.getConsumptionDay()) +" kWh).\n"
+                + "Consumption over night(s) on this period: " + mStat.getConsumptionNight() + " watts (" + w2kWh(mStat.getConsumptionNight()) +" kWh).\n"
+                + "Average consumption: " + mStat.getAverage() + " watts (" + w2kWh(mStat.getAverage()) + " kWh).\n"
+                + "Maximum value (" + timestamp2Date(mStat.getMaxTimestamp()) + "): "
+                + mStat.getMaxValue() + " watts (" + w2kWh(mStat.getMaxValue()) + " kWh).\n"
+                + "Minimum value (" + timestamp2Date(mStat.getMinTimestamp()) + "): "
+                + mStat.getMinValue() + " watts (" + w2kWh(mStat.getMinValue()) + " kWh).\n"
+                + "Diff of consumption between last two periods: " + w2kWh(mStat.getDiffLastTwo()) + " kWh.";
 
-        mTextView.setText("CARD " + position);
+        mTextView.setText(text);
+
+        //mTextView.setText("CARD " + position);
         return rootView;
+    }
+
+    /**
+     * Convert watt to kWh and round it up with two decimals.
+     * @param watt the value you want to convert
+     */
+    private double w2kWh(int watt) {
+        double converted = (double)watt/(60*1000);
+        return Math.round(converted * 100.0) / 100.0;
+    }
+
+    /**
+     * Convert a linux timestamp to a Date time.
+     * @param timestamp
+     * @return a Java Date.
+     */
+    private Date timestamp2Date(int timestamp) {
+        return new java.util.Date((long) timestamp * 1000);
     }
 }

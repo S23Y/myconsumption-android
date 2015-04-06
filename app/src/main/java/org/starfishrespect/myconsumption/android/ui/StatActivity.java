@@ -12,33 +12,37 @@ import android.widget.Toast;
 import com.astuetz.PagerSlidingTabStrip;
 
 import org.starfishrespect.myconsumption.android.R;
+import org.starfishrespect.myconsumption.android.SingleInstance;
+import org.starfishrespect.myconsumption.android.dao.StatValuesUpdater;
+import org.starfishrespect.myconsumption.server.api.dto.StatDTO;
 
-public class StatActivity extends BaseActivity {
+import java.util.List;
 
-    Toolbar toolbar;
-    PagerSlidingTabStrip tabs;
-    ViewPager pager;
+public class StatActivity extends BaseActivity
+        implements StatValuesUpdater.StatUpdateFinishedCallback {
 
-    private MyPagerAdapter adapter;
+    Toolbar mToolbar;
+    PagerSlidingTabStrip mTabs;
+    ViewPager mPager;
+
+    private MyPagerAdapter mPageAdapter;
+    private List<StatDTO> mStats;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_stat);
-        //toolbar = (Toolbar) findViewById(R.id.toolbar_actionbar);
-        toolbar = getActionBarToolbar();
-        toolbar.setTitle("MyConsumption - Statistics");
-        tabs = (PagerSlidingTabStrip) findViewById(R.id.tabs);
-        pager = (ViewPager) findViewById(R.id.pager);
+        mToolbar = getActionBarToolbar();
+        mToolbar.setTitle("MyConsumption - Statistics");
+        mTabs = (PagerSlidingTabStrip) findViewById(R.id.tabs);
+        mPager = (ViewPager) findViewById(R.id.pager);
 
-        adapter = new MyPagerAdapter(getSupportFragmentManager());
-        pager.setAdapter(adapter);
-        tabs.setViewPager(pager);
-        final int pageMargin = (int) TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, 4, getResources()
-                .getDisplayMetrics());
-        pager.setPageMargin(pageMargin);
-        pager.setCurrentItem(1);
+        // Fetch the data from the server
+        StatValuesUpdater updater = new StatValuesUpdater();
+        updater.setUpdateFinishedCallback(this);
+        updater.refreshDB();
 
-        tabs.setOnTabReselectedListener(new PagerSlidingTabStrip.OnTabReselectedListener() {
+        mTabs.setOnTabReselectedListener(new PagerSlidingTabStrip.OnTabReselectedListener() {
             @Override
             public void onTabReselected(int position) {
                 Toast.makeText(StatActivity.this, "Tab reselected: " + position, Toast.LENGTH_SHORT).show();
@@ -52,6 +56,25 @@ public class StatActivity extends BaseActivity {
     protected int getSelfNavDrawerItem() {
         // set this to have a nav drawer associated with this activity
         return NAVDRAWER_ITEM_STATS;
+    }
+
+    @Override
+    public void onStatUpdateFinished() {
+        SingleInstance.getStatsController().loadStats();
+        mStats = SingleInstance.getStatsController().getStats();
+
+        mPageAdapter = new MyPagerAdapter(getSupportFragmentManager());
+        mPager.setAdapter(mPageAdapter);
+        mTabs.setViewPager(mPager);
+
+        final int pageMargin = (int) TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, 4, getResources()
+                .getDisplayMetrics());
+        mPager.setPageMargin(pageMargin);
+        mPager.setCurrentItem(1);
+    }
+
+    public void reloadUser(boolean refreshData) {
+        // todo
     }
 
 
@@ -75,7 +98,7 @@ public class StatActivity extends BaseActivity {
 
         @Override
         public Fragment getItem(int position) {
-            return SlidingStatFragment.newInstance(position);
+            return SlidingStatFragment.newInstance(mStats.get(position), position);
         }
     }
 }
