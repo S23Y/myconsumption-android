@@ -19,7 +19,7 @@
     myconsumption:theme="@style/ActionBarThemeOverlay"
     myconsumption:popupTheme="@style/ActionBarPopupThemeOverlay"
     android:id="@+id/toolbar_actionbar"
-    android:background="@null"
+    android:background="?attr/colorPrimary"
     myconsumption:titleTextAppearance="@style/ActionBar.TitleText"
     myconsumption:contentInsetStart="?actionBarInsetStart"
     android:layout_width="match_parent"

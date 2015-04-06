@@ -5,7 +5,6 @@ import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentPagerAdapter;
 import android.support.v4.view.ViewPager;
-import android.support.v7.app.ActionBarActivity;
 import android.support.v7.widget.Toolbar;
 import android.util.TypedValue;
 import android.widget.Toast;
@@ -14,7 +13,7 @@ import com.astuetz.PagerSlidingTabStrip;
 
 import org.starfishrespect.myconsumption.android.R;
 
-public class StatActivity extends ActionBarActivity {
+public class StatActivity extends BaseActivity {
 
     Toolbar toolbar;
     PagerSlidingTabStrip tabs;
@@ -25,7 +24,9 @@ public class StatActivity extends ActionBarActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_stat);
-        toolbar = (Toolbar) findViewById(R.id.toolbar_actionbar);
+        //toolbar = (Toolbar) findViewById(R.id.toolbar_actionbar);
+        toolbar = getActionBarToolbar();
+        toolbar.setTitle("HelloWorld");
         tabs = (PagerSlidingTabStrip) findViewById(R.id.tabs);
         pager = (ViewPager) findViewById(R.id.pager);
 
@@ -43,13 +44,20 @@ public class StatActivity extends ActionBarActivity {
                 Toast.makeText(StatActivity.this, "Tab reselected: " + position, Toast.LENGTH_SHORT).show();
             }
         });
+
+        overridePendingTransition(0, 0);
+    }
+
+    @Override
+    protected int getSelfNavDrawerItem() {
+        // set this to have a nav drawer associated with this activity
+        return NAVDRAWER_ITEM_STATS;
     }
 
 
     public class MyPagerAdapter extends FragmentPagerAdapter {
 
-        private final String[] TITLES = {"Categories", "Home", "Top Paid", "Top Free", "Top Grossing", "Top New Paid",
-                "Top New Free", "Trending"};
+        private final String[] TITLES = {"ALL TIME", "DAY", "WEEK", "MONTH", "YEAR"};
 
         public MyPagerAdapter(FragmentManager fm) {
             super(fm);
