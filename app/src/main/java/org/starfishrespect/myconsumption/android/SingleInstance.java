@@ -31,7 +31,7 @@ public class SingleInstance {
     //private static String serverAddress = "pahe.manex.biz";
     //private static String serverAddress = "172.20.1.75"; // @manex (bridged)
     //private static String serverAddress  = "192.168.242.129";  // @ans (nat)
-    private static String serverAddress = "192.168.1.31";   // @lw (bridged)
+    private static String serverAddress = "192.168.1.32";   // @lw (bridged)
     private static int port = 8080;
     private static String protocol = "http://";
     // TODO serverDir = "myconsumption"

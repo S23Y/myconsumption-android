@@ -51,4 +51,6 @@ dependencies {
     // Page slider
     compile 'com.jpardogo.materialtabstrip:library:1.0.9'
 
+    // MPAndroid Chart
+    compile 'com.github.PhilJay:MPAndroidChart:v2.0.9'
 }
