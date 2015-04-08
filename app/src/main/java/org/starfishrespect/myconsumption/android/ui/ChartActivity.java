@@ -26,7 +26,7 @@ import static org.starfishrespect.myconsumption.android.util.LogUtils.makeLogTag
 public class ChartActivity extends BaseActivity
         implements
         SensorListAdapter.SensorChangeCallback, SensorValuesUpdater.UpdateFinishedCallback,
-        GetUserAsyncTask.GetUserCallback, GraphChoiceFragment.GraphOptionChangeCallback {
+        GetUserAsyncTask.GetUserCallback, ChartChoiceFragment.GraphOptionChangeCallback {
 
     private static final String TAG = makeLogTag(ChartActivity.class);
     private boolean mFirstLaunchEver;
@@ -93,16 +93,16 @@ public class ChartActivity extends BaseActivity
         }
     }
 
-    private GraphChoiceFragment getGraphChoiceFragment() {
+    private ChartChoiceFragment getGraphChoiceFragment() {
         // Get the fragment
-        GraphChoiceFragment graphChoiceFragment = (GraphChoiceFragment)
+        ChartChoiceFragment chartChoiceFragment = (ChartChoiceFragment)
                 getSupportFragmentManager().findFragmentById(R.id.graph_choice);
 
-        if (graphChoiceFragment == null) {
+        if (chartChoiceFragment == null) {
             LOGE(TAG, "GraphChoiceFragment not found");
             return null;
         } else {
-            return graphChoiceFragment;
+            return chartChoiceFragment;
         }
     }
 
@@ -116,7 +116,7 @@ public class ChartActivity extends BaseActivity
 
     public void reloadUser(boolean refreshData) {
         ChartViewFragment chartView = getChartViewFragment();
-        GraphChoiceFragment graphChoice = getGraphChoiceFragment();
+        ChartChoiceFragment graphChoice = getGraphChoiceFragment();
 
         if (chartView == null || graphChoice == null)
             return;

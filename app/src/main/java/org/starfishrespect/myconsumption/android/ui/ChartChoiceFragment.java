@@ -35,7 +35,7 @@ import java.util.*;
  * Fragment that contains settings of the graph (which dataset to show, which range,
  * colors) and allows to edit them (color, sensor settings, delete)
  */
-public class GraphChoiceFragment extends Fragment {
+public class ChartChoiceFragment extends Fragment {
 
     //private UserData user; // not needed anymore, accessed through the controller
     private ListView listViewSensor;
