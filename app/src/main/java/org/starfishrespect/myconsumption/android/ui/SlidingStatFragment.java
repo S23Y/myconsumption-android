@@ -119,8 +119,8 @@ public class SlidingStatFragment extends Fragment {
         ArrayList<Entry> entries1 = new ArrayList<Entry>();
         ArrayList<String> xVals = new ArrayList<String>();
 
-        xVals.add("PEAK TIME: " + w2kWh(mStat.getConsumptionDay()));
-        xVals.add("OFF-PEAK TIME: " + w2kWh(mStat.getConsumptionNight()));
+        xVals.add("PEAK TIME: " + w2kWh(mStat.getConsumptionDay()) + " " + getString(R.string.textview_stat_kWh));
+        xVals.add("OFF-PEAK TIME: " + w2kWh(mStat.getConsumptionNight()) + " " + getString(R.string.textview_stat_kWh));
 
         //xVals.add("entry" + (1));
         //xVals.add("entry" + (2));
