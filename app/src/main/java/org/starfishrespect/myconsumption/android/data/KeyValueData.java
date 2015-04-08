@@ -10,7 +10,7 @@ import com.j256.ormlite.table.DatabaseTable;
 public class KeyValueData {
     @DatabaseField(generatedId=true) // Auto increment
     private Integer id;
-    @DatabaseField
+    @DatabaseField(unique = true, index = true)
     private String key;
     @DatabaseField
     private String value;

@@ -84,7 +84,7 @@ public class SlidingStatFragment extends Fragment {
         textView.setText(timestamp2DateString(mStat.getMinTimestamp()));
 
         textView = (TextView) rootView.findViewById(R.id.txtVwCO2);
-        double co2 = w2kWh(mStat.getConsumption()) * SingleInstance.getkWhToCO2();
+        int co2 = (int) (w2kWh(mStat.getConsumption()) * SingleInstance.getkWhToCO2());
         textView.setText(String.valueOf(co2));
 
         textView = (TextView) rootView.findViewById(R.id.txtVwEuroHigh);

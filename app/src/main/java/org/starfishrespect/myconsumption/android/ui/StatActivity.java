@@ -86,7 +86,7 @@ public class StatActivity extends BaseActivity
 
     @Override
     public void onConfigUpdateFinished() {
-        SingleInstance.getConfigController().loadConfig();
+       // todo : reload the value co2 € kwH day and € kwh night
     }
 
 
