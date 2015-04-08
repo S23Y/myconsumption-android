@@ -6,8 +6,8 @@ import org.codehaus.jackson.map.ObjectMapper;
 import org.springframework.web.client.HttpClientErrorException;
 import org.springframework.web.client.ResourceAccessException;
 import org.starfishrespect.myconsumption.android.SingleInstance;
+import org.starfishrespect.myconsumption.android.data.KeyValueData;
 import org.starfishrespect.myconsumption.android.data.SensorData;
-import org.starfishrespect.myconsumption.android.data.StatData;
 import org.springframework.http.converter.json.MappingJacksonHttpMessageConverter;
 import org.springframework.web.client.RestTemplate;
 import org.starfishrespect.myconsumption.server.api.dto.StatDTO;
@@ -60,8 +60,14 @@ public class StatValuesUpdater {
 
                         try {
                             String json = mapper.writeValueAsString(stats);
+
+                            int id = db.getIdForKey("stats");
+                            KeyValueData valueData = new KeyValueData("stats", json);
+                            valueData.setId(id);
+
                             LOGD(TAG, "writing stat in local db: " + json);
-                            db.getStatDao().createOrUpdate(new StatData("stats", json));
+                            db.getKeyValueDao().createOrUpdate(valueData);
+
                         } catch (IOException e) {
                             LOGD(TAG, "Cannot create stats " + stats.toString(), e);
                         }

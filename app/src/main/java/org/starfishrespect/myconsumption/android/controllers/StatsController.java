@@ -29,7 +29,7 @@ public class StatsController {
         String statsJSON;
 
         try {
-            statsJSON = SingleInstance.getDatabaseHelper().getStatForKey("stats").getValue();
+            statsJSON = SingleInstance.getDatabaseHelper().getValueForKey("stats").getValue();
         } catch (NullPointerException e) {
             LOGE(TAG, "cannot load stats from local db", e);
             return;

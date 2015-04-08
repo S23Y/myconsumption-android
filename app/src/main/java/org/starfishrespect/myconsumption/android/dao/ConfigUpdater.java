@@ -46,8 +46,12 @@ public class ConfigUpdater {
                     String url = SingleInstance.getServerUrl() + "configs/co2";
                     Double co2 = template.getForObject(url, Double.class);
 
-                    LOGD(TAG, "writing config in local db: " + co2);
-                    db.getKeyValueDao().createOrUpdate(new KeyValueData("config_co2", co2.toString()));
+                    int id = db.getIdForKey("config_co2");
+                    KeyValueData valueData = new KeyValueData("config_co2", co2.toString());
+                    valueData.setId(id);
+
+                    LOGD(TAG, "writing stat in local db: " + co2);
+                    db.getKeyValueDao().createOrUpdate(valueData);
 
                 } catch (SQLException e) {
                     LOGD(TAG, "Cannot create config co2", e);
@@ -59,8 +63,12 @@ public class ConfigUpdater {
                     String url = SingleInstance.getServerUrl() + "configs/day";
                     Double day = template.getForObject(url, Double.class);
 
-                    LOGD(TAG, "writing config in local db: " + day);
-                    db.getKeyValueDao().createOrUpdate(new KeyValueData("config_day", day.toString()));
+                    int id = db.getIdForKey("config_day");
+                    KeyValueData valueData = new KeyValueData("config_day", day.toString());
+                    valueData.setId(id);
+
+                    LOGD(TAG, "writing stat in local db: " + day);
+                    db.getKeyValueDao().createOrUpdate(valueData);
 
                 } catch (SQLException e) {
                     LOGD(TAG, "Cannot create config day", e);
@@ -72,8 +80,12 @@ public class ConfigUpdater {
                     String url = SingleInstance.getServerUrl() + "configs/night";
                     Double night = template.getForObject(url, Double.class);
 
-                    LOGD(TAG, "writing config in local db: " + night);
-                    db.getKeyValueDao().createOrUpdate(new KeyValueData("config_night", night.toString()));
+                    int id = db.getIdForKey("config_night");
+                    KeyValueData valueData = new KeyValueData("config_night", night.toString());
+                    valueData.setId(id);
+
+                    LOGD(TAG, "writing stat in local db: " + night);
+                    db.getKeyValueDao().createOrUpdate(valueData);
 
                 } catch (SQLException e) {
                     LOGD(TAG, "Cannot create config night", e);

@@ -8,7 +8,7 @@ import com.j256.ormlite.table.DatabaseTable;
  */
 @DatabaseTable(tableName = "keyvalue")
 public class KeyValueData {
-    @DatabaseField(generatedId=true) // Auto increment
+    @DatabaseField(generatedId=true, allowGeneratedIdInsert=true) // Auto increment
     private Integer id;
     @DatabaseField(unique = true, index = true)
     private String key;
@@ -22,6 +22,10 @@ public class KeyValueData {
 
     public KeyValueData() {
 
+    }
+
+    public Integer getId() {
+        return id;
     }
 
     public String getKey() {
@@ -46,5 +50,9 @@ public class KeyValueData {
                 "key='" + key + '\'' +
                 ", value='" + value + '\'' +
                 '}';
+    }
+
+    public void setId(int id) {
+        this.id = id;
     }
 }

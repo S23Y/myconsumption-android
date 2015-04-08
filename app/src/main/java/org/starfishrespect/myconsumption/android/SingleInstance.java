@@ -127,15 +127,30 @@ public class SingleInstance {
     }
 
     public static double getkWhToCO2() {
-        return Double.parseDouble(getDatabaseHelper().getValueForKey("config_co2").getValue());
+        KeyValueData valueData = getDatabaseHelper().getValueForKey("config_co2");
+
+        if (valueData == null)
+            return 0.0;
+        else
+            return Double.parseDouble(valueData.getValue());
     }
 
     public static double getkWhDayPrice() {
-        return Double.parseDouble(getDatabaseHelper().getValueForKey("config_day").getValue());
+        KeyValueData valueData = getDatabaseHelper().getValueForKey("config_day");
+
+        if (valueData == null)
+            return 0.0;
+        else
+            return Double.parseDouble(valueData.getValue());
     }
 
     public static double getkWhNightPrice() {
-        return Double.parseDouble(SingleInstance.getDatabaseHelper().getValueForKey("config_night").getValue());
+        KeyValueData valueData = getDatabaseHelper().getValueForKey("config_night");
+
+        if (valueData == null)
+            return 0.0;
+        else
+            return Double.parseDouble(valueData.getValue());
     }
 
     // removes all the data of the current user and go back to the login
