@@ -56,7 +56,7 @@ public class ChartChoiceFragment extends Fragment {
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        View view = inflater.inflate(R.layout.fragment_graph_choice, container, false);
+        View view = inflater.inflate(R.layout.fragment_chart_choice, container, false);
         listViewSensor = (ListView) view.findViewById(R.id.listViewSensors);
         mLinearLayout = (LinearLayout) view.findViewById(R.id.linearLayoutDateSelectionItems);
         mTextView = (TextView) view.findViewById(R.id.textViewUsername);

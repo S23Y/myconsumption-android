@@ -3,6 +3,7 @@ package org.starfishrespect.myconsumption.android;
 import android.content.Context;
 import android.content.Intent;
 
+import org.starfishrespect.myconsumption.android.controllers.ConfigController;
 import org.starfishrespect.myconsumption.android.controllers.StatsController;
 //import org.starfishrespect.myconsumption.android.controllers.FragmentController;
 import org.starfishrespect.myconsumption.android.controllers.UserController;
@@ -36,9 +37,16 @@ public class SingleInstance {
     private static String protocol = "http://";
     // TODO serverDir = "myconsumption"
     private static String serverDir = "";
+
     private static StatsController statsController;
+    private static ConfigController configController;
+
     private static int[] colors = {0xffff0000, 0xff0000ff, 0xff000000,
             0xff000060, 0xff008000, 0xff600000, 0xff661144, 0xff606060, 0xffaa6611};
+
+    private static Double kWhToCO2 = null; // kg of CO2 per kWh
+    private static Double kWhDayPrice = null;  // €/kWh
+    private static Double kWhNightPrice = null; // €/kWh
 
     private static boolean init = true;
 
@@ -88,6 +96,12 @@ public class SingleInstance {
         return statsController;
     }
 
+    public static ConfigController getConfigController() {
+        if (configController == null)
+         configController = new ConfigController();
+        return configController;
+    }
+
     public static String getServerUrl() {
         return protocol + serverAddress + ":" + port + "/" + serverDir;
     }
@@ -122,6 +136,39 @@ public class SingleInstance {
 
     public static int getRandomColor() {
         return colors[new Random().nextInt(colors.length)];
+    }
+
+    public static double getkWhToCO2() {
+        if (kWhToCO2 == null) {
+            return -1;
+        }
+        return kWhToCO2;
+    }
+
+    public static void setkWhToCO2(Double kWhToCO2) {
+        SingleInstance.kWhToCO2 = kWhToCO2;
+    }
+
+    public static double getkWhDayPrice() {
+        if (kWhDayPrice == null) {
+            return -1;
+        }
+        return kWhDayPrice;
+    }
+
+    public static void setkWhDayPrice(Double kWhDayPrice) {
+        SingleInstance.kWhDayPrice = kWhDayPrice;
+    }
+
+    public static double getkWhNightPrice() {
+        if (kWhNightPrice == null) {
+            return -1;
+        }
+        return kWhNightPrice;
+    }
+
+    public static void setkWhNightPrice(Double kWhNightPrice) {
+        SingleInstance.kWhNightPrice = kWhNightPrice;
     }
 
     // removes all the data of the current user and go back to the login

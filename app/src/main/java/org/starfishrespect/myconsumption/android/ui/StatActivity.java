@@ -13,13 +13,15 @@ import com.astuetz.PagerSlidingTabStrip;
 
 import org.starfishrespect.myconsumption.android.R;
 import org.starfishrespect.myconsumption.android.SingleInstance;
+import org.starfishrespect.myconsumption.android.dao.ConfigUpdater;
 import org.starfishrespect.myconsumption.android.dao.StatValuesUpdater;
 import org.starfishrespect.myconsumption.server.api.dto.StatDTO;
 
 import java.util.List;
 
 public class StatActivity extends BaseActivity
-        implements StatValuesUpdater.StatUpdateFinishedCallback {
+        implements StatValuesUpdater.StatUpdateFinishedCallback,
+        ConfigUpdater.ConfigUpdateFinishedCallback {
 
     Toolbar mToolbar;
     PagerSlidingTabStrip mTabs;
@@ -37,10 +39,15 @@ public class StatActivity extends BaseActivity
         mTabs = (PagerSlidingTabStrip) findViewById(R.id.tabs);
         mPager = (ViewPager) findViewById(R.id.pager);
 
+        // TODO only on reload
         // Fetch the data from the server
-        StatValuesUpdater updater = new StatValuesUpdater();
-        updater.setUpdateFinishedCallback(this);
-        updater.refreshDB();
+        StatValuesUpdater statUpdater = new StatValuesUpdater();
+        statUpdater.setUpdateFinishedCallback(this);
+        statUpdater.refreshDB();
+        // TODO only on reload
+        ConfigUpdater configUpdater = new ConfigUpdater();
+        configUpdater.setUpdateFinishedCallback(this);
+        configUpdater.refreshDB();
 
         mTabs.setOnTabReselectedListener(new PagerSlidingTabStrip.OnTabReselectedListener() {
             @Override
@@ -58,6 +65,10 @@ public class StatActivity extends BaseActivity
         return NAVDRAWER_ITEM_STATS;
     }
 
+    public void reloadUser(boolean refreshData) {
+        // todo
+    }
+
     @Override
     public void onStatUpdateFinished() {
         SingleInstance.getStatsController().loadStats();
@@ -73,8 +84,9 @@ public class StatActivity extends BaseActivity
         mPager.setCurrentItem(1);
     }
 
-    public void reloadUser(boolean refreshData) {
-        // todo
+    @Override
+    public void onConfigUpdateFinished() {
+        SingleInstance.getConfigController().loadConfig();
     }
 
 

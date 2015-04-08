@@ -8,9 +8,9 @@ import com.j256.ormlite.table.DatabaseTable;
  */
 @DatabaseTable(tableName = "keyvalue")
 public class KeyValueData {
-    @DatabaseField(id = true)
-    private int id;
-    @DatabaseField(unique = true, index = true)
+    @DatabaseField(generatedId=true) // Auto increment
+    private Integer id;
+    @DatabaseField
     private String key;
     @DatabaseField
     private String value;

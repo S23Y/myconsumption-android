@@ -20,6 +20,7 @@ import com.github.mikephil.charting.data.PieDataSet;
 import com.github.mikephil.charting.utils.ColorTemplate;
 
 import org.starfishrespect.myconsumption.android.R;
+import org.starfishrespect.myconsumption.android.SingleInstance;
 import org.starfishrespect.myconsumption.server.api.dto.StatDTO;
 
 import java.text.Format;
@@ -81,6 +82,22 @@ public class SlidingStatFragment extends Fragment {
 
         textView = (TextView) rootView.findViewById(R.id.txtVwMinimumTimestamp);
         textView.setText(timestamp2DateString(mStat.getMinTimestamp()));
+
+        textView = (TextView) rootView.findViewById(R.id.txtVwCO2);
+        double co2 = w2kWh(mStat.getConsumption()) * SingleInstance.getkWhToCO2();
+        textView.setText(String.valueOf(co2));
+
+        textView = (TextView) rootView.findViewById(R.id.txtVwEuroHigh);
+        int dayEuro = (int) (w2kWh(mStat.getConsumptionDay()) * SingleInstance.getkWhDayPrice());
+        textView.setText(String.valueOf(dayEuro));
+
+        textView = (TextView) rootView.findViewById(R.id.txtVwEuroOff);
+        int nightEuro = (int) (w2kWh(mStat.getConsumptionNight()) * SingleInstance.getkWhNightPrice());
+        textView.setText(String.valueOf(nightEuro));
+
+        textView = (TextView) rootView.findViewById(R.id.txtVwEuro);
+        int totEuro = dayEuro + nightEuro;
+        textView.setText(String.valueOf(totEuro));
 
         // Adding arrow
         ImageView imgView = (ImageView) rootView.findViewById(R.id.imageView);
