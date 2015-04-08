@@ -13,6 +13,8 @@ import android.widget.TextView;
 import org.starfishrespect.myconsumption.android.R;
 import org.starfishrespect.myconsumption.server.api.dto.StatDTO;
 
+import java.text.Format;
+import java.text.SimpleDateFormat;
 import java.util.Date;
 
 /**
@@ -62,10 +64,10 @@ public class SlidingStatFragment extends Fragment {
         //mTextView.setText(text);
 
         TextView textView = (TextView) rootView.findViewById(R.id.txtVwConsumption);
-        textView.setText(String.valueOf(w2kWh(mStat.getConsumption())));
+        textView.setText(w2kWh(mStat.getConsumption()));
 
         textView = (TextView) rootView.findViewById(R.id.txtVwAveragekWh);
-        textView.setText(String.valueOf(w2kWh(mStat.getAverage())));
+        textView.setText(w2kWh(mStat.getAverage()));
 
         textView = (TextView) rootView.findViewById(R.id.txtVwAverageWatts);
         textView.setText(String.valueOf(mStat.getAverage()));
@@ -74,13 +76,13 @@ public class SlidingStatFragment extends Fragment {
         textView.setText(String.valueOf(mStat.getMaxValue()));
 
         textView = (TextView) rootView.findViewById(R.id.txtVwMaximumTimestamp);
-        textView.setText(timestamp2Date(mStat.getMaxTimestamp()).toString());
+        textView.setText(timestamp2Date(mStat.getMaxTimestamp()));
 
         textView = (TextView) rootView.findViewById(R.id.txtVwMinimum);
         textView.setText(String.valueOf(mStat.getMinValue()));
 
         textView = (TextView) rootView.findViewById(R.id.txtVwMinimumTimestamp);
-        textView.setText(timestamp2Date(mStat.getMinTimestamp()).toString());
+        textView.setText(timestamp2Date(mStat.getMinTimestamp()));
 
         // Adding arrow
         ImageView imgView = (ImageView) rootView.findViewById(R.id.imageView);
@@ -103,19 +105,21 @@ public class SlidingStatFragment extends Fragment {
 
     /**
      * Convert watt to kWh and round it up with two decimals.
-     * @param watt the value you want to convert
+     * @param watt the value you want to convert as a String
      */
-    private double w2kWh(int watt) {
+    private String w2kWh(int watt) {
         double converted = (double)watt/(60*1000);
-        return Math.round(converted * 100.0) / 100.0;
+        return String.valueOf(Math.round(converted * 100.0) / 100.0);
     }
 
     /**
      * Convert a linux timestamp to a Date time.
      * @param timestamp
-     * @return a Java Date.
+     * @return a date formatted as a String.
      */
-    private Date timestamp2Date(int timestamp) {
-        return new java.util.Date((long) timestamp * 1000);
+    private String timestamp2Date(int timestamp) {
+        Date date = new java.util.Date((long) timestamp * 1000);
+        Format formatter = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+        return formatter.format(date);
     }
 }
