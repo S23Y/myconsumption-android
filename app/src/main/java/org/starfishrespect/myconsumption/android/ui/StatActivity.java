@@ -84,15 +84,15 @@ public class StatActivity extends BaseActivity
         View spinnerContainer = LayoutInflater.from(this).inflate(R.layout.actionbar_spinner,
                 mToolbar, false);
         ActionBar.LayoutParams lp = new ActionBar.LayoutParams(
-                ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT);
+                ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT);
         mToolbar.addView(spinnerContainer, lp);
 
         List<SensorData> sensors = SingleInstance.getUserController().getUser().getSensors();
         SpinnerSensorAdapter sensorAdapter = new SpinnerSensorAdapter(SingleInstance.getChartActivity(), sensors);
 
-
         // Populate spinners
         Spinner spinner = (Spinner) spinnerContainer.findViewById(R.id.actionbar_spinner);
+
 //        // Create an ArrayAdapter using the string array and a default spinner layout
 //        ArrayAdapter<CharSequence> spinnerAdapter = ArrayAdapter.createFromResource(this,
 //                R.array.iam_array, android.R.layout.simple_spinner_item);
@@ -101,17 +101,17 @@ public class StatActivity extends BaseActivity
         // Apply the adapter to the spinner
         spinner.setAdapter(sensorAdapter);
 //
-//        spinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
-//            @Override
-//            public void onItemSelected(AdapterView<?> spinner, View view, int position, long itemId) {
-//                //onTopLevelTagSelected(mTopLevelSpinnerAdapter.getTag(position));
-//                Toast.makeText(StatActivity.this,"spinner selected", Toast.LENGTH_SHORT).show();
-//            }
-//
-//            @Override
-//            public void onNothingSelected(AdapterView<?> adapterView) {
-//            }
-//        });
+        spinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+            @Override
+            public void onItemSelected(AdapterView<?> spinner, View view, int position, long itemId) {
+                //onTopLevelTagSelected(mTopLevelSpinnerAdapter.getTag(position));
+                Toast.makeText(StatActivity.this,"spinner selected", Toast.LENGTH_SHORT).show();
+            }
+
+            @Override
+            public void onNothingSelected(AdapterView<?> adapterView) {
+            }
+        });
     }
 
     @Override

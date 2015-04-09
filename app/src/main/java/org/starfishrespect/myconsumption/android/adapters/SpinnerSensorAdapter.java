@@ -44,10 +44,12 @@ public class SpinnerSensorAdapter extends BaseAdapter {
     public View getView(int position, View convertView, ViewGroup parent) {
         View view = convertView;
         if (convertView == null) {
-            view = inflater.inflate(android.R.layout.simple_spinner_item, null);
+            view = inflater.inflate(android.R.layout.simple_spinner_dropdown_item, null);
         }
         TextView tv = (TextView) view.findViewById(android.R.id.text1);
         tv.setText(sensors.get(position).getName());
         return view;
     }
+
+
 }
