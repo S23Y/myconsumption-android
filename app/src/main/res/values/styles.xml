@@ -44,6 +44,16 @@
 
     <style name="Theme.MyConsumption" parent="Theme.MyConsumption.Base" />
 
+    <style name="Widget.MyConsumption.HeaderBar.Spinner.Base" parent="Widget.AppCompat.Light.Spinner.DropDown.ActionBar">
+        <item name="android:background">?android:selectableItemBackground</item>
+        <item name="android:dropDownSelector">?android:selectableItemBackground</item>
+        <item name="android:divider">@null</item>
+        <item name="android:dividerHeight">0dp</item>
+        <item name="android:overlapAnchor">true</item>
+    </style>
+
+    <style name="Widget.MyConsumption.HeaderBar.Spinner" parent="Widget.MyConsumption.HeaderBar.Spinner.Base" />
+
     <style name="HeaderBar">
         <item name="android:background">?colorPrimary</item>
         <item name="android:elevation">@dimen/headerbar_elevation</item>

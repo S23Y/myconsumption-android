@@ -5,23 +5,40 @@ import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentPagerAdapter;
 import android.support.v4.view.ViewPager;
+import android.support.v7.app.ActionBar;
 import android.support.v7.widget.Toolbar;
 import android.util.TypedValue;
+import android.view.LayoutInflater;
+import android.view.View;
+import android.view.ViewGroup;
+import android.widget.AdapterView;
+import android.widget.ArrayAdapter;
+import android.widget.Spinner;
 import android.widget.Toast;
 
 import com.astuetz.PagerSlidingTabStrip;
 
 import org.starfishrespect.myconsumption.android.R;
 import org.starfishrespect.myconsumption.android.SingleInstance;
+import org.starfishrespect.myconsumption.android.adapters.SensorListAdapter;
+import org.starfishrespect.myconsumption.android.adapters.SpinnerSensorAdapter;
 import org.starfishrespect.myconsumption.android.dao.ConfigUpdater;
 import org.starfishrespect.myconsumption.android.dao.StatValuesUpdater;
+import org.starfishrespect.myconsumption.android.data.SensorData;
 import org.starfishrespect.myconsumption.server.api.dto.StatDTO;
 
+import java.sql.SQLException;
 import java.util.List;
+
+import static org.starfishrespect.myconsumption.android.util.LogUtils.LOGD;
+import static org.starfishrespect.myconsumption.android.util.LogUtils.LOGE;
+import static org.starfishrespect.myconsumption.android.util.LogUtils.makeLogTag;
 
 public class StatActivity extends BaseActivity
         implements StatValuesUpdater.StatUpdateFinishedCallback,
         ConfigUpdater.ConfigUpdateFinishedCallback {
+
+    private static final String TAG = makeLogTag(StatActivity.class);
 
     Toolbar mToolbar;
     PagerSlidingTabStrip mTabs;
@@ -36,6 +53,9 @@ public class StatActivity extends BaseActivity
         setContentView(R.layout.activity_stat);
         mToolbar = getActionBarToolbar();
         mToolbar.setTitle("MyConsumption - Statistics");
+
+        setUpActionBarSpinner();
+
         mTabs = (PagerSlidingTabStrip) findViewById(R.id.tabs);
         mPager = (ViewPager) findViewById(R.id.pager);
 
@@ -57,6 +77,41 @@ public class StatActivity extends BaseActivity
         });
 
         overridePendingTransition(0, 0);
+    }
+
+    private void setUpActionBarSpinner() {
+        LOGD(TAG, "Configuring Action Bar spinner.");
+        View spinnerContainer = LayoutInflater.from(this).inflate(R.layout.actionbar_spinner,
+                mToolbar, false);
+        ActionBar.LayoutParams lp = new ActionBar.LayoutParams(
+                ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT);
+        mToolbar.addView(spinnerContainer, lp);
+
+        List<SensorData> sensors = SingleInstance.getUserController().getUser().getSensors();
+        SpinnerSensorAdapter sensorAdapter = new SpinnerSensorAdapter(SingleInstance.getChartActivity(), sensors);
+
+
+        // Populate spinners
+        Spinner spinner = (Spinner) spinnerContainer.findViewById(R.id.actionbar_spinner);
+//        // Create an ArrayAdapter using the string array and a default spinner layout
+//        ArrayAdapter<CharSequence> spinnerAdapter = ArrayAdapter.createFromResource(this,
+//                R.array.iam_array, android.R.layout.simple_spinner_item);
+//        // Specify the layout to use when the list of choices appears
+//        spinnerAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+        // Apply the adapter to the spinner
+        spinner.setAdapter(sensorAdapter);
+//
+//        spinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+//            @Override
+//            public void onItemSelected(AdapterView<?> spinner, View view, int position, long itemId) {
+//                //onTopLevelTagSelected(mTopLevelSpinnerAdapter.getTag(position));
+//                Toast.makeText(StatActivity.this,"spinner selected", Toast.LENGTH_SHORT).show();
+//            }
+//
+//            @Override
+//            public void onNothingSelected(AdapterView<?> adapterView) {
+//            }
+//        });
     }
 
     @Override
