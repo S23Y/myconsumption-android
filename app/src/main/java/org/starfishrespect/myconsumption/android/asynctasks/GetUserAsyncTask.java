@@ -41,7 +41,7 @@ public class GetUserAsyncTask extends AsyncTask<Void, UserData, Void> {
         RestTemplate template = new RestTemplate();
         template.getMessageConverters().add(new MappingJacksonHttpMessageConverter());
         try {
-            UserDTO user = template.getForObject(SingleInstance.getServerUrl() + "user/" + username, UserDTO.class);
+            UserDTO user = template.getForObject(SingleInstance.getServerUrl() + "users/" + username, UserDTO.class);
             UserData userData = new UserData(user);
             for (String sensor : user.getSensors()) {
                 try {

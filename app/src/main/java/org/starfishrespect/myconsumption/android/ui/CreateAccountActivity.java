@@ -106,7 +106,7 @@ public class CreateAccountActivity extends Activity {
         MultiValueMap<String, String> postParams = new LinkedMultiValueMap<>();
         postParams.add("password", editTextPassword.getText().toString());
         try {
-            String result = template.postForObject(SingleInstance.getServerUrl() + "user/" + editTextUsername.getText().toString(),
+            String result = template.postForObject(SingleInstance.getServerUrl() + "users/" + editTextUsername.getText().toString(),
                     postParams, String.class);
             Log.d(TAG, result);
 

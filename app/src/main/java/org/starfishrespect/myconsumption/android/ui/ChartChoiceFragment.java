@@ -149,7 +149,7 @@ public class ChartChoiceFragment extends Fragment {
                         RestTemplate template = new RestTemplate();
                         template.getMessageConverters().add(new FormHttpMessageConverter());
                         template.getMessageConverters().add(new StringHttpMessageConverter());
-                        template.delete(SingleInstance.getServerUrl() + "user/" +
+                        template.delete(SingleInstance.getServerUrl() + "users/" +
                                 SingleInstance.getUserController().getUser().getName() +
                                 "/sensor/" +
                                 sensors.get(lastLongClickItem).getSensorId());

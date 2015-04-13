@@ -167,7 +167,7 @@ public class GcmRegisterer {
                 postParams.add("device_type", "android");
                 postParams.add("token", regid);
                 try {
-                    String result = template.postForObject(SingleInstance.getServerUrl() + "user/" + username + "/token", postParams, String.class);
+                    String result = template.postForObject(SingleInstance.getServerUrl() + "users/" + username + "/token", postParams, String.class);
                     Log.d(TAG, result);
                     prefs.edit().putBoolean(PROPERTY_SERVER_HAS_REG_ID, true);
                 } catch (ResourceAccessException | HttpClientErrorException | HttpServerErrorException e) {
