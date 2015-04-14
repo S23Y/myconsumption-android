@@ -25,11 +25,11 @@ public class StatsController {
     /**
      *  Load the stats from the local database.
      */
-    public void loadStats() {
+    public void loadStats(String sensorId) {
         String statsJSON;
 
         try {
-            statsJSON = SingleInstance.getDatabaseHelper().getValueForKey("stats").getValue();
+            statsJSON = SingleInstance.getDatabaseHelper().getValueForKey("stats_" + sensorId).getValue();
         } catch (NullPointerException e) {
             LOGE(TAG, "cannot load stats from local db", e);
             return;

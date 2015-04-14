@@ -1,5 +1,6 @@
 package org.starfishrespect.myconsumption.android.ui;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
@@ -12,7 +13,6 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
-import android.widget.ArrayAdapter;
 import android.widget.Spinner;
 import android.widget.Toast;
 
@@ -20,14 +20,12 @@ import com.astuetz.PagerSlidingTabStrip;
 
 import org.starfishrespect.myconsumption.android.R;
 import org.starfishrespect.myconsumption.android.SingleInstance;
-import org.starfishrespect.myconsumption.android.adapters.SensorListAdapter;
 import org.starfishrespect.myconsumption.android.adapters.SpinnerSensorAdapter;
 import org.starfishrespect.myconsumption.android.dao.ConfigUpdater;
 import org.starfishrespect.myconsumption.android.dao.StatValuesUpdater;
 import org.starfishrespect.myconsumption.android.data.SensorData;
 import org.starfishrespect.myconsumption.server.api.dto.StatDTO;
 
-import java.sql.SQLException;
 import java.util.List;
 
 import static org.starfishrespect.myconsumption.android.util.LogUtils.LOGD;
@@ -45,12 +43,24 @@ public class StatActivity extends BaseActivity
     private ViewPager mPager;
 
     private MyPagerAdapter mPageAdapter;
+    private SpinnerSensorAdapter mSpinnerAdapter;
     private List<StatDTO> mStats;
+
+    static final String STATE_SENSOR = "sensorId";
+
+    private String mSensorId;
+    private boolean mFirstStart = true;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_stat);
+
+        Intent intent = getIntent();
+        Bundle extras = intent.getExtras();
+        if (extras != null)
+            mSensorId = extras.getString(STATE_SENSOR);
+
         mToolbar = getActionBarToolbar();
         mToolbar.setTitle("MyConsumption - Statistics");
 
@@ -88,7 +98,11 @@ public class StatActivity extends BaseActivity
         mToolbar.addView(spinnerContainer, lp);
 
         List<SensorData> sensors = SingleInstance.getUserController().getUser().getSensors();
-        SpinnerSensorAdapter sensorAdapter = new SpinnerSensorAdapter(SingleInstance.getChartActivity(), sensors);
+
+        if (mSensorId == null)
+            mSensorId = sensors.get(0).getSensorId();
+
+        mSpinnerAdapter = new SpinnerSensorAdapter(StatActivity.this, sensors);
 
         // Populate spinners
         Spinner spinner = (Spinner) spinnerContainer.findViewById(R.id.actionbar_spinner);
@@ -99,13 +113,27 @@ public class StatActivity extends BaseActivity
 //        // Specify the layout to use when the list of choices appears
 //        spinnerAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         // Apply the adapter to the spinner
-        spinner.setAdapter(sensorAdapter);
-//
+        spinner.setAdapter(mSpinnerAdapter);
+
         spinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> spinner, View view, int position, long itemId) {
-                //onTopLevelTagSelected(mTopLevelSpinnerAdapter.getTag(position));
-                Toast.makeText(StatActivity.this,"spinner selected", Toast.LENGTH_SHORT).show();
+
+                if (!mFirstStart) {
+                    //onTopLevelTagSelected(mTopLevelSpinnerAdapter.getTag(position));
+                    Toast.makeText(StatActivity.this,"spinner selected " + mSpinnerAdapter.getItem(position), Toast.LENGTH_SHORT).show();
+                    mSensorId = (String) mSpinnerAdapter.getItem(position);
+                    //onStatUpdateFinished();
+                    //getWindow().getDecorView().findViewById(android.R.id.mainLayout).invalidate();
+
+                    //Intent intent = new Intent(StatActivity.this, StatActivity.class);
+                    Intent intent = getIntent();
+                    intent.putExtra(STATE_SENSOR,mSensorId);
+                    finish();
+                    startActivity(intent);
+                }
+
+                mFirstStart = false;
             }
 
             @Override
@@ -126,7 +154,7 @@ public class StatActivity extends BaseActivity
 
     @Override
     public void onStatUpdateFinished() {
-        SingleInstance.getStatsController().loadStats();
+        SingleInstance.getStatsController().loadStats(mSensorId);
         mStats = SingleInstance.getStatsController().getStats();
 
         mPageAdapter = new MyPagerAdapter(getSupportFragmentManager());

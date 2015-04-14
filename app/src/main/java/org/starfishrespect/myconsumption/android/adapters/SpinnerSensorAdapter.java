@@ -32,7 +32,7 @@ public class SpinnerSensorAdapter extends BaseAdapter {
 
     @Override
     public Object getItem(int position) {
-        return sensors.get(position);
+        return sensors.get(position).getSensorId();
     }
 
     @Override

@@ -60,9 +60,10 @@ public class StatValuesUpdater {
 
                         try {
                             String json = mapper.writeValueAsString(stats);
+                            String key = "stats_" + sensor.getSensorId();
 
-                            int id = db.getIdForKey("stats");
-                            KeyValueData valueData = new KeyValueData("stats", json);
+                            int id = db.getIdForKey(key);
+                            KeyValueData valueData = new KeyValueData(key, json);
                             valueData.setId(id);
 
                             LOGD(TAG, "writing stat in local db: " + json);
