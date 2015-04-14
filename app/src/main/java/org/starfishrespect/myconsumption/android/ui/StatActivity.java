@@ -40,9 +40,9 @@ public class StatActivity extends BaseActivity
 
     private static final String TAG = makeLogTag(StatActivity.class);
 
-    Toolbar mToolbar;
-    PagerSlidingTabStrip mTabs;
-    ViewPager mPager;
+    private Toolbar mToolbar;
+    private PagerSlidingTabStrip mTabs;
+    private ViewPager mPager;
 
     private MyPagerAdapter mPageAdapter;
     private List<StatDTO> mStats;
