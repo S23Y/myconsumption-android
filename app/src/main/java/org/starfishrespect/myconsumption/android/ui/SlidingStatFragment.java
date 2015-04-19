@@ -62,6 +62,14 @@ public class SlidingStatFragment extends Fragment {
 
         ViewCompat.setElevation(rootView, 50);
 
+        // If no values found for this period, just display info for the user
+        if (mStat.getConsumption() == 0) {
+            TextView textView = (TextView) rootView.findViewById(R.id.txtVwConsumption);
+            textView.setText(getString(R.string.textview_stat_no_value_found));
+            return rootView;
+        }
+
+
         TextView textView = (TextView) rootView.findViewById(R.id.txtVwConsumption);
         textView.setText(String.valueOf(w2kWh(mStat.getConsumption())));
 

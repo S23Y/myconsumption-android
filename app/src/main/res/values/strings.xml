@@ -128,4 +128,6 @@
     <string name="textview_stat_money">€</string>
     <string name="textview_stat_high_peak">high peak</string>
     <string name="textview_stat_off_peak">off peak</string>
+
+    <string name="textview_stat_no_value_found">No values found for this period...</string>
 </resources>

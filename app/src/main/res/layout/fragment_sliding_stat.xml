@@ -42,7 +42,7 @@
                         android:layout_height="wrap_content"
                         android:padding="8dp"
                         android:textSize="24sp"
-                        android:text="0" />
+                        android:text="" />
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
@@ -71,7 +71,7 @@
                         android:padding="8dp"
                         android:textSize="24sp"
                         android:layout_gravity="center_vertical"
-                        android:text="0" />
+                        android:text="" />
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
@@ -104,7 +104,7 @@
                                 android:layout_height="wrap_content"
                                 android:padding="8dp"
                                 android:textSize="14sp"
-                                android:text="0" />
+                                android:text="" />
                             <TextView
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
@@ -124,7 +124,7 @@
                                 android:layout_gravity="center_vertical"
                                 android:padding="8dp"
                                 android:textSize="14sp"
-                                android:text="0" />
+                                android:text="" />
                             <TextView
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
@@ -148,7 +148,7 @@
                                         android:layout_height="wrap_content"
                                         android:padding="8dp"
                                         android:textSize="14sp"
-                                        android:text="0" />
+                                        android:text="" />
                                     <TextView
                                         android:layout_width="wrap_content"
                                         android:layout_height="wrap_content"
@@ -172,7 +172,7 @@
                                         android:layout_height="wrap_content"
                                         android:padding="8dp"
                                         android:textSize="14sp"
-                                        android:text="0" />
+                                        android:text="" />
                                     <TextView
                                         android:layout_width="wrap_content"
                                         android:layout_height="wrap_content"
@@ -210,7 +210,7 @@
                         android:layout_height="wrap_content"
                         android:padding="8dp"
                         android:textSize="24sp"
-                        android:text="0" />
+                        android:text="" />
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
@@ -230,7 +230,7 @@
                         android:layout_height="wrap_content"
                         android:padding="3dp"
                         android:textSize="14sp"
-                        android:text="0" />
+                        android:text="" />
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
@@ -263,7 +263,7 @@
                         android:layout_height="wrap_content"
                         android:padding="8dp"
                         android:textSize="24sp"
-                        android:text="0" />
+                        android:text="" />
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
@@ -308,7 +308,7 @@
                         android:layout_height="wrap_content"
                         android:padding="8dp"
                         android:textSize="24sp"
-                        android:text="0" />
+                        android:text="" />
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
