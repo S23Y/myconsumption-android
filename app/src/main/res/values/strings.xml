@@ -131,4 +131,5 @@
 
     <string name="textview_stat_no_value_found">No values found for this period...</string>
     <string name="textview_user_profile_know">I know my electricity consumption</string>
+    <string name="button_settings_save_profile">Save profile</string>
 </resources>
