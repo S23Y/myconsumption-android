@@ -40,8 +40,7 @@ public class SettingsActivity extends BaseActivity {
         // Apply the adapter to the spinner
         simSpinner.setAdapter(simAdapter);
 
-        ImageView imageView = (ImageView) findViewById(R.id.imageView);
-        imageView.setImageResource(R.drawable.consumption_profile);
+
 
         overridePendingTransition(0, 0);
     }
