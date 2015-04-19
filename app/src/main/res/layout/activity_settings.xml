@@ -62,7 +62,10 @@
             android:orientation="vertical"
             android:layout_width="wrap_content"
             android:layout_height="match_parent"
-            android:paddingTop="?actionBarSize">>
+            android:paddingTop="?actionBarSize"
+            android:paddingLeft="5dp"
+            android:paddingRight="5dp"
+            android:paddingBottom="5dp">
 
             <TextView
                 android:layout_width="wrap_content"
@@ -70,7 +73,8 @@
                 android:text="@string/textview_user_profile_iam"
                 android:layout_margin="1dp"
                 android:textStyle="bold"
-                android:id="@+id/textViewIam"/>
+                android:id="@+id/textViewIam"
+                android:paddingTop="10dp" />
 
             <Spinner
                 android:id="@+id/iam_spinner"
@@ -100,7 +104,7 @@
             <RadioGroup xmlns:android="http://schemas.android.com/apk/res/android"
                 android:layout_width="fill_parent"
                 android:layout_height="wrap_content"
-                android:orientation="vertical"
+                android:orientation="horizontal"
                 android:checkedButton="@+id/radio_no">
                 <RadioButton android:id="@+id/radio_yes"
                     android:layout_width="wrap_content"
@@ -141,8 +145,9 @@
 
             <RadioGroup
                 android:id="@+id/radioGroup1"
-                android:layout_width="wrap_content"
+                android:layout_width="fill_parent"
                 android:layout_height="wrap_content"
+                android:orientation="horizontal"
                 android:checkedButton="@+id/radio_profile_1">
                 
                 <RadioButton android:id="@+id/radio_profile_1"
