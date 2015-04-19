@@ -127,7 +127,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:inputType="number"
-                android:id="@+id/codeEditConsumption"
+                android:id="@+id/consumptionEdit"
                 android:imeOptions="actionDone"
                 android:visibility="gone"/>
 
@@ -142,55 +142,25 @@
             <RadioGroup
                 android:id="@+id/radioGroup1"
                 android:layout_width="wrap_content"
-                android:layout_height="wrap_content" >
-
-                <LinearLayout
+                android:layout_height="wrap_content"
+                android:checkedButton="@+id/radio_profile_1">
+                
+                <RadioButton android:id="@+id/radio_profile_1"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:orientation="horizontal" >
-
-                    <RadioButton
-                        android:id="@+id/radio0"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"/>
-
-                    <ImageView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:src="@drawable/consumption_profile_1" />
-                </LinearLayout>
-
-                <LinearLayout
+                    android:onClick="onRadioButtonClicked"
+                    android:drawableRight="@drawable/consumption_profile_1" />
+                <RadioButton android:id="@+id/radio_profile_2"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:orientation="horizontal" >
-
-                    <RadioButton
-                        android:id="@+id/radio01"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"/>
-
-                    <ImageView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:src="@drawable/consumption_profile_2" />
-                </LinearLayout>
-
-                <LinearLayout
+                    android:onClick="onRadioButtonClicked"
+                    android:drawableRight="@drawable/consumption_profile_2" />
+                <RadioButton android:id="@+id/radio_profile_3"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:orientation="horizontal" >
+                    android:onClick="onRadioButtonClicked"
+                    android:drawableRight="@drawable/consumption_profile_3" />
 
-                    <RadioButton
-                        android:id="@+id/radio02"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content" />
-
-                    <ImageView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:src="@drawable/consumption_profile_3" />
-                </LinearLayout>
             </RadioGroup>
             
             <Button
