@@ -92,18 +92,44 @@
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="@string/textview_user_profile_code"
+                android:text="@string/textview_user_profile_know"
                 android:layout_margin="1dp"
                 android:textStyle="bold"
-                android:id="@+id/textViewCode"/>
+                android:id="@+id/textViewKnow"/>
+
+            <RadioGroup xmlns:android="http://schemas.android.com/apk/res/android"
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:checkedButton="@+id/radio_no">
+                <RadioButton android:id="@+id/radio_yes"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/button_yes"
+                    android:onClick="onRadioButtonClicked"/>
+                <RadioButton android:id="@+id/radio_no"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/button_no"
+                    android:onClick="onRadioButtonClicked"/>
+            </RadioGroup>
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/textview_user_profile_consumption"
+                android:layout_margin="1dp"
+                android:textStyle="bold"
+                android:id="@+id/textViewConsumption"
+                android:visibility="gone"/>
 
             <EditText
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:inputType="number"
-                android:ems="4"
-                android:id="@+id/codeEditText"
-                android:imeOptions="actionDone"/>
+                android:id="@+id/codeEditConsumption"
+                android:imeOptions="actionDone"
+                android:visibility="gone"/>
 
             <TextView
                 android:layout_width="wrap_content"

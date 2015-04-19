@@ -113,7 +113,7 @@
     <string name="text_reload">Reloading data</string>
     <string name="textview_user_profile_iam">I am:</string>
     <string name="textview_user_profile_sim">I want to do a simulation for:</string>
-    <string name="textview_user_profile_code">My postal code is:</string>
+    <string name="textview_user_profile_consumption">My annual consumption is (kWh):</string>
     <string name="textview_user_profile_choose">My electricity consumption profile is best described as follows:</string>
 
     <string name="textview_stat_consumption">Consumption over this period:</string>
@@ -130,4 +130,5 @@
     <string name="textview_stat_off_peak">off peak</string>
 
     <string name="textview_stat_no_value_found">No values found for this period...</string>
+    <string name="textview_user_profile_know">I know my electricity consumption</string>
 </resources>
