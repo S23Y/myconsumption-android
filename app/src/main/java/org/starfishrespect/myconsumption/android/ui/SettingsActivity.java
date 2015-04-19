@@ -20,9 +20,14 @@ public class SettingsActivity extends BaseActivity {
     private int mProfileHouse = 1;
     private TextView mTextViewChoose;
     private RadioGroup mRadioGroup1;
+    private Spinner mIamSpinner;
     private TextView mTextViewConsumption;
     private EditText mConsumptionEdit;
     private boolean mHouseShow;
+
+    private final static int RESID_POS = 0;
+    private final static int PRO_POS = 1;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -37,30 +42,25 @@ public class SettingsActivity extends BaseActivity {
         mTextViewConsumption = (TextView) findViewById(R.id.textViewConsumption);
         mConsumptionEdit = (EditText) findViewById(R.id.consumptionEdit);
 
-        // Populate spinners
-        Spinner iamSpinner = (Spinner) findViewById(R.id.iam_spinner);
-        Spinner simSpinner = (Spinner) findViewById(R.id.sim_spinner);
-        // Create an ArrayAdapter using the string array and a default spinner layout
-        ArrayAdapter<CharSequence> iamAdapter = ArrayAdapter.createFromResource(this,
-                R.array.iam_array, android.R.layout.simple_spinner_item);
-        // Specify the layout to use when the list of choices appears
-        iamAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-        // Apply the adapter to the spinner
-        iamSpinner.setAdapter(iamAdapter);
+        // Populate spinner
+        mIamSpinner = (Spinner) findViewById(R.id.iam_spinner);
+        ((ArrayAdapter<CharSequence>) mIamSpinner.getAdapter()).setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+        mIamSpinner.setSelection(RESID_POS, false);
 
-        // Create an ArrayAdapter using the string array and a default spinner layout
-        ArrayAdapter<CharSequence> simAdapter = ArrayAdapter.createFromResource(this,
-                R.array.sim_array, android.R.layout.simple_spinner_item);
-        // Specify the layout to use when the list of choices appears
-        simAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-        // Apply the adapter to the spinner
-        simSpinner.setAdapter(simAdapter);
+
 
 
         final Button button = (Button) findViewById(R.id.button_save);
         button.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
                 // Perform action on click
+
+                //        short privacy = Somtehing.RESID;
+                //        if (mIamSpinner.getSelectedItemPosition() == PRO_POS)
+                //            privacy = Somtehing.PRO
+
+                // Handle mProfileHouse
+
                 if (mHouseShow) {
 
                 }
