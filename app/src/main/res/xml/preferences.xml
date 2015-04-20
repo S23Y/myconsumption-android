@@ -18,9 +18,13 @@
 
     <CheckBoxPreference
         android:key="pref_local_times"
-        android:title="lol"
-        android:summary="lol"
+        android:title="@string/pref_user_profile_iam_sum"
+        android:summary="@string/pref_user_profile_iam"
         android:defaultValue="false" />
+
+<!--
+    textview_user_profile_consumption
+    textview_user_profile_choose-->
 
 <!--    <CheckBoxPreference
         android:key="pref_attendee_at_venue"
