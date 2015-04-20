@@ -137,4 +137,5 @@
     <string name="textview_stat_no_value_found">No values found for this period...</string>
     <string name="pref_user_profile">User profile</string>
     <string name="navdrawer_item_comparison">Comparison</string>
+    <string name="textview_comp_profile_description">My energy consumption profile is best described as follows:</string>
 </resources>

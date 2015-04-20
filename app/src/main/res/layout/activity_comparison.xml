@@ -58,6 +58,31 @@
         </LinearLayout>
 
         <!--content goes here-->
+        <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="horizontal"
+            android:background="?colorControlHighlight"
+            android:paddingTop="?attr/actionBarSize">
+
+            <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:background="@color/navdrawer_background"
+                android:orientation="vertical"
+                android:padding="8dp"
+                android:layout_margin="10dp">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:padding="8dp"
+                    android:textSize="14sp"
+                    android:text="@string/textview_comp_profile_description" />
+
+            </LinearLayout>
+
+        </LinearLayout>
 
         <!--Header bar-->
         <LinearLayout style="@style/HeaderBar"
