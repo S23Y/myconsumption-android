@@ -44,10 +44,14 @@ public class SettingsActivity extends BaseActivity {
 
         // Populate spinner
         mIamSpinner = (Spinner) findViewById(R.id.iam_spinner);
-        ((ArrayAdapter<CharSequence>) mIamSpinner.getAdapter()).setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+        // Create an ArrayAdapter using the string array and a default spinner layout
+        ArrayAdapter<CharSequence> iamAdapter = ArrayAdapter.createFromResource(this,
+                R.array.iam_array, android.R.layout.simple_spinner_item);
+        // Specify the layout to use when the list of choices appears
+        iamAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+        // Apply the adapter to the spinner
+        mIamSpinner.setAdapter(iamAdapter);
         mIamSpinner.setSelection(RESID_POS, false);
-
-
 
 
         final Button button = (Button) findViewById(R.id.button_save);
@@ -60,6 +64,8 @@ public class SettingsActivity extends BaseActivity {
                 //            privacy = Somtehing.PRO
 
                 // Handle mProfileHouse
+
+                // Take into account edit text mConsumptionEdit
 
                 if (mHouseShow) {
 
