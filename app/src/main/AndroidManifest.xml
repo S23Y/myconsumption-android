@@ -24,21 +24,11 @@
             </intent-filter>
         </activity>
 
-        <activity
-            android:name=".ui.ChartActivity"
-            android:label="@string/app_name" />
-
-        <activity
-            android:name=".ui.StatActivity"
-            android:label="@string/app_name" />
-
-        <activity
-            android:name=".ui.SettingsActivity"
-            android:label="@string/app_name" />
-
-        <activity
-            android:name=".ui.HelloWorldActivity"
-            android:label="@string/title_helloworld" />
+        <activity android:name=".ui.ChartActivity" />
+        <activity android:name=".ui.StatActivity" />
+        <activity android:name=".ui.SettingsActivity" />
+        <activity android:name=".ui.ComparisonActivity" />
+        <activity android:name=".ui.HelloWorldActivity" />
 
         <activity
             android:name="ui.AddSensorActivity"

@@ -12,7 +12,7 @@ public class ComparisonActivity extends BaseActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_helloworld);
+        setContentView(R.layout.activity_comparison);
 
         Toolbar toolbar = getActionBarToolbar();
         toolbar.setTitle("MyConsumption - Comparison");
@@ -23,8 +23,7 @@ public class ComparisonActivity extends BaseActivity {
     @Override
     protected int getSelfNavDrawerItem() {
         // set this to have a nav drawer associated with this activity
-        // TODO: change this
-        return NAVDRAWER_ITEM_CHART;
+        return NAVDRAWER_ITEM_COMPARISON;
     }
 
 }

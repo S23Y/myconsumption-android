@@ -88,8 +88,8 @@ public abstract class BaseActivity extends ActionBarActivity {
     protected static final int NAVDRAWER_ITEM_CHART = 0;
     protected static final int NAVDRAWER_ITEM_STATS = 1;
     protected static final int NAVDRAWER_ITEM_SIGN_IN = 2;
-    protected static final int NAVDRAWER_ITEM_SETTINGS = 3;
-//    protected static final int NAVDRAWER_ITEM_SOCIAL = 3;
+    protected static final int NAVDRAWER_ITEM_COMPARISON = 3;
+    protected static final int NAVDRAWER_ITEM_SETTINGS = 4;
 //    protected static final int NAVDRAWER_ITEM_VIDEO_LIBRARY = 4;
 //    protected static final int NAVDRAWER_ITEM_SIGN_IN = 5;
 
@@ -104,6 +104,7 @@ public abstract class BaseActivity extends ActionBarActivity {
             R.string.navdrawer_item_chart,
             R.string.navdrawer_item_stat,
             R.string.navdrawer_item_sign_in,
+            R.string.navdrawer_item_comparison,
             R.string.navdrawer_item_settings
     };
 
@@ -112,6 +113,7 @@ public abstract class BaseActivity extends ActionBarActivity {
             R.drawable.ic_drawer_chart,  // Chart
             R.drawable.ic_drawer_stat, // Stat
             0, // Sign in
+            R.drawable.ic_comparison,   // Comparison
             R.drawable.ic_drawer_settings
     };
 
@@ -339,6 +341,7 @@ public abstract class BaseActivity extends ActionBarActivity {
         // Chart is always shown
         mNavDrawerItems.add(NAVDRAWER_ITEM_CHART);
         mNavDrawerItems.add(NAVDRAWER_ITEM_STATS);
+        mNavDrawerItems.add(NAVDRAWER_ITEM_COMPARISON);
 
 //        // If the attendee is on-site, show Map on the nav drawer
 //        if (attendeeAtVenue) {
@@ -485,6 +488,11 @@ public abstract class BaseActivity extends ActionBarActivity {
                 break;
             case NAVDRAWER_ITEM_STATS:
                 intent = new Intent(this, StatActivity.class);
+                startActivity(intent);
+                finish();
+                break;
+            case NAVDRAWER_ITEM_COMPARISON:
+                intent = new Intent(this, ComparisonActivity.class);
                 startActivity(intent);
                 finish();
                 break;
