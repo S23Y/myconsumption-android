@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string-array name="pref_house_values">
+        <item>600</item>
+        <item>1200</item>
+        <item>3500</item>
+    </string-array>
+
+    <string-array name="pref_house_entries">
+        <item>Studio / apartment with refrigerator: 600 kWh / year</item>
+        <item>Small family using a dishwasher + refrigerator: 1200 kWh / year</item>
+        <item>Average family with electric appliances + electric water heater: 3,500 kWh</item>
+    </string-array>
+</resources>
