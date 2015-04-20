@@ -2,8 +2,10 @@ package org.starfishrespect.myconsumption.android.ui;
 /**
  * Created by thibaud on 19.03.15.
  */
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
+import android.view.View;
 
 import org.starfishrespect.myconsumption.android.R;
 
@@ -26,4 +28,10 @@ public class ComparisonActivity extends BaseActivity {
         return NAVDRAWER_ITEM_COMPARISON;
     }
 
+    public void modifyProfile(View view) {
+        // Launch settings activity
+        Intent intent = new Intent(this, SettingsActivity.class);
+        startActivity(intent);
+        // finish() ?
+    }
 }

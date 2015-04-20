@@ -138,4 +138,5 @@
     <string name="pref_user_profile">User profile</string>
     <string name="navdrawer_item_comparison">Comparison</string>
     <string name="textview_comp_profile_description">My energy consumption profile is best described as follows:</string>
+    <string name="button_modify">Modify</string>
 </resources>
