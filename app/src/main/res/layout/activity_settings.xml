@@ -13,6 +13,40 @@
   See the License for the specific language governing permissions and
   limitations under the License.
   -->
+
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    tools:context=".ui.SettingsActivity">
+
+    <include layout="@layout/toolbar_actionbar_with_headerbar" />
+
+    <FrameLayout
+        android:id="@+id/container"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1" />
+</LinearLayout>
+
+
+<!--
+&lt;!&ndash;
+  Copyright 2014 Google Inc. All rights reserved.
+
+  Licensed under the Apache License, Version 2.0 (the "License");
+  you may not use this file except in compliance with the License.
+  You may obtain a copy of the License at
+
+       http://www.apache.org/licenses/LICENSE-2.0
+
+  Unless required by applicable law or agreed to in writing, software
+  distributed under the License is distributed on an "AS IS" BASIS,
+  WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+  See the License for the specific language governing permissions and
+  limitations under the License.
+  &ndash;&gt;
 <android.support.v4.widget.DrawerLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
@@ -24,7 +58,7 @@
     tools:context=".ui.MainActivity">
 
 
-    <!-- Main layout -->
+    &lt;!&ndash; Main layout &ndash;&gt;
     <org.starfishrespect.myconsumption.android.ui.widget.DrawShadowFrameLayout
         android:id="@+id/main_content"
         android:layout_width="match_parent"
@@ -32,7 +66,7 @@
         android:clipChildren="false"
         app:shadowDrawable="@drawable/header_shadow">
 
-        <!--Reload layout-->
+        &lt;!&ndash;Reload layout&ndash;&gt;
         <LinearLayout
             android:id="@+id/layoutGlobalReloading"
             android:layout_alignParentBottom="true"
@@ -57,7 +91,7 @@
                 android:id="@+id/textView"/>
         </LinearLayout>
 
-        <!--content goes here-->
+        &lt;!&ndash;content goes here&ndash;&gt;
         <LinearLayout
             android:orientation="vertical"
             android:layout_width="wrap_content"
@@ -166,7 +200,7 @@
 
         </LinearLayout>
 
-        <!--Header bar-->
+        &lt;!&ndash;Header bar&ndash;&gt;
         <LinearLayout style="@style/HeaderBar"
             android:id="@+id/headerbar"
             android:layout_width="match_parent"
@@ -174,13 +208,14 @@
             android:clickable="true"
             android:orientation="vertical">
 
-            <include layout="@layout/toolbar_actionbar" /> <!-- placeholder, empty except on L -->
+            <include layout="@layout/toolbar_actionbar" /> &lt;!&ndash; placeholder, empty except on L &ndash;&gt;
         </LinearLayout>
 
     </org.starfishrespect.myconsumption.android.ui.widget.DrawShadowFrameLayout>
 
 
-    <!-- Nav drawer -->
+    &lt;!&ndash; Nav drawer &ndash;&gt;
     <include layout="@layout/navdrawer" />
 
 </android.support.v4.widget.DrawerLayout>
+-->
