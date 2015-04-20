@@ -33,6 +33,14 @@ public class PrefUtils  {
             return context.getResources().getStringArray(R.array.pref_house_entries)[position];
     }
 
+    public static int getProfileConsumption(final Context context) {
+        int position = getProfileIndex(context);
+        if (position < 0)
+            return -1;
+        else
+            return context.getResources().getIntArray(R.array.pref_house_kwh_values)[position];
+    }
+
     public static void registerOnSharedPreferenceChangeListener(final Context context,
                                                                 SharedPreferences.OnSharedPreferenceChangeListener listener) {
         SharedPreferences sp = PreferenceManager.getDefaultSharedPreferences(context);

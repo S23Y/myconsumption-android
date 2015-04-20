@@ -21,12 +21,10 @@ import com.github.mikephil.charting.utils.ColorTemplate;
 
 import org.starfishrespect.myconsumption.android.R;
 import org.starfishrespect.myconsumption.android.SingleInstance;
+import org.starfishrespect.myconsumption.android.util.StatUtils;
 import org.starfishrespect.myconsumption.server.api.dto.StatDTO;
 
-import java.text.Format;
-import java.text.SimpleDateFormat;
 import java.util.ArrayList;
-import java.util.Date;
 
 /**
 * Created by thibaud on 30.03.15.
@@ -71,10 +69,10 @@ public class SlidingStatFragment extends Fragment {
 
 
         TextView textView = (TextView) rootView.findViewById(R.id.txtVwConsumption);
-        textView.setText(String.valueOf(w2kWh(mStat.getConsumption())));
+        textView.setText(String.valueOf(StatUtils.w2kWh(mStat.getConsumption())));
 
         textView = (TextView) rootView.findViewById(R.id.txtVwAveragekWh);
-        textView.setText(String.valueOf(w2kWh(mStat.getAverage())));
+        textView.setText(String.valueOf(StatUtils.w2kWh(mStat.getAverage())));
 
         textView = (TextView) rootView.findViewById(R.id.txtVwAverageWatts);
         textView.setText(String.valueOf(mStat.getAverage()));
@@ -83,24 +81,24 @@ public class SlidingStatFragment extends Fragment {
         textView.setText(String.valueOf(mStat.getMaxValue()));
 
         textView = (TextView) rootView.findViewById(R.id.txtVwMaximumTimestamp);
-        textView.setText(timestamp2DateString(mStat.getMaxTimestamp()));
+        textView.setText(StatUtils.timestamp2DateString(mStat.getMaxTimestamp()));
 
         textView = (TextView) rootView.findViewById(R.id.txtVwMinimum);
         textView.setText(String.valueOf(mStat.getMinValue()));
 
         textView = (TextView) rootView.findViewById(R.id.txtVwMinimumTimestamp);
-        textView.setText(timestamp2DateString(mStat.getMinTimestamp()));
+        textView.setText(StatUtils.timestamp2DateString(mStat.getMinTimestamp()));
 
         textView = (TextView) rootView.findViewById(R.id.txtVwCO2);
-        int co2 = (int) (w2kWh(mStat.getConsumption()) * SingleInstance.getkWhToCO2());
+        int co2 = (int) (StatUtils.w2kWh(mStat.getConsumption()) * SingleInstance.getkWhToCO2());
         textView.setText(String.valueOf(co2));
 
         textView = (TextView) rootView.findViewById(R.id.txtVwEuroHigh);
-        int dayEuro = (int) (w2kWh(mStat.getConsumptionDay()) * SingleInstance.getkWhDayPrice());
+        int dayEuro = (int) (StatUtils.w2kWh(mStat.getConsumptionDay()) * SingleInstance.getkWhDayPrice());
         textView.setText(String.valueOf(dayEuro));
 
         textView = (TextView) rootView.findViewById(R.id.txtVwEuroOff);
-        int nightEuro = (int) (w2kWh(mStat.getConsumptionNight()) * SingleInstance.getkWhNightPrice());
+        int nightEuro = (int) (StatUtils.w2kWh(mStat.getConsumptionNight()) * SingleInstance.getkWhNightPrice());
         textView.setText(String.valueOf(nightEuro));
 
         textView = (TextView) rootView.findViewById(R.id.txtVwEuro);
@@ -121,7 +119,7 @@ public class SlidingStatFragment extends Fragment {
             imgView.setImageResource(R.drawable.ic_arrow_stable);
 
         textView = (TextView) rootView.findViewById(R.id.txtVwComparison);
-        textView.setText(text + " " + w2kWh(diff));
+        textView.setText(text + " " + StatUtils.w2kWh(diff));
 
 
         // Piechart
@@ -144,13 +142,13 @@ public class SlidingStatFragment extends Fragment {
         ArrayList<Entry> entries1 = new ArrayList<Entry>();
         ArrayList<String> xVals = new ArrayList<String>();
 
-        xVals.add("PEAK TIME: " + w2kWh(mStat.getConsumptionDay()) + " " + getString(R.string.textview_stat_kWh));
-        xVals.add("OFF-PEAK TIME: " + w2kWh(mStat.getConsumptionNight()) + " " + getString(R.string.textview_stat_kWh));
+        xVals.add("PEAK TIME: " + StatUtils.w2kWh(mStat.getConsumptionDay()) + " " + getString(R.string.textview_stat_kWh));
+        xVals.add("OFF-PEAK TIME: " + StatUtils.w2kWh(mStat.getConsumptionNight()) + " " + getString(R.string.textview_stat_kWh));
 
         //xVals.add("entry" + (1));
         //xVals.add("entry" + (2));
-        entries1.add(new Entry((float) w2kWh(mStat.getConsumptionDay()), 0));
-        entries1.add(new Entry((float) w2kWh(mStat.getConsumptionNight()), 1));
+        entries1.add(new Entry((float) StatUtils.w2kWh(mStat.getConsumptionDay()), 0));
+        entries1.add(new Entry((float) StatUtils.w2kWh(mStat.getConsumptionNight()), 1));
 
 
         PieDataSet ds1 = new PieDataSet(entries1, "");
@@ -163,25 +161,5 @@ public class SlidingStatFragment extends Fragment {
         d.setValueTypeface(Typeface.DEFAULT);
 
         return d;
-    }
-
-    /**
-     * Convert watt to kWh and round it up with two decimals.
-     * @param watt the value you want to convert as a String
-     */
-    private double w2kWh(int watt) {
-        double converted = (double)watt/(60*1000);
-        return Math.round(converted * 100.0) / 100.0;
-    }
-
-    /**
-     * Convert a linux timestamp to a Date time.
-     * @param timestamp
-     * @return a date formatted as a String.
-     */
-    private String timestamp2DateString(int timestamp) {
-        Date date = new java.util.Date((long) timestamp * 1000);
-        Format formatter = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
-        return formatter.format(date);
     }
 }

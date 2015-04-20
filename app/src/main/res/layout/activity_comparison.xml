@@ -82,7 +82,7 @@
 
                 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
                     android:layout_width="match_parent"
-                    android:layout_height="match_parent"
+                    android:layout_height="wrap_content"
                     android:orientation="horizontal" >
 
                     <ImageView
@@ -104,6 +104,93 @@
                         android:onClick="modifyProfile"
                         android:id="@+id/buttonModify" />
 
+                </LinearLayout>
+
+                <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:orientation="horizontal" >
+
+                    <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="vertical" >
+
+                        <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent"
+                            android:orientation="horizontal" >
+
+                            <TextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:padding="8dp"
+                                android:textSize="14sp"
+                                android:text="@string/textview_comp_avg_consumption" />
+                            <TextView
+                                android:id="@+id/txtVwCompAvgCons"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:padding="8dp"
+                                android:textSize="24sp"
+                                android:text="" />
+                            <TextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:padding="8dp"
+                                android:textSize="14sp"
+                                android:text="@string/textview_comp_kWh_year" />
+                        </LinearLayout>
+
+                        <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent"
+                            android:orientation="horizontal" >
+
+                            <TextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:padding="8dp"
+                                android:textSize="14sp"
+                                android:text="@string/textview_comp_my_consumption" />
+                            <TextView
+                                android:id="@+id/txtVwCompMyCons"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:padding="8dp"
+                                android:textSize="24sp"
+                                android:text="" />
+                            <TextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:padding="8dp"
+                                android:textSize="14sp"
+                                android:text="@string/textview_comp_kWh_year" />
+                        </LinearLayout>
+
+                        <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent"
+                            android:orientation="horizontal" >
+
+                            <TextView
+                                android:id="@+id/txtVwCompPercent"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:padding="8dp"
+                                android:textSize="24sp"
+                                android:text="" />
+                            <TextView
+                                android:id="@+id/txtVwCompUnderOver"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:padding="8dp"
+                                android:textSize="24sp"
+                                android:text="" />
+                        </LinearLayout>
+                    </LinearLayout>
+
+                    <!--// graph-->
 
                 </LinearLayout>
 

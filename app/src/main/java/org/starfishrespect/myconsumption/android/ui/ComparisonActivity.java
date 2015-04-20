@@ -12,23 +12,46 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import org.starfishrespect.myconsumption.android.R;
+import org.starfishrespect.myconsumption.android.SingleInstance;
+import org.starfishrespect.myconsumption.android.data.SensorData;
 import org.starfishrespect.myconsumption.android.util.PrefUtils;
+import org.starfishrespect.myconsumption.android.util.StatUtils;
+import org.starfishrespect.myconsumption.server.api.dto.Period;
+import org.starfishrespect.myconsumption.server.api.dto.StatDTO;
+
+import java.util.List;
 
 public class ComparisonActivity extends BaseActivity {
 
     private ImageView mImageView;
     private TextView mTxtViewProfile;
+    private TextView mTxtViewAvgCons;
+    private TextView mTxtViewMyCons;
+    private TextView mTxtViewPercent;
+    private TextView mTxtViewUnderOver;
+    private String mSensorId;
+
+    static final String STATE_SENSOR = "sensorId";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_comparison);
 
+        Intent intent = getIntent();
+        Bundle extras = intent.getExtras();
+        if (extras != null)
+            mSensorId = extras.getString(STATE_SENSOR);
+
         Toolbar toolbar = getActionBarToolbar();
         toolbar.setTitle("MyConsumption - Comparison");
 
         mImageView = (ImageView) findViewById(R.id.imageViewComp);
         mTxtViewProfile = (TextView) findViewById(R.id.txtVwProfileDescription);
+        mTxtViewAvgCons = (TextView) findViewById(R.id.txtVwCompAvgCons);
+        mTxtViewMyCons = (TextView) findViewById(R.id.txtVwCompMyCons);
+        mTxtViewPercent = (TextView) findViewById(R.id.txtVwCompPercent);
+        mTxtViewUnderOver = (TextView) findViewById(R.id.txtVwCompUnderOver);
 
         populateView();
 
@@ -51,6 +74,30 @@ public class ComparisonActivity extends BaseActivity {
                 mImageView.setImageDrawable(getResources().getDrawable(R.drawable.consumption_profile_2));
                 break;
         }
+
+
+        double profileConsumption = PrefUtils.getProfileConsumption(this);
+        mTxtViewAvgCons.setText(String.valueOf((int) profileConsumption));
+
+
+        List<SensorData> sensors = SingleInstance.getUserController().getUser().getSensors();
+
+        if (mSensorId == null)
+            mSensorId = sensors.get(0).getSensorId();
+
+        SingleInstance.getStatsController().loadStats(mSensorId);
+        StatDTO stat = SingleInstance.getStatsController().getStats().get(Period.YEAR.getValue());
+
+        double myCons = StatUtils.w2kWh(stat.getConsumption());
+        mTxtViewMyCons.setText(String.valueOf((int) myCons));
+
+        double percent = (( myCons - profileConsumption) / profileConsumption) * 100.0;
+
+        mTxtViewPercent.setText(String.valueOf((int) percent) + " %");
+        if (percent > 0)
+            mTxtViewUnderOver.setText(getString(R.string.text_comp_over));
+        else
+            mTxtViewUnderOver.setText(getString(R.string.text_comp_under));
     }
 
     @Override

@@ -6,11 +6,11 @@
         <item>2</item>
     </integer-array>
 
-    <string-array name="pref_house_kwh_values">
+    <integer-array name="pref_house_kwh_values">
         <item>600</item>
         <item>1200</item>
         <item>3500</item>
-    </string-array>
+    </integer-array>
 
     <string-array name="pref_house_entries">
         <item>Studio / apartment with refrigerator: 600 kWh / year</item>

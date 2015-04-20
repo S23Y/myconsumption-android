@@ -139,4 +139,9 @@
     <string name="navdrawer_item_comparison">Comparison</string>
     <string name="textview_comp_profile_description">My energy consumption profile is best described as follows:</string>
     <string name="button_modify">Modify</string>
+    <string name="textview_comp_avg_consumption">Average profile consumption:</string>
+    <string name="textview_comp_kWh_year">kWh / year</string>
+    <string name="textview_comp_my_consumption">My consumption:</string>
+    <string name="text_comp_over">over the average</string>
+    <string name="text_comp_under">under the average</string>
 </resources>
