@@ -1,16 +1,12 @@
 package org.starfishrespect.myconsumption.android.ui;
-/**
- * Created by thibaud on 19.03.15.
- */
+
 import android.content.Intent;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
-import android.util.Log;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
-
 
 import com.github.mikephil.charting.charts.BarChart;
 import com.github.mikephil.charting.components.Legend;
@@ -32,7 +28,14 @@ import org.starfishrespect.myconsumption.server.api.dto.StatDTO;
 import java.util.ArrayList;
 import java.util.List;
 
+import static org.starfishrespect.myconsumption.android.util.LogUtils.LOGD;
+import static org.starfishrespect.myconsumption.android.util.LogUtils.makeLogTag;
+
+/**
+ * Created by thibaud on 19.04.15.
+ */
 public class ComparisonActivity extends BaseActivity implements OnChartValueSelectedListener {
+    private static final String TAG = makeLogTag(ComparisonActivity.class);
 
     private ImageView mImageView;
     private TextView mTxtViewProfile, mTxtViewAvgCons, mTxtViewMyCons;
@@ -165,11 +168,11 @@ public class ComparisonActivity extends BaseActivity implements OnChartValueSele
 
     @Override
     public void onValueSelected(Entry e, int dataSetIndex, Highlight h) {
-        Log.i("Activity", "Selected: " + e.toString() + ", dataSet: " + dataSetIndex);
+        LOGD("Activity", "Selected: " + e.toString() + ", dataSet: " + dataSetIndex);
     }
 
     @Override
     public void onNothingSelected() {
-        Log.i("Activity", "Nothing selected.");
+        LOGD("Activity", "Nothing selected.");
     }
 }
