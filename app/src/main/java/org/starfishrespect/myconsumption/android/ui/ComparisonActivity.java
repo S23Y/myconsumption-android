@@ -3,13 +3,23 @@ package org.starfishrespect.myconsumption.android.ui;
  * Created by thibaud on 19.03.15.
  */
 import android.content.Intent;
-import android.content.SharedPreferences;
+import android.graphics.Color;
 import android.os.Bundle;
-import android.preference.PreferenceManager;
 import android.support.v7.widget.Toolbar;
+import android.util.Log;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
+
+
+import com.github.mikephil.charting.charts.BarChart;
+import com.github.mikephil.charting.components.Legend;
+import com.github.mikephil.charting.data.BarData;
+import com.github.mikephil.charting.data.BarDataSet;
+import com.github.mikephil.charting.data.BarEntry;
+import com.github.mikephil.charting.data.Entry;
+import com.github.mikephil.charting.listener.OnChartValueSelectedListener;
+import com.github.mikephil.charting.utils.Highlight;
 
 import org.starfishrespect.myconsumption.android.R;
 import org.starfishrespect.myconsumption.android.SingleInstance;
@@ -19,17 +29,16 @@ import org.starfishrespect.myconsumption.android.util.StatUtils;
 import org.starfishrespect.myconsumption.server.api.dto.Period;
 import org.starfishrespect.myconsumption.server.api.dto.StatDTO;
 
+import java.util.ArrayList;
 import java.util.List;
 
-public class ComparisonActivity extends BaseActivity {
+public class ComparisonActivity extends BaseActivity implements OnChartValueSelectedListener {
 
     private ImageView mImageView;
-    private TextView mTxtViewProfile;
-    private TextView mTxtViewAvgCons;
-    private TextView mTxtViewMyCons;
-    private TextView mTxtViewPercent;
-    private TextView mTxtViewUnderOver;
+    private TextView mTxtViewProfile, mTxtViewAvgCons, mTxtViewMyCons;
+    private TextView mTxtViewPercent, mTxtViewUnderOver;
     private String mSensorId;
+    private BarChart mChart;
 
     static final String STATE_SENSOR = "sensorId";
 
@@ -52,10 +61,52 @@ public class ComparisonActivity extends BaseActivity {
         mTxtViewMyCons = (TextView) findViewById(R.id.txtVwCompMyCons);
         mTxtViewPercent = (TextView) findViewById(R.id.txtVwCompPercent);
         mTxtViewUnderOver = (TextView) findViewById(R.id.txtVwCompUnderOver);
+        mChart = (BarChart) findViewById(R.id.chart1);
+        initBarChart();
 
         populateView();
 
         overridePendingTransition(0, 0);
+    }
+
+    private void initBarChart() {
+        mChart.setOnChartValueSelectedListener(this);
+        mChart.setDescription("");
+        // scaling can now only be done on x- and y-axis separately
+        mChart.setPinchZoom(false);
+        mChart.setDrawBarShadow(false);
+        mChart.setDrawGridBackground(false);
+        mChart.getXAxis().setEnabled(false);
+        mChart.getAxisLeft().setEnabled(false);
+        mChart.getAxisRight().setEnabled(false);
+        Legend l = mChart.getLegend();
+        l.setPosition(Legend.LegendPosition.BELOW_CHART_CENTER);
+        l.setTextSize(12f);
+    }
+
+    private void setData(float value1, float value2) {
+        ArrayList<BarEntry> yVals1 = new ArrayList<>();
+        ArrayList<BarEntry> yVals2 = new ArrayList<>();
+        yVals1.add(new BarEntry(value1, 0));
+        yVals2.add(new BarEntry(value2, 0));
+
+        BarDataSet set1 = new BarDataSet(yVals1, "My consumption");
+        set1.setBarSpacePercent(55f);
+        set1.setColor(Color.rgb(192, 255, 140));
+
+        BarDataSet set2 = new BarDataSet(yVals2, "Average profile");
+        set2.setBarSpacePercent(55f);
+        set2.setColor(Color.rgb(255, 247, 140));
+
+        ArrayList<BarDataSet> dataSets = new ArrayList<>();
+        dataSets.add(set1);
+        dataSets.add(set2);
+
+        String[] xVals = {""};
+        BarData data = new BarData(xVals, dataSets);
+        data.setValueTextSize(12f);
+
+        mChart.setData(data);
     }
 
     private void populateView() {
@@ -75,10 +126,8 @@ public class ComparisonActivity extends BaseActivity {
                 break;
         }
 
-
         double profileConsumption = PrefUtils.getProfileConsumption(this);
         mTxtViewAvgCons.setText(String.valueOf((int) profileConsumption));
-
 
         List<SensorData> sensors = SingleInstance.getUserController().getUser().getSensors();
 
@@ -98,6 +147,14 @@ public class ComparisonActivity extends BaseActivity {
             mTxtViewUnderOver.setText(getString(R.string.text_comp_over));
         else
             mTxtViewUnderOver.setText(getString(R.string.text_comp_under));
+
+        setData((float) myCons, (float) profileConsumption);
+    }
+
+    public void modifyProfile(View view) {
+        // Launch settings activity
+        Intent intent = new Intent(this, SettingsActivity.class);
+        startActivity(intent);
     }
 
     @Override
@@ -106,10 +163,13 @@ public class ComparisonActivity extends BaseActivity {
         return NAVDRAWER_ITEM_COMPARISON;
     }
 
-    public void modifyProfile(View view) {
-        // Launch settings activity
-        Intent intent = new Intent(this, SettingsActivity.class);
-        startActivity(intent);
-        // finish() ?
+    @Override
+    public void onValueSelected(Entry e, int dataSetIndex, Highlight h) {
+        Log.i("Activity", "Selected: " + e.toString() + ", dataSet: " + dataSetIndex);
+    }
+
+    @Override
+    public void onNothingSelected() {
+        Log.i("Activity", "Nothing selected.");
     }
 }
