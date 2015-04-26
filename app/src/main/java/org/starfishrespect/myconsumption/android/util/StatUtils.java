@@ -14,7 +14,7 @@ public class StatUtils {
      */
     public static double w2kWh(int watt) {
         //double converted = ((double) watt*60.0) / 1000.0;
-        double converted = watt / 1000.0; // TODO not correct, timestamps needed to compute this over a period
+        double converted = watt / (60.0 * 60.0 * 1000.0); // TODO correct?
         return Math.round(converted * 100.0) / 100.0;
     }
 
