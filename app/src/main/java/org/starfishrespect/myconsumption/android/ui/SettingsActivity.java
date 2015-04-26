@@ -16,9 +16,6 @@
 
 package org.starfishrespect.myconsumption.android.ui;
 
-/**
- * Created by thibaud on 19.03.15.
- */
 import android.content.ComponentName;
 import android.content.SharedPreferences;
 import android.os.Bundle;
@@ -31,6 +28,7 @@ import org.starfishrespect.myconsumption.android.R;
 import org.starfishrespect.myconsumption.android.util.PrefUtils;
 
 /**
+ * Created by thibaud on 19.03.15.
  * Activity for customizing app settings.
  */
 public class SettingsActivity extends BaseActivity {
