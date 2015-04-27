@@ -140,7 +140,7 @@ public class ComparisonActivity extends BaseActivity implements OnChartValueSele
         SingleInstance.getStatsController().loadStats(mSensorId);
         StatDTO stat = SingleInstance.getStatsController().getStats().get(Period.YEAR.getValue());
 
-        double myCons = StatUtils.w2kWh(stat.getConsumption());
+        double myCons = StatUtils.w2kWh(stat.getAverageConsumption());
         mTxtViewMyCons.setText(String.valueOf((int) myCons));
 
         double percent = (( myCons - profileConsumption) / profileConsumption) * 100.0;

@@ -61,7 +61,7 @@ public class SlidingStatFragment extends Fragment {
         ViewCompat.setElevation(rootView, 50);
 
         // If no values found for this period, just display info for the user
-        if (mStat.getConsumption() == 0) {
+        if (mStat.getAverageConsumption() == 0) {
             TextView textView = (TextView) rootView.findViewById(R.id.txtVwConsumption);
             textView.setText(getString(R.string.textview_stat_no_value_found));
             return rootView;
@@ -69,13 +69,13 @@ public class SlidingStatFragment extends Fragment {
 
 
         TextView textView = (TextView) rootView.findViewById(R.id.txtVwConsumption);
-        textView.setText(String.valueOf(StatUtils.w2kWh(mStat.getConsumption())));
+//        textView.setText(String.valueOf(StatUtils.w2kWh(mStat.getConsumption())));
 
         textView = (TextView) rootView.findViewById(R.id.txtVwAveragekWh);
-        textView.setText(String.valueOf(StatUtils.w2kWh(mStat.getAverage())));
+        textView.setText(String.valueOf(StatUtils.w2kWh(mStat.getAverageConsumption())));
 
         textView = (TextView) rootView.findViewById(R.id.txtVwAverageWatts);
-        textView.setText(String.valueOf(mStat.getAverage()));
+        textView.setText(String.valueOf(mStat.getAverageConsumption()));
 
         textView = (TextView) rootView.findViewById(R.id.txtVwMaximum);
         textView.setText(String.valueOf(mStat.getMaxValue()));
@@ -89,21 +89,21 @@ public class SlidingStatFragment extends Fragment {
         textView = (TextView) rootView.findViewById(R.id.txtVwMinimumTimestamp);
         textView.setText(StatUtils.timestamp2DateString(mStat.getMinTimestamp()));
 
-        textView = (TextView) rootView.findViewById(R.id.txtVwCO2);
-        int co2 = (int) (StatUtils.w2kWh(mStat.getConsumption()) * SingleInstance.getkWhToCO2());
-        textView.setText(String.valueOf(co2));
+//        textView = (TextView) rootView.findViewById(R.id.txtVwCO2);
+//        int co2 = (int) (StatUtils.w2kWh(mStat.getConsumption()) * SingleInstance.getkWhToCO2());
+//        textView.setText(String.valueOf(co2));
+//
+//        textView = (TextView) rootView.findViewById(R.id.txtVwEuroHigh);
+//        int dayEuro = (int) (StatUtils.w2kWh(mStat.getConsumptionDay()) * SingleInstance.getkWhDayPrice());
+//        textView.setText(String.valueOf(dayEuro));
+//
+//        textView = (TextView) rootView.findViewById(R.id.txtVwEuroOff);
+//        int nightEuro = (int) (StatUtils.w2kWh(mStat.getConsumptionNight()) * SingleInstance.getkWhNightPrice());
+//        textView.setText(String.valueOf(nightEuro));
 
-        textView = (TextView) rootView.findViewById(R.id.txtVwEuroHigh);
-        int dayEuro = (int) (StatUtils.w2kWh(mStat.getConsumptionDay()) * SingleInstance.getkWhDayPrice());
-        textView.setText(String.valueOf(dayEuro));
-
-        textView = (TextView) rootView.findViewById(R.id.txtVwEuroOff);
-        int nightEuro = (int) (StatUtils.w2kWh(mStat.getConsumptionNight()) * SingleInstance.getkWhNightPrice());
-        textView.setText(String.valueOf(nightEuro));
-
-        textView = (TextView) rootView.findViewById(R.id.txtVwEuro);
-        int totEuro = dayEuro + nightEuro;
-        textView.setText(String.valueOf(totEuro));
+//        textView = (TextView) rootView.findViewById(R.id.txtVwEuro);
+//        int totEuro = dayEuro + nightEuro;
+//        textView.setText(String.valueOf(totEuro));
 
         // Adding arrow
         ImageView imgView = (ImageView) rootView.findViewById(R.id.imageView);
@@ -122,44 +122,44 @@ public class SlidingStatFragment extends Fragment {
         textView.setText(text + " " + StatUtils.w2kWh(diff));
 
 
-        // Piechart
-        mChart = (PieChart) rootView.findViewById(R.id.pieChart1);
-        mChart.setDescription("");
-
-        // radius of the center hole in percent of maximum radius
-        mChart.setHoleRadius(45f);
-        mChart.setTransparentCircleRadius(50f);
-
-        Legend l = mChart.getLegend();
-        l.setPosition(Legend.LegendPosition.BELOW_CHART_CENTER);
-
-        mChart.setData(generatePieData());
+//        // Piechart
+//        mChart = (PieChart) rootView.findViewById(R.id.pieChart1);
+//        mChart.setDescription("");
+//
+//        // radius of the center hole in percent of maximum radius
+//        mChart.setHoleRadius(45f);
+//        mChart.setTransparentCircleRadius(50f);
+//
+//        Legend l = mChart.getLegend();
+//        l.setPosition(Legend.LegendPosition.BELOW_CHART_CENTER);
+//
+//        mChart.setData(generatePieData());
 
         return rootView;
     }
 
-    protected PieData generatePieData() {
-        ArrayList<Entry> entries1 = new ArrayList<Entry>();
-        ArrayList<String> xVals = new ArrayList<String>();
-
-        xVals.add("PEAK TIME: " + StatUtils.w2kWh(mStat.getConsumptionDay()) + " " + getString(R.string.textview_stat_kWh));
-        xVals.add("OFF-PEAK TIME: " + StatUtils.w2kWh(mStat.getConsumptionNight()) + " " + getString(R.string.textview_stat_kWh));
-
-        //xVals.add("entry" + (1));
-        //xVals.add("entry" + (2));
-        entries1.add(new Entry((float) StatUtils.w2kWh(mStat.getConsumptionDay()), 0));
-        entries1.add(new Entry((float) StatUtils.w2kWh(mStat.getConsumptionNight()), 1));
-
-
-        PieDataSet ds1 = new PieDataSet(entries1, "");
-        ds1.setColors(ColorTemplate.VORDIPLOM_COLORS);
-        ds1.setSliceSpace(2f);
-        ds1.setValueTextColor(Color.BLACK);
-        ds1.setValueTextSize(12f);
-
-        PieData d = new PieData(xVals, ds1);
-        d.setValueTypeface(Typeface.DEFAULT);
-
-        return d;
-    }
+//    protected PieData generatePieData() {
+//        ArrayList<Entry> entries1 = new ArrayList<Entry>();
+//        ArrayList<String> xVals = new ArrayList<String>();
+//
+//        xVals.add("PEAK TIME: " + StatUtils.w2kWh(mStat.getConsumptionDay()) + " " + getString(R.string.textview_stat_kWh));
+//        xVals.add("OFF-PEAK TIME: " + StatUtils.w2kWh(mStat.getConsumptionNight()) + " " + getString(R.string.textview_stat_kWh));
+//
+//        //xVals.add("entry" + (1));
+//        //xVals.add("entry" + (2));
+//        entries1.add(new Entry((float) StatUtils.w2kWh(mStat.getConsumptionDay()), 0));
+//        entries1.add(new Entry((float) StatUtils.w2kWh(mStat.getConsumptionNight()), 1));
+//
+//
+//        PieDataSet ds1 = new PieDataSet(entries1, "");
+//        ds1.setColors(ColorTemplate.VORDIPLOM_COLORS);
+//        ds1.setSliceSpace(2f);
+//        ds1.setValueTextColor(Color.BLACK);
+//        ds1.setValueTextSize(12f);
+//
+//        PieData d = new PieData(xVals, ds1);
+//        d.setValueTypeface(Typeface.DEFAULT);
+//
+//        return d;
+//    }
 }
