@@ -12,7 +12,11 @@ import android.support.v4.app.TaskStackBuilder;
 import android.widget.Toast;
 
 import org.starfishrespect.myconsumption.android.R;
+import org.starfishrespect.myconsumption.android.SingleInstance;
+import org.starfishrespect.myconsumption.android.data.SensorData;
 import org.starfishrespect.myconsumption.android.ui.ChartActivity;
+
+import java.util.List;
 
 /**
  * Created by thibaud on 27.04.15.
@@ -27,7 +31,9 @@ public class Alarm extends BroadcastReceiver
         wl.acquire();
 
         // Put here YOUR code.
+        //List<SensorData> sensors = SingleInstance.getUserController().getUser().getSensors(); // fait tout crasher
         Toast.makeText(context, "Notification triggered", Toast.LENGTH_LONG).show(); // For example
+
         makeNotification(context);
 
         wl.release();
@@ -68,7 +74,7 @@ public class Alarm extends BroadcastReceiver
         AlarmManager am =( AlarmManager)context.getSystemService(Context.ALARM_SERVICE);
         Intent i = new Intent(context, Alarm.class);
         PendingIntent pi = PendingIntent.getBroadcast(context, 0, i, 0);
-        am.setRepeating(AlarmManager.RTC_WAKEUP, System.currentTimeMillis(), 1000 * 60 * 1, pi); // Millisec * Second * Minute
+        am.setRepeating(AlarmManager.RTC_WAKEUP, System.currentTimeMillis(), 1000 * 10, pi); // Millisec * Second * Minute
     }
 
     public void CancelAlarm(Context context)
