@@ -10,6 +10,7 @@ import org.starfishrespect.myconsumption.android.dao.DatabaseHelper;
 import org.starfishrespect.myconsumption.android.dao.SensorValuesDao;
 import org.starfishrespect.myconsumption.android.data.KeyValueData;
 import org.starfishrespect.myconsumption.android.data.SensorData;
+import org.starfishrespect.myconsumption.android.notifications.NotifierService;
 import org.starfishrespect.myconsumption.android.ui.ChartActivity;
 import org.starfishrespect.myconsumption.android.ui.LoginActivity;
 
@@ -44,6 +45,7 @@ public class SingleInstance {
             0xff000060, 0xff008000, 0xff600000, 0xff661144, 0xff606060, 0xffaa6611};
 
     private static boolean init = true;
+    private static boolean serviceStarted = false;
 
 //    // Since it is a Singleton, the constructor is private (we can't instantiate this class) => faux, ceci est une classe qui regroupe des singletons et non un singleton en elle meme
 //    private SingleInstance() {
@@ -51,7 +53,7 @@ public class SingleInstance {
 
     public static void init(Context c) {
         if (init) {
-            context = c;
+            context = c; // TODO check this. Context might point to smthg not useful after screen rotation
         }
         init = false;
 
@@ -172,5 +174,13 @@ public class SingleInstance {
 
         chartActivity.startActivity(new Intent(chartActivity, LoginActivity.class));
         chartActivity.finish();
+    }
+
+    public static void startNotificationService() {
+        if (!serviceStarted) {
+            Intent intent = new Intent(context, NotifierService.class);
+            context.startService(intent);
+            serviceStarted = true;
+        }
     }
 }

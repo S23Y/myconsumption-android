@@ -42,6 +42,7 @@ public class ChartActivity extends BaseActivity
 
         // Initialize context, database helper, user and so on...
         SingleInstance.init(this);
+        SingleInstance.startNotificationService();
 
         setContentView(R.layout.activity_chart);
 
