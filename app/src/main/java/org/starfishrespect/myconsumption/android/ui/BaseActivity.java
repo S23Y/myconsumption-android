@@ -4,6 +4,9 @@ import android.animation.ArgbEvaluator;
 import android.animation.ObjectAnimator;
 import android.animation.TypeEvaluator;
 import android.animation.ValueAnimator;
+import android.app.AlertDialog;
+import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.graphics.Color;
 import android.graphics.Rect;
@@ -25,8 +28,13 @@ import android.widget.TextView;
 
 import org.starfishrespect.myconsumption.android.R;
 import org.starfishrespect.myconsumption.android.SingleInstance;
+import org.starfishrespect.myconsumption.android.asynctasks.GetUserAsyncTask;
+import org.starfishrespect.myconsumption.android.dao.SensorValuesDao;
+import org.starfishrespect.myconsumption.android.dao.SensorValuesUpdater;
+import org.starfishrespect.myconsumption.android.data.UserData;
 import org.starfishrespect.myconsumption.android.ui.widget.ScrimInsetsScrollView;
 import org.starfishrespect.myconsumption.android.util.LUtils;
+import org.starfishrespect.myconsumption.android.util.MiscFunctions;
 import org.starfishrespect.myconsumption.android.util.UIUtils;
 
 import java.util.ArrayList;
@@ -37,7 +45,8 @@ import static org.starfishrespect.myconsumption.android.util.LogUtils.LOGI;
 import static org.starfishrespect.myconsumption.android.util.LogUtils.LOGW;
 import static org.starfishrespect.myconsumption.android.util.LogUtils.makeLogTag;
 
-public abstract class BaseActivity extends ActionBarActivity {
+public abstract class BaseActivity extends ActionBarActivity implements SensorValuesUpdater.UpdateFinishedCallback,
+        GetUserAsyncTask.GetUserCallback {
     private static final String TAG = makeLogTag(BaseActivity.class);
 
     private ObjectAnimator mStatusBarColorAnimator;
@@ -637,8 +646,7 @@ public abstract class BaseActivity extends ActionBarActivity {
         int id = item.getItemId();
         switch (id) {
             case R.id.menu_refresh:
-                SingleInstance.getChartActivity().refreshData();
-                // TODO SmthUtils.refreshData(); for now only ChartActivity is reloaded when refresh item is selected
+                refreshData();
                 LOGD(TAG, "menu refresh clicked");
                 return true;
         }
@@ -653,4 +661,71 @@ public abstract class BaseActivity extends ActionBarActivity {
     protected int getSelfNavDrawerItem() {
         return NAVDRAWER_ITEM_INVALID;
     }
+
+    /**
+     * Refresh data from server to the local Android db.
+     */
+    public void refreshData() {
+        if (!MiscFunctions.isOnline(this)) {
+            MiscFunctions.makeOfflineDialog(this).show();
+            return;
+        }
+
+        showReloadLayout(true);
+        /*PingTask.ping(Controller.getServerAddress(), new PingTask.PingResultCallback() {
+            @Override
+            public void pingResult(String url, boolean accessible) {
+                if (accessible) {*/
+        GetUserAsyncTask getUserAsyncTask = new GetUserAsyncTask(SingleInstance.getUserController().getUser().getName());
+        getUserAsyncTask.setGetUserCallback(this);
+        getUserAsyncTask.execute();
+                /*}
+                else {
+                    showReloadLayout(false);
+                    Toast.makeText(MainActivity.this, "Cannot ping server", Toast.LENGTH_SHORT).show();
+                }
+            }
+        });*/
+    }
+
+    private void showReloadLayout(boolean visible) {
+        if (visible) {
+            findViewById(R.id.layoutGlobalReloading).setVisibility(View.VISIBLE);
+        } else {
+            findViewById(R.id.layoutGlobalReloading).setVisibility(View.GONE);
+        }
+    }
+
+    // from callback of GetUserAsyncTask
+    @Override
+    public void userFound(UserData user) {
+        new SensorValuesDao(SingleInstance.getDatabaseHelper()).updateSensorList(user.getSensors());
+        SensorValuesUpdater updater = new SensorValuesUpdater();
+        updater.setUpdateFinishedCallback(this);
+        updater.refreshDB();
+    }
+
+    // from callback of GetUserAsyncTask
+    @Override
+    public void userRetrieveError(Exception e) {
+        new AlertDialog.Builder(this)
+                .setTitle(R.string.dialog_title_error)
+                .setMessage(getString(R.string.dialog_error_update_data_error))
+                .setPositiveButton(R.string.button_ok, new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        dialog.dismiss();
+                    }
+                })
+                .show();
+        showReloadLayout(false);
+    }
+
+    @Override
+    public void onUpdateFinished() {
+        showReloadLayout(false);
+        //SingleInstance.getUserController().loadUser(false);
+        SingleInstance.getUserController().reloadUser(false);
+    }
+
 }

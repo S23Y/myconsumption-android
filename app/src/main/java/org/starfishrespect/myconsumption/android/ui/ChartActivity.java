@@ -1,7 +1,5 @@
 package org.starfishrespect.myconsumption.android.ui;
 
-import android.app.AlertDialog;
-import android.content.DialogInterface;
 import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
 import android.view.View;
@@ -10,12 +8,7 @@ import org.starfishrespect.myconsumption.android.Config;
 import org.starfishrespect.myconsumption.android.R;
 import org.starfishrespect.myconsumption.android.SingleInstance;
 import org.starfishrespect.myconsumption.android.adapters.SensorListAdapter;
-import org.starfishrespect.myconsumption.android.asynctasks.GetUserAsyncTask;
-import org.starfishrespect.myconsumption.android.dao.SensorValuesDao;
-import org.starfishrespect.myconsumption.android.dao.SensorValuesUpdater;
 import org.starfishrespect.myconsumption.android.data.SensorData;
-import org.starfishrespect.myconsumption.android.data.UserData;
-import org.starfishrespect.myconsumption.android.util.MiscFunctions;
 
 import java.util.Date;
 
@@ -25,8 +18,7 @@ import static org.starfishrespect.myconsumption.android.util.LogUtils.makeLogTag
 
 public class ChartActivity extends BaseActivity
         implements
-        SensorListAdapter.SensorChangeCallback, SensorValuesUpdater.UpdateFinishedCallback,
-        GetUserAsyncTask.GetUserCallback, ChartChoiceFragment.GraphOptionChangeCallback {
+        SensorListAdapter.SensorChangeCallback, ChartChoiceFragment.GraphOptionChangeCallback {
 
     private static final String TAG = makeLogTag(ChartActivity.class);
     private boolean mFirstLaunchEver;
@@ -160,64 +152,6 @@ public class ChartActivity extends BaseActivity
         return mFirstLaunchEver;
     }
 
-    /**
-     * Refresh data from server (?).
-     */
-    public void refreshData() {
-        if (!MiscFunctions.isOnline(this)) {
-            MiscFunctions.makeOfflineDialog(this).show();
-            return;
-        }
-
-        showReloadLayout(true);
-        /*PingTask.ping(Controller.getServerAddress(), new PingTask.PingResultCallback() {
-            @Override
-            public void pingResult(String url, boolean accessible) {
-                if (accessible) {*/
-        GetUserAsyncTask getUserAsyncTask = new GetUserAsyncTask(SingleInstance.getUserController().getUser().getName());
-        getUserAsyncTask.setGetUserCallback(ChartActivity.this);
-        getUserAsyncTask.execute();
-                /*}
-                else {
-                    showReloadLayout(false);
-                    Toast.makeText(MainActivity.this, "Cannot ping server", Toast.LENGTH_SHORT).show();
-                }
-            }
-        });*/
-    }
-
-    // from callback of GetUserAsyncTask
-    @Override
-    public void userFound(UserData user) {
-        new SensorValuesDao(SingleInstance.getDatabaseHelper()).updateSensorList(user.getSensors());
-        SensorValuesUpdater updater = new SensorValuesUpdater();
-        updater.setUpdateFinishedCallback(this);
-        updater.refreshDB();
-    }
-
-    // from callback of GetUserAsyncTask
-    @Override
-    public void userRetrieveError(Exception e) {
-        new AlertDialog.Builder(this)
-                .setTitle(R.string.dialog_title_error)
-                .setMessage(getString(R.string.dialog_error_update_data_error))
-                .setPositiveButton(R.string.button_ok, new DialogInterface.OnClickListener() {
-                    @Override
-                    public void onClick(DialogInterface dialog, int which) {
-                        dialog.dismiss();
-                    }
-                })
-                .show();
-        showReloadLayout(false);
-    }
-
-    private void showReloadLayout(boolean visible) {
-        if (visible) {
-            findViewById(R.id.layoutGlobalReloading).setVisibility(View.VISIBLE);
-        } else {
-            findViewById(R.id.layoutGlobalReloading).setVisibility(View.GONE);
-        }
-    }
 
     // from callback of GraphChoiceFragment
     @Override
@@ -250,12 +184,5 @@ public class ChartActivity extends BaseActivity
         if (chartViewFragment != null) {
             chartViewFragment.setSensorColor(sensor, sensor.getColor());
         }
-    }
-
-    @Override
-    public void onUpdateFinished() {
-        showReloadLayout(false);
-        //SingleInstance.getUserController().loadUser(false);
-        SingleInstance.getUserController().reloadUser(false);
     }
 }
