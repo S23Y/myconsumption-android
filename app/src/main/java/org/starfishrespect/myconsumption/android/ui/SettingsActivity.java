@@ -38,7 +38,7 @@ public class SettingsActivity extends BaseActivity {
         setContentView(R.layout.activity_settings);
 
         Toolbar toolbar = getActionBarToolbar();
-        getSupportActionBar().setTitle("MyConsumption - Settings");
+        getSupportActionBar().setTitle(getString(R.string.title_settings));
         toolbar.setNavigationIcon(R.drawable.ic_up);
 
         toolbar.setNavigationOnClickListener(new View.OnClickListener() {

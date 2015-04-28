@@ -62,7 +62,7 @@ public class StatActivity extends BaseActivity
             mSensorId = extras.getString(STATE_SENSOR);
 
         mToolbar = getActionBarToolbar();
-        getSupportActionBar().setTitle("MyConsumption - Statistics");
+        getSupportActionBar().setTitle(getString(R.string.title_stat));
 
         setUpActionBarSpinner();
 

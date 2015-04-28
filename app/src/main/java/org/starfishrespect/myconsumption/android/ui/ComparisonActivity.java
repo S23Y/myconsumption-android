@@ -55,8 +55,8 @@ public class ComparisonActivity extends BaseActivity implements OnChartValueSele
         if (extras != null)
             mSensorId = extras.getString(STATE_SENSOR);
 
-        Toolbar toolbar = getActionBarToolbar();
-        getSupportActionBar().setTitle("MyConsumption - Comparison");
+        getActionBarToolbar();
+        getSupportActionBar().setTitle(getString(R.string.title_comp));
 
         mImageView = (ImageView) findViewById(R.id.imageViewComp);
         mTxtViewProfile = (TextView) findViewById(R.id.txtVwProfileDescription);

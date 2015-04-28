@@ -14,8 +14,8 @@ public class HelloWorldActivity extends BaseActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_helloworld);
 
-        Toolbar toolbar = getActionBarToolbar();
-        toolbar.setTitle("HelloWorld");
+        getActionBarToolbar();
+        getSupportActionBar().setTitle("HelloWorld");
 
         overridePendingTransition(0, 0);
     }

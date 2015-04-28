@@ -148,4 +148,8 @@
     <string name="pref_sync_notif">Allow to receive notifications from the server</string>
     <string name="pref_sync_refresh_sum">Refreshing frequency</string>
     <string name="pref_sync_refresh">Period between each synchronization with the server</string>
+    <string name="title_chart">MyConsumption - Chart</string>
+    <string name="title_comp">MyConsumption - Comparison</string>
+    <string name="title_settings">MyConsumption - Settings</string>
+    <string name="title_stat">MyConsumption - Statistics</string>
 </resources>
