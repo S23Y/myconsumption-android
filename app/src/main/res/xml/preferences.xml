@@ -37,7 +37,22 @@
             android:dialogTitle="@string/pref_user_profile_choose_list"
             android:entries="@array/pref_house_entries"
             android:entryValues="@array/pref_house_values"/>
+    </PreferenceCategory>
 
+    <PreferenceCategory
+        android:title="Synchronization">
+        <ListPreference
+            android:key="pref_sync_refresh"
+            android:title="@string/pref_sync_refresh_sum"
+            android:dialogTitle="@string/pref_sync_refresh"
+            android:entries="@array/pref_sync_refresh_entries"
+            android:entryValues="@array/pref_sync_refresh_values"/>
+
+        <CheckBoxPreference
+            android:key="pref_sync_notification"
+            android:title="@string/pref_sync_notif_sum"
+            android:summary="@string/pref_sync_notif"
+            android:defaultValue="true" />
     </PreferenceCategory>
 
 <!--

@@ -144,4 +144,8 @@
     <string name="textview_comp_my_consumption">My consumption:</string>
     <string name="text_comp_over">over the average</string>
     <string name="text_comp_under">under the average</string>
+    <string name="pref_sync_notif_sum">Notifications</string>
+    <string name="pref_sync_notif">Allow to receive notifications from the server</string>
+    <string name="pref_sync_refresh_sum">Refreshing frequency</string>
+    <string name="pref_sync_refresh">Period between each synchronization with the server</string>
 </resources>
