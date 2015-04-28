@@ -39,7 +39,7 @@ public class ChartActivity extends BaseActivity
         setContentView(R.layout.activity_chart);
 
         Toolbar toolbar = getActionBarToolbar();
-        toolbar.setTitle("My Consumption - Chart");
+        getSupportActionBar().setTitle("My Consumption - Chart");
 
         overridePendingTransition(0, 0);
         init();

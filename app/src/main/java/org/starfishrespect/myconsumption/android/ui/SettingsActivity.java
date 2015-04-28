@@ -38,7 +38,7 @@ public class SettingsActivity extends BaseActivity {
         setContentView(R.layout.activity_settings);
 
         Toolbar toolbar = getActionBarToolbar();
-        toolbar.setTitle("MyConsumption - Settings");
+        getSupportActionBar().setTitle("MyConsumption - Settings");
         toolbar.setNavigationIcon(R.drawable.ic_up);
 
         toolbar.setNavigationOnClickListener(new View.OnClickListener() {
@@ -136,7 +136,7 @@ public class SettingsActivity extends BaseActivity {
         setContentView(R.layout.activity_settings);
 
         Toolbar toolbar = getActionBarToolbar();
-        toolbar.setTitle("MyConsumption - Settings");
+        getSupportActionBar().setTitle("MyConsumption - Settings");
 
         mTextViewChoose = (TextView) findViewById(R.id.textViewChoose);
         mRadioGroup1 = (RadioGroup) findViewById(R.id.radioGroup1);
