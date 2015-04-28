@@ -13,7 +13,9 @@ import android.widget.Toast;
 
 import org.starfishrespect.myconsumption.android.R;
 import org.starfishrespect.myconsumption.android.SingleInstance;
+import org.starfishrespect.myconsumption.android.controllers.UserController;
 import org.starfishrespect.myconsumption.android.data.SensorData;
+import org.starfishrespect.myconsumption.android.data.UserData;
 import org.starfishrespect.myconsumption.android.ui.ChartActivity;
 
 import java.util.List;
@@ -21,8 +23,8 @@ import java.util.List;
 /**
  * Created by thibaud on 27.04.15.
  */
-public class Alarm extends BroadcastReceiver
-{
+public class Alarm extends BroadcastReceiver {
+
     @Override
     public void onReceive(Context context, Intent intent)
     {
@@ -30,8 +32,16 @@ public class Alarm extends BroadcastReceiver
         PowerManager.WakeLock wl = pm.newWakeLock(PowerManager.PARTIAL_WAKE_LOCK, "");
         wl.acquire();
 
-        // Put here YOUR code.
-        //List<SensorData> sensors = SingleInstance.getUserController().getUser().getSensors(); // fait tout crasher
+        try {
+            UserController controller = SingleInstance.getUserController();
+            System.out.println("Controller is null? " + (controller == null));
+            UserData user = controller.getUser();
+            System.out.println("User is null? " + (user == null));
+            List<SensorData> sensors = user.getSensors(); // fait tout crasher
+            System.out.println("sensors is null? " + (sensors == null));
+        } catch (Exception e) {
+
+        }
         Toast.makeText(context, "Notification triggered", Toast.LENGTH_LONG).show(); // For example
 
         makeNotification(context);
@@ -74,7 +84,7 @@ public class Alarm extends BroadcastReceiver
         AlarmManager am =( AlarmManager)context.getSystemService(Context.ALARM_SERVICE);
         Intent i = new Intent(context, Alarm.class);
         PendingIntent pi = PendingIntent.getBroadcast(context, 0, i, 0);
-        am.setRepeating(AlarmManager.RTC_WAKEUP, System.currentTimeMillis(), 1000 * 10, pi); // Millisec * Second * Minute
+        am.setRepeating(AlarmManager.RTC_WAKEUP, System.currentTimeMillis(), 1000 * 15, pi); // Millisec * Second * Minute
     }
 
     public void CancelAlarm(Context context)

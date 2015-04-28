@@ -10,6 +10,7 @@ import org.starfishrespect.myconsumption.android.dao.DatabaseHelper;
 import org.starfishrespect.myconsumption.android.dao.SensorValuesDao;
 import org.starfishrespect.myconsumption.android.data.KeyValueData;
 import org.starfishrespect.myconsumption.android.data.SensorData;
+import org.starfishrespect.myconsumption.android.data.UserData;
 import org.starfishrespect.myconsumption.android.notifications.NotifierService;
 import org.starfishrespect.myconsumption.android.ui.ChartActivity;
 import org.starfishrespect.myconsumption.android.ui.LoginActivity;
@@ -30,9 +31,9 @@ public class SingleInstance {
 
     // TODO put those config in Config.java or in an xml file
     //private static String serverAddress = "pahe.manex.biz";
-    //private static String serverAddress = "172.20.1.75"; // @manex (bridged)
+    private static String serverAddress = "172.20.1.75"; // @manex (bridged)
     //private static String serverAddress = "192.168.242.129";  // @ans (nat)
-    private static String serverAddress = "192.168.1.9"; // @ans bridged ethernet
+    //private static String serverAddress = "192.168.1.9"; // @ans bridged ethernet
     //private static String serverAddress = "192.168.1.32";   // @lw (bridged)
     private static int port = 8080;
     private static String protocol = "http://";
