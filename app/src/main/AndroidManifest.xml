@@ -43,11 +43,11 @@
 
 
         <activity
-            android:name="ui.AddSensorActivity"
+            android:name=".ui.AddSensorActivity"
             android:label="Create Sensor"/>
 
         <activity
-            android:name="ui.CreateAccountActivity"
+            android:name=".ui.CreateAccountActivity"
             android:label="Create Account" />
     </application>
 

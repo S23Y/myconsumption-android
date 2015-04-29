@@ -32,16 +32,16 @@ public class Alarm extends BroadcastReceiver {
         PowerManager.WakeLock wl = pm.newWakeLock(PowerManager.PARTIAL_WAKE_LOCK, "");
         wl.acquire();
 
-        try {
-            UserController controller = SingleInstance.getUserController();
-            System.out.println("Controller is null? " + (controller == null));
-            UserData user = controller.getUser();
-            System.out.println("User is null? " + (user == null));
-            List<SensorData> sensors = user.getSensors(); // fait tout crasher
-            System.out.println("sensors is null? " + (sensors == null));
-        } catch (Exception e) {
-
-        }
+//        try {
+//            UserController controller = SingleInstance.getUserController();
+//            System.out.println("Controller is null? " + (controller == null));
+//            UserData user = controller.getUser();
+//            System.out.println("User is null? " + (user == null));
+//            List<SensorData> sensors = user.getSensors(); // fait tout crasher
+//            System.out.println("sensors is null? " + (sensors == null));
+//        } catch (Exception e) {
+//
+//        }
         Toast.makeText(context, "Notification triggered", Toast.LENGTH_LONG).show(); // For example
 
         makeNotification(context);
