@@ -152,4 +152,5 @@
     <string name="title_comp">MyConsumption - Comparison</string>
     <string name="title_settings">MyConsumption - Settings</string>
     <string name="title_stat">MyConsumption - Statistics</string>
+    <string name="navdrawer_item_add_sensor">Add a sensor</string>
 </resources>

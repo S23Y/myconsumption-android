@@ -96,12 +96,10 @@ public abstract class BaseActivity extends ActionBarActivity implements SensorVa
     // it's a list of all possible items.
     protected static final int NAVDRAWER_ITEM_CHART = 0;
     protected static final int NAVDRAWER_ITEM_STATS = 1;
-    protected static final int NAVDRAWER_ITEM_SIGN_IN = 2;
-    protected static final int NAVDRAWER_ITEM_COMPARISON = 3;
-    protected static final int NAVDRAWER_ITEM_SETTINGS = 4;
-//    protected static final int NAVDRAWER_ITEM_VIDEO_LIBRARY = 4;
-//    protected static final int NAVDRAWER_ITEM_SIGN_IN = 5;
-
+    protected static final int NAVDRAWER_ITEM_COMPARISON = 2;
+    protected static final int NAVDRAWER_ITEM_SIGN_IN = 3;
+    protected static final int NAVDRAWER_ITEM_ADD_SENSOR = 4;
+    protected static final int NAVDRAWER_ITEM_SETTINGS = 5;
 //    protected static final int NAVDRAWER_ITEM_EXPERTS_DIRECTORY = 7;
 //    protected static final int NAVDRAWER_ITEM_PEOPLE_IVE_MET = 8;
     protected static final int NAVDRAWER_ITEM_INVALID = -1;
@@ -112,8 +110,9 @@ public abstract class BaseActivity extends ActionBarActivity implements SensorVa
     private static final int[] NAVDRAWER_TITLE_RES_ID = new int[]{
             R.string.navdrawer_item_chart,
             R.string.navdrawer_item_stat,
-            R.string.navdrawer_item_sign_in,
             R.string.navdrawer_item_comparison,
+            R.string.navdrawer_item_sign_in,
+            R.string.navdrawer_item_add_sensor,
             R.string.navdrawer_item_settings
     };
 
@@ -121,8 +120,9 @@ public abstract class BaseActivity extends ActionBarActivity implements SensorVa
     private static final int[] NAVDRAWER_ICON_RES_ID = new int[] {
             R.drawable.ic_drawer_chart,  // Chart
             R.drawable.ic_drawer_stat, // Stat
-            0, // Sign in
             R.drawable.ic_comparison,   // Comparison
+            0, // Sign in
+            R.drawable.ic_add,   // Add sensor
             R.drawable.ic_drawer_settings
     };
 
@@ -357,6 +357,7 @@ public abstract class BaseActivity extends ActionBarActivity implements SensorVa
 //            mNavDrawerItems.add(NAVDRAWER_ITEM_STATS);
 //        }
         mNavDrawerItems.add(NAVDRAWER_ITEM_SEPARATOR);
+        mNavDrawerItems.add(NAVDRAWER_ITEM_ADD_SENSOR);
 
 //        // If attendee is on-site, show the People I've Met item
 //        if (attendeeAtVenue) {
@@ -505,11 +506,11 @@ public abstract class BaseActivity extends ActionBarActivity implements SensorVa
                 startActivity(intent);
                 finish();
                 break;
-//            case NAVDRAWER_ITEM_SOCIAL:
-//                intent = new Intent(this, HelloWorldActivity.class);
-//                startActivity(intent);
-//                finish();
-//                break;
+            case NAVDRAWER_ITEM_ADD_SENSOR:
+                intent = new Intent(this, AddSensorActivity.class);
+                startActivity(intent);
+                finish();
+                break;
 //            case NAVDRAWER_ITEM_EXPERTS_DIRECTORY:
 //                intent = new Intent(this, HelloWorldActivity.class);
 //                startActivity(intent);
