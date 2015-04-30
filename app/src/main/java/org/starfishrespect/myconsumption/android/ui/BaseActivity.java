@@ -727,6 +727,7 @@ public abstract class BaseActivity extends ActionBarActivity implements SensorVa
 
     @Override
     public void onUpdateFinished() {
+        SingleInstance.getUserController().loadUser();
         showReloadLayout(false);
         //SingleInstance.getUserController().loadUser(false);
         //SingleInstance.getUserController().reloadUser(false);

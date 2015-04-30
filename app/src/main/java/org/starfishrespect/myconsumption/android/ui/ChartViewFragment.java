@@ -30,9 +30,12 @@ import org.achartengine.model.XYSeries;
 import org.achartengine.renderer.XYMultipleSeriesRenderer;
 import org.achartengine.renderer.XYSeriesRenderer;
 import org.achartengine.util.IndexXYMap;
+import org.starfishrespect.myconsumption.android.events.ColorChangedEvent;
 import org.starfishrespect.myconsumption.android.events.DateChangedEvent;
 import org.starfishrespect.myconsumption.android.events.FragmentsReadyEvent;
 import org.starfishrespect.myconsumption.android.events.ReloadUserEvent;
+import org.starfishrespect.myconsumption.android.events.UpdateMovingAverageEvent;
+import org.starfishrespect.myconsumption.android.events.VisibilityChangedEvent;
 
 import java.sql.SQLException;
 import java.text.DecimalFormat;
@@ -78,6 +81,7 @@ public class ChartViewFragment extends Fragment {
     private View refreshingView;
     private LinearLayout chartLayout;
     private boolean refreshing = false;
+    private int seekBarPosition = 0;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
@@ -130,6 +134,31 @@ public class ChartViewFragment extends Fragment {
         }
         long date = event.getDate().getTime() / 1000;
         showAllGraphicsWithPrecision((int) date, event.getDateDelay(), event.getValueDelay());
+    }
+
+    /**
+     * Triggered when the visibility is changed in ChartChoiceFragment.
+     * @param event A VisibilityChangedEvent event
+     */
+    public void onEvent(VisibilityChangedEvent event) {
+        setSensorVisibility(event.getSensor(), event.getSensor().isVisible());
+    }
+
+    /**
+     * Triggered when the color is changed in ChartChoiceFragment.
+     * @param event A ColorChangedEvent event
+     */
+    public void onEvent(ColorChangedEvent event) {
+        setSensorColor(event.getSensor(), event.getSensor().getColor());
+    }
+
+    /**
+     * Triggered when the moving average seekbar is changed in ChartChoiceFragment.
+     * @param event A UpdateMovingAverageEvent event
+     */
+    public void onEvent(UpdateMovingAverageEvent event) {
+        seekBarPosition = event.getSeekBarPosition();
+        updateMovingAverage();
     }
 
     // load data from the local database to a sensor
@@ -188,7 +217,7 @@ public class ChartViewFragment extends Fragment {
             originalChartDataset.addSeries(serie);
             currentChartDataset.addSeries(movingAverage(
                     serie,
-                    SingleInstance.getChartActivity().getSmoothingValue()));
+                    seekBarPosition));
 
             // Add series to the renderer
             chartRenderer.addSeriesRenderer(serieRenderer);
@@ -418,17 +447,16 @@ public class ChartViewFragment extends Fragment {
      * Apply a moving average on the dataset based on the smoothing option chosen by the user.
      * It updates the current data set displayed on screen based on the values given in the
      * original data set.
-     * @param n period of the moving average
      */
-    public void updateMovingAverage(int n) {
-        if (n < 0)
+    public void updateMovingAverage() {
+        if (seekBarPosition < 0)
             return;
 
         int index = 0;
 
         // Take into account each sensor and its associated series.
         for (XYSeries series : originalChartDataset.getSeries()) {
-            XYSeries moving = movingAverage(series, n);
+            XYSeries moving = movingAverage(series, seekBarPosition);
 
             currentChartDataset.removeSeries(
                     currentChartDataset.getSeriesAt(index++));

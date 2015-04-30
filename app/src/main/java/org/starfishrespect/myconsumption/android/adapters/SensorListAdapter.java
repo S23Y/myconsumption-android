@@ -11,8 +11,12 @@ import android.widget.*;
 import org.starfishrespect.myconsumption.android.R;
 import org.starfishrespect.myconsumption.android.component.ColorDialog;
 import org.starfishrespect.myconsumption.android.data.SensorData;
+import org.starfishrespect.myconsumption.android.events.ColorChangedEvent;
+import org.starfishrespect.myconsumption.android.events.VisibilityChangedEvent;
 
 import java.util.List;
+
+import de.greenrobot.event.EventBus;
 
 /**
  * Adapter that shows the list of sensors
@@ -21,7 +25,6 @@ public class SensorListAdapter extends BaseAdapter {
 
     private List<SensorData> sensors;
     private LayoutInflater inflater;
-    private SensorChangeCallback sensorChangeCallback;
     private CompoundButton.OnCheckedChangeListener checkedChangeListener;
 
     public SensorListAdapter(Context context, List<SensorData> sensors) {
@@ -30,18 +33,12 @@ public class SensorListAdapter extends BaseAdapter {
         checkedChangeListener = new CompoundButton.OnCheckedChangeListener() {
             @Override
             public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
-                if (sensorChangeCallback != null) {
-                    int id = (Integer) buttonView.getTag();
-                    SensorData sensor = SensorListAdapter.this.sensors.get(id);
-                    sensor.setVisible(isChecked);
-                    sensorChangeCallback.visibilityChanged(sensor);
-                }
+                int id = (Integer) buttonView.getTag();
+                SensorData sensor = SensorListAdapter.this.sensors.get(id);
+                sensor.setVisible(isChecked);
+                EventBus.getDefault().post(new VisibilityChangedEvent(sensor));
             }
         };
-    }
-
-    public void setSensorChangeCallback(SensorChangeCallback callback) {
-        this.sensorChangeCallback = callback;
     }
 
     @Override
@@ -87,11 +84,11 @@ public class SensorListAdapter extends BaseAdapter {
                 colorDialog.setOnColorSelected(new ColorDialog.OnColorSelected() {
                     @Override
                     public void colorSelected(Dialog dlg, int color) {
-                        if (sensorChangeCallback != null) {
-                            sensor.setColor(color);
-                            view.setBackgroundColor(color);
-                            sensorChangeCallback.colorChanged(sensor);
-                        }
+
+                        sensor.setColor(color);
+                        view.setBackgroundColor(color);
+                        EventBus.getDefault().post(new ColorChangedEvent(sensor));
+
                         dlg.dismiss();
                     }
                 });
@@ -120,11 +117,5 @@ public class SensorListAdapter extends BaseAdapter {
             imageViewSensorWarning.setVisibility(View.GONE);
         }
         return view;
-    }
-
-    public interface SensorChangeCallback {
-        public void visibilityChanged(SensorData sensor);
-
-        public void colorChanged(SensorData sensor);
     }
 }

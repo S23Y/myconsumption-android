@@ -28,6 +28,7 @@ import org.springframework.web.client.RestTemplate;
 import org.starfishrespect.myconsumption.android.events.DateChangedEvent;
 import org.starfishrespect.myconsumption.android.events.FragmentsReadyEvent;
 import org.starfishrespect.myconsumption.android.events.ReloadUserEvent;
+import org.starfishrespect.myconsumption.android.events.UpdateMovingAverageEvent;
 import org.starfishrespect.myconsumption.android.util.MiscFunctions;
 
 import java.sql.SQLException;
@@ -91,7 +92,7 @@ public class ChartChoiceFragment extends Fragment {
             @Override
             public void onStopTrackingTouch(SeekBar seekBar) {
                 // Tell ChartViewFragment to update the graph
-                SingleInstance.getChartActivity().updateMovingAverage(seekBarPosition);
+                EventBus.getDefault().post(new UpdateMovingAverageEvent(seekBarPosition));
             }
         });
 
@@ -381,95 +382,90 @@ public class ChartChoiceFragment extends Fragment {
             mLinearLayout.setVisibility(View.GONE);
             return;
         }
-        try {
-            long start = Long.MAX_VALUE;
-            long end = 0;
-            for (SensorData sensor : SingleInstance.getDatabaseHelper().getSensorDao().queryForAll()) {
-                if (start > sensor.getFirstLocalValue().getTime()) {
-                    start = sensor.getFirstLocalValue().getTime();
-                }
-                if (end < sensor.getLastLocalValue().getTime()) {
-                    end = sensor.getLastLocalValue().getTime();
-                }
-                start = start - start % 86400000L;
-                end = end - end % 86400000L;
+        long start = Long.MAX_VALUE;
+        long end = 0;
+        for (SensorData sensor : SingleInstance.getUserController().getUser().getSensors()) {
+            if (start > sensor.getFirstLocalValue().getTime()) {
+                start = sensor.getFirstLocalValue().getTime();
             }
-
-            final List<SpinnerDateData> dates = new ArrayList<>();
-            int precision = frequencies.get(spinnerFrequency.getSelectedItemPosition()).getDelay();
-            SimpleDateFormat formatter = null;
-            if (precision == FrequencyData.DELAY_EVERYTHING) {
-                dates.add(new SpinnerDateData(new Date(0), "Everything"));
-            } else if (precision == FrequencyData.DELAY_MONTH) {
-                formatter = new SimpleDateFormat("MMMM yyyy");
-                Calendar next = new GregorianCalendar();
-                next.setTimeInMillis(start);
-                next.set(Calendar.DAY_OF_MONTH, 1);
-                start = next.getTimeInMillis();
-            } else if (precision == FrequencyData.DELAY_YEAR) {
-                formatter = new SimpleDateFormat("yyyy");
-                Calendar next = new GregorianCalendar();
-                next.setTimeInMillis(start);
-                next.set(Calendar.DAY_OF_MONTH, 1);
-                next.set(Calendar.MONTH, Calendar.JANUARY);
-                start = next.getTimeInMillis();
-            } else {
-                formatter = new SimpleDateFormat("dd MMMM yyyy");
+            if (end < sensor.getLastLocalValue().getTime()) {
+                end = sensor.getLastLocalValue().getTime();
             }
-            if (start == 0) {
-                mLinearLayout.setVisibility(View.GONE);
-                return;
-            }
-            long cur = start;
-            while (cur <= end && precision != FrequencyData.DELAY_EVERYTHING) {
-                Date d = new Date(cur);
-                dates.add(new SpinnerDateData(d, formatter.format(d)));
-                switch (precision) {
-                    case FrequencyData.DELAY_MONTH: {
-                        Calendar next = new GregorianCalendar();
-                        next.setTimeInMillis(cur);
-                        next.add(Calendar.MONTH, 1);
-                        cur = next.getTimeInMillis();
-                        break;
-                    }
-                    case FrequencyData.DELAY_YEAR: {
-                        Calendar next = new GregorianCalendar();
-                        next.setTimeInMillis(cur);
-                        next.add(Calendar.YEAR, 1);
-                        cur = next.getTimeInMillis();
-                        break;
-                    }
-                    case FrequencyData.DELAY_MINUTE:
-                    case FrequencyData.DELAY_DAY:
-                    case FrequencyData.DELAY_HOUR:
-                    case FrequencyData.DELAY_WEEK:
-                    default:
-                        cur += (long) precision * 1000;
-                }
-            }
-            spinnerDate.setOnItemSelectedListener(null);
-            //spinnerDate.setAdapter(new SpinnerDateAdapter(getActivity(), dates));
-            spinnerDate.setAdapter(new SpinnerDateAdapter(SingleInstance.getChartActivity(), dates));
-            spinnerDate.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
-                @Override
-                public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
-                    FrequencyData f = frequencies.get(spinnerFrequency.getSelectedItemPosition());
-                    FrequencyData precision = (FrequencyData) spinnerPrecision.getSelectedItem();
-                    if (precision != null)
-                        EventBus.getDefault().post(new DateChangedEvent(dates.get(position).getDate(), f.getDelay(), precision.getDelay()));
-                }
-
-                @Override
-                public void onNothingSelected(AdapterView<?> parent) {
-
-                }
-            });
-            spinnerDate.setSelection(dates.size() - 1);
-            mLinearLayout.setVisibility(View.VISIBLE);
-
-        } catch (SQLException e) {
-            // todo LOGE e.printStackTrace()
+            start = start - start % 86400000L;
+            end = end - end % 86400000L;
         }
+
+        final List<SpinnerDateData> dates = new ArrayList<>();
+        int precision = frequencies.get(spinnerFrequency.getSelectedItemPosition()).getDelay();
+        SimpleDateFormat formatter = null;
+        if (precision == FrequencyData.DELAY_EVERYTHING) {
+            dates.add(new SpinnerDateData(new Date(0), "Everything"));
+        } else if (precision == FrequencyData.DELAY_MONTH) {
+            formatter = new SimpleDateFormat("MMMM yyyy");
+            Calendar next = new GregorianCalendar();
+            next.setTimeInMillis(start);
+            next.set(Calendar.DAY_OF_MONTH, 1);
+            start = next.getTimeInMillis();
+        } else if (precision == FrequencyData.DELAY_YEAR) {
+            formatter = new SimpleDateFormat("yyyy");
+            Calendar next = new GregorianCalendar();
+            next.setTimeInMillis(start);
+            next.set(Calendar.DAY_OF_MONTH, 1);
+            next.set(Calendar.MONTH, Calendar.JANUARY);
+            start = next.getTimeInMillis();
+        } else {
+            formatter = new SimpleDateFormat("dd MMMM yyyy");
+        }
+        if (start == 0) {
+            mLinearLayout.setVisibility(View.GONE);
+            return;
+        }
+        long cur = start;
+        while (cur <= end && precision != FrequencyData.DELAY_EVERYTHING) {
+            Date d = new Date(cur);
+            dates.add(new SpinnerDateData(d, formatter.format(d)));
+            switch (precision) {
+                case FrequencyData.DELAY_MONTH: {
+                    Calendar next = new GregorianCalendar();
+                    next.setTimeInMillis(cur);
+                    next.add(Calendar.MONTH, 1);
+                    cur = next.getTimeInMillis();
+                    break;
+                }
+                case FrequencyData.DELAY_YEAR: {
+                    Calendar next = new GregorianCalendar();
+                    next.setTimeInMillis(cur);
+                    next.add(Calendar.YEAR, 1);
+                    cur = next.getTimeInMillis();
+                    break;
+                }
+                case FrequencyData.DELAY_MINUTE:
+                case FrequencyData.DELAY_DAY:
+                case FrequencyData.DELAY_HOUR:
+                case FrequencyData.DELAY_WEEK:
+                default:
+                    cur += (long) precision * 1000;
+            }
+        }
+        spinnerDate.setOnItemSelectedListener(null);
+        //spinnerDate.setAdapter(new SpinnerDateAdapter(getActivity(), dates));
+        spinnerDate.setAdapter(new SpinnerDateAdapter(SingleInstance.getChartActivity(), dates));
+        spinnerDate.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+            @Override
+            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+                FrequencyData f = frequencies.get(spinnerFrequency.getSelectedItemPosition());
+                FrequencyData precision = (FrequencyData) spinnerPrecision.getSelectedItem();
+                if (precision != null)
+                    EventBus.getDefault().post(new DateChangedEvent(dates.get(position).getDate(), f.getDelay(), precision.getDelay()));
+            }
+
+            @Override
+            public void onNothingSelected(AdapterView<?> parent) {
+
+            }
+        });
+        spinnerDate.setSelection(dates.size() - 1);
+        mLinearLayout.setVisibility(View.VISIBLE);
     }
 
     public int getSmoothingValue() {

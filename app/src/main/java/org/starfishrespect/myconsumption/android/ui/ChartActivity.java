@@ -6,18 +6,14 @@ import android.widget.Toast;
 import org.starfishrespect.myconsumption.android.Config;
 import org.starfishrespect.myconsumption.android.R;
 import org.starfishrespect.myconsumption.android.SingleInstance;
-import org.starfishrespect.myconsumption.android.adapters.SensorListAdapter;
-import org.starfishrespect.myconsumption.android.data.SensorData;
 import org.starfishrespect.myconsumption.android.events.FragmentsReadyEvent;
 import org.starfishrespect.myconsumption.android.events.ReloadUserEvent;
 import de.greenrobot.event.EventBus;
 
 import static org.starfishrespect.myconsumption.android.util.LogUtils.LOGD;
-import static org.starfishrespect.myconsumption.android.util.LogUtils.LOGE;
 import static org.starfishrespect.myconsumption.android.util.LogUtils.makeLogTag;
 
-public class ChartActivity extends BaseActivity
-        implements SensorListAdapter.SensorChangeCallback {
+public class ChartActivity extends BaseActivity {
 
     private static final String TAG = makeLogTag(ChartActivity.class);
     private boolean mFirstLaunchEver;
@@ -86,31 +82,31 @@ public class ChartActivity extends BaseActivity
             this.refreshData();
     }
 
-    private ChartViewFragment getChartViewFragment() {
-        // Get the fragment
-        ChartViewFragment chartViewFragment = (ChartViewFragment)
-                getSupportFragmentManager().findFragmentById(R.id.chart_viewer);
-
-        if (chartViewFragment == null) {
-            LOGE(TAG, "ChartViewFragment not found");
-            return null;
-        } else {
-            return chartViewFragment;
-        }
-    }
-
-    private ChartChoiceFragment getGraphChoiceFragment() {
-        // Get the fragment
-        ChartChoiceFragment chartChoiceFragment = (ChartChoiceFragment)
-                getSupportFragmentManager().findFragmentById(R.id.graph_choice);
-
-        if (chartChoiceFragment == null) {
-            LOGE(TAG, "GraphChoiceFragment not found");
-            return null;
-        } else {
-            return chartChoiceFragment;
-        }
-    }
+//    private ChartViewFragment getChartViewFragment() {
+//        // Get the fragment
+//        ChartViewFragment chartViewFragment = (ChartViewFragment)
+//                getSupportFragmentManager().findFragmentById(R.id.chart_viewer);
+//
+//        if (chartViewFragment == null) {
+//            LOGE(TAG, "ChartViewFragment not found");
+//            return null;
+//        } else {
+//            return chartViewFragment;
+//        }
+//    }
+//
+//    private ChartChoiceFragment getGraphChoiceFragment() {
+//        // Get the fragment
+//        ChartChoiceFragment chartChoiceFragment = (ChartChoiceFragment)
+//                getSupportFragmentManager().findFragmentById(R.id.graph_choice);
+//
+//        if (chartChoiceFragment == null) {
+//            LOGE(TAG, "GraphChoiceFragment not found");
+//            return null;
+//        } else {
+//            return chartChoiceFragment;
+//        }
+//    }
 
     private void init() {
         // Reload the user
@@ -119,49 +115,11 @@ public class ChartActivity extends BaseActivity
         setFirstLaunchEver(false);
     }
 
-
-
-    public void updateMovingAverage(int n) {
-        if (getChartViewFragment() == null)
-            return;
-
-        getChartViewFragment().updateMovingAverage(n);
-    }
-
-    public int getSmoothingValue() {
-        if (getGraphChoiceFragment() == null)
-            return -1;
-        else
-            return getGraphChoiceFragment().getSmoothingValue();
-    }
-
     public void setFirstLaunchEver(boolean mFirstLaunchEver) {
         this.mFirstLaunchEver = mFirstLaunchEver;
     }
 
     public boolean isFirstLaunchEver() {
         return mFirstLaunchEver;
-    }
-
-
-
-
-
-    // from SensorChangeCallback
-    @Override
-    public void visibilityChanged(SensorData sensor) {
-        ChartViewFragment chartViewFragment = getChartViewFragment();
-        if (chartViewFragment != null) {
-            chartViewFragment.setSensorVisibility(sensor, sensor.isVisible());
-        }
-    }
-
-    // from SensorChangeCallback
-    @Override
-    public void colorChanged(SensorData sensor) {
-        ChartViewFragment chartViewFragment = getChartViewFragment();
-        if (chartViewFragment != null) {
-            chartViewFragment.setSensorColor(sensor, sensor.getColor());
-        }
     }
 }
