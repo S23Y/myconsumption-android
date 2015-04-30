@@ -1,11 +1,10 @@
 package org.starfishrespect.myconsumption.android.controllers;
 
-import org.starfishrespect.myconsumption.android.dao.DatabaseHelper;
 import org.starfishrespect.myconsumption.android.SingleInstance;
 import org.starfishrespect.myconsumption.android.data.SensorData;
 import org.starfishrespect.myconsumption.android.data.UserData;
 import org.codehaus.jackson.map.ObjectMapper;
-import org.starfishrespect.myconsumption.android.events.ReloadUser;
+import org.starfishrespect.myconsumption.android.events.ReloadUserEvent;
 import org.starfishrespect.myconsumption.android.util.AlertUtils;
 
 import java.io.IOException;
@@ -49,7 +48,7 @@ public class UserController {
      * @param refreshData if the data need to be refreshed.
      */
     public void reloadUser(boolean refreshData) {
-        EventBus.getDefault().post(new ReloadUser(refreshData));
+        EventBus.getDefault().post(new ReloadUserEvent(refreshData));
 
         // TODO handle reload in other activity and fragments
     }

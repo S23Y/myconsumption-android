@@ -30,7 +30,8 @@ import org.achartengine.model.XYSeries;
 import org.achartengine.renderer.XYMultipleSeriesRenderer;
 import org.achartengine.renderer.XYSeriesRenderer;
 import org.achartengine.util.IndexXYMap;
-import org.starfishrespect.myconsumption.android.events.FragmentsReady;
+import org.starfishrespect.myconsumption.android.events.FragmentsReadyEvent;
+import org.starfishrespect.myconsumption.android.events.ReloadUserEvent;
 
 import java.sql.SQLException;
 import java.text.DecimalFormat;
@@ -80,6 +81,10 @@ public class ChartViewFragment extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_chart_view, container, false);
+
+        // Register to the EventBus
+        EventBus.getDefault().register(this);
+
         textViewNoData = (TextView) view.findViewById(R.id.textViewNoData);
         textViewDataSensorName = (TextView) view.findViewById(R.id.textViewDataSensorName);
         textViewDataDate = (TextView) view.findViewById(R.id.textViewDataDate);
@@ -97,7 +102,26 @@ public class ChartViewFragment extends Fragment {
     @Override
     public void onStart() {
         super.onStart();
-        EventBus.getDefault().post(new FragmentsReady(this.getClass(), true));
+        EventBus.getDefault().post(new FragmentsReadyEvent(this.getClass(), true));
+    }
+
+    @Override
+    public void onDestroy() {
+        // Unregister to the EventBus
+        EventBus.getDefault().unregister(this);
+        super.onDestroy();
+    }
+
+    /**
+     * Triggered when the user wants to reload data.
+     * @param event A ReloadUser event
+     */
+    public void onEvent(ReloadUserEvent event) {
+        if (SingleInstance.getUserController().getUser().getSensors().size() == 0) {
+            reset();
+        } else if (!event.refreshData()) {
+            reset();
+        }
     }
 
     // load data from the local database to a sensor

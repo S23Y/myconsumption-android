@@ -25,8 +25,9 @@ import org.starfishrespect.myconsumption.android.data.SpinnerDateData;
 import org.springframework.http.converter.FormHttpMessageConverter;
 import org.springframework.http.converter.StringHttpMessageConverter;
 import org.springframework.web.client.RestTemplate;
-import org.starfishrespect.myconsumption.android.events.FragmentsReady;
-import org.starfishrespect.myconsumption.android.events.MessageEvent;
+import org.starfishrespect.myconsumption.android.events.DateChangedEvent;
+import org.starfishrespect.myconsumption.android.events.FragmentsReadyEvent;
+import org.starfishrespect.myconsumption.android.events.ReloadUserEvent;
 import org.starfishrespect.myconsumption.android.util.MiscFunctions;
 
 import java.sql.SQLException;
@@ -61,6 +62,10 @@ public class ChartChoiceFragment extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_chart_choice, container, false);
+
+        // Register to the EventBus
+        EventBus.getDefault().register(this);
+
         listViewSensor = (ListView) view.findViewById(R.id.listViewSensors);
         mLinearLayout = (LinearLayout) view.findViewById(R.id.linearLayoutDateSelectionItems);
         mTextView = (TextView) view.findViewById(R.id.textViewUsername);
@@ -130,7 +135,31 @@ public class ChartChoiceFragment extends Fragment {
     @Override
     public void onStart() {
         super.onStart();
-        EventBus.getDefault().post(new FragmentsReady(this.getClass(), true));
+        EventBus.getDefault().post(new FragmentsReadyEvent(this.getClass(), true));
+    }
+
+    @Override
+    public void onDestroy() {
+        // Unregister to the EventBus
+        EventBus.getDefault().unregister(this);
+        super.onDestroy();
+    }
+
+    /**
+     * Triggered when the user wants to reload data.
+     * @param event A ReloadUser event
+     */
+    public void onEvent(ReloadUserEvent event) {
+        setUser();
+        refreshSpinnerFrequencies();
+        refreshSpinnerPrecision();
+
+        if (SingleInstance.getUserController().getUser().getSensors().size() == 0) {
+            refreshSpinnerDate();
+        } else if (!event.refreshData()) {
+            refreshSpinnerDate();
+            EventBus.getDefault().post(new DateChangedEvent(getDate(), getDateDelay(), getValueDelay()));
+        }
     }
 
     private void editSensor(int index) {

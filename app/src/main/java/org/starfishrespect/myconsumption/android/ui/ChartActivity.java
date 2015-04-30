@@ -8,9 +8,8 @@ import org.starfishrespect.myconsumption.android.R;
 import org.starfishrespect.myconsumption.android.SingleInstance;
 import org.starfishrespect.myconsumption.android.adapters.SensorListAdapter;
 import org.starfishrespect.myconsumption.android.data.SensorData;
-import org.starfishrespect.myconsumption.android.events.FragmentsReady;
-import org.starfishrespect.myconsumption.android.events.MessageEvent;
-import org.starfishrespect.myconsumption.android.events.ReloadUser;
+import org.starfishrespect.myconsumption.android.events.FragmentsReadyEvent;
+import org.starfishrespect.myconsumption.android.events.ReloadUserEvent;
 
 import java.util.Date;
 
@@ -67,20 +66,15 @@ public class ChartActivity extends BaseActivity
         super.onDestroy();
     }
 
-    // This method will be called when a MessageEvent is posted
-    public void onEvent(MessageEvent event){
-        Toast.makeText(this, event.message, Toast.LENGTH_SHORT).show();
-    }
-
-    public void onEvent(FragmentsReady event) {
-        if (event.getFragmentClass().getName().equals(ChartChoiceFragment.class.getName())) {
+    /**
+     * Notify this activity that its child fragments are ready (meaning onStart() has been called).
+     * @param event A Fragment Ready event
+     */
+    public void onEvent(FragmentsReadyEvent event) {
+        if (event.getFragmentClass().getName().equals(ChartChoiceFragment.class.getName()))
             this.chartChoiceReady = true;
-            Toast.makeText(this, "Choice ready", Toast.LENGTH_SHORT).show();
-        }
-        if (event.getFragmentClass().getName().equals(ChartViewFragment.class.getName())) {
+        if (event.getFragmentClass().getName().equals(ChartViewFragment.class.getName()))
             this.chartViewReady = true;
-            Toast.makeText(this, "View ready", Toast.LENGTH_SHORT).show();
-        }
 
         if (chartChoiceReady && chartViewReady) {
             Toast.makeText(this, "Both are ready", Toast.LENGTH_SHORT).show();
@@ -88,36 +82,40 @@ public class ChartActivity extends BaseActivity
         }
     }
 
-    public void onEvent(ReloadUser event) {
-
+    /**
+     * Triggered when the user wants to reload data.
+     * @param event A ReloadUser event
+     */
+    public void onEvent(ReloadUserEvent event) {
+        if (event.refreshData())
+            this.refreshData();
     }
 
+    private ChartViewFragment getChartViewFragment() {
+        // Get the fragment
+        ChartViewFragment chartViewFragment = (ChartViewFragment)
+                getSupportFragmentManager().findFragmentById(R.id.chart_viewer);
 
-//    private ChartViewFragment getChartViewFragment() {
-//        // Get the fragment
-//        ChartViewFragment chartViewFragment = (ChartViewFragment)
-//                getSupportFragmentManager().findFragmentById(R.id.chart_viewer);
-//
-//        if (chartViewFragment == null) {
-//            LOGE(TAG, "ChartViewFragment not found");
-//            return null;
-//        } else {
-//            return chartViewFragment;
-//        }
-//    }
-//
-//    private ChartChoiceFragment getGraphChoiceFragment() {
-//        // Get the fragment
-//        ChartChoiceFragment chartChoiceFragment = (ChartChoiceFragment)
-//                getSupportFragmentManager().findFragmentById(R.id.graph_choice);
-//
-//        if (chartChoiceFragment == null) {
-//            LOGE(TAG, "GraphChoiceFragment not found");
-//            return null;
-//        } else {
-//            return chartChoiceFragment;
-//        }
-//    }
+        if (chartViewFragment == null) {
+            LOGE(TAG, "ChartViewFragment not found");
+            return null;
+        } else {
+            return chartViewFragment;
+        }
+    }
+
+    private ChartChoiceFragment getGraphChoiceFragment() {
+        // Get the fragment
+        ChartChoiceFragment chartChoiceFragment = (ChartChoiceFragment)
+                getSupportFragmentManager().findFragmentById(R.id.graph_choice);
+
+        if (chartChoiceFragment == null) {
+            LOGE(TAG, "GraphChoiceFragment not found");
+            return null;
+        } else {
+            return chartChoiceFragment;
+        }
+    }
 
     private void init() {
             // Reload the user
@@ -125,28 +123,7 @@ public class ChartActivity extends BaseActivity
             setFirstLaunchEver(false);
     }
 
-    public void reloadUser(boolean refreshData) {
-        ChartViewFragment chartView = getChartViewFragment();
-        ChartChoiceFragment graphChoice = getGraphChoiceFragment();
 
-        if (chartView == null || graphChoice == null)
-            return;
-
-        graphChoice.setUser();
-        graphChoice.refreshSpinnerFrequencies();
-        graphChoice.refreshSpinnerPrecision();
-
-        if (SingleInstance.getUserController().getUser().getSensors().size() == 0) {
-            graphChoice.refreshSpinnerDate();
-            chartView.reset();
-        } else if (refreshData) {
-            this.refreshData();
-        } else {
-            graphChoice.refreshSpinnerDate();
-            chartView.reset();
-            dateChanged(graphChoice.getDate(), graphChoice.getDateDelay(), graphChoice.getValueDelay());
-        }
-    }
 
     public void updateMovingAverage(int n) {
         if (getChartViewFragment() == null)

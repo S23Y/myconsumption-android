@@ -3,10 +3,10 @@ package org.starfishrespect.myconsumption.android.events;
 /**
  * Created by thibaud on 30.04.15.
  */
-public class ReloadUser {
+public class ReloadUserEvent {
     private final boolean refreshData;
 
-    public ReloadUser(boolean refresh) {
+    public ReloadUserEvent(boolean refresh) {
         this.refreshData = refresh;
     }
 
