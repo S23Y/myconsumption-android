@@ -48,7 +48,6 @@ public class ChartChoiceFragment extends Fragment {
     private TextView mTextView = null;
     private SensorListAdapter sensorListAdapter;
     private SensorListAdapter.SensorChangeCallback sensorChangeCallback;
-    private GraphOptionChangeCallback graphOptionChangeCallback;
     private Spinner spinnerDate, spinnerFrequency, spinnerPrecision;
     private List<FrequencyData> frequencies;
     private List<SensorData> sensors = null;
@@ -246,7 +245,6 @@ public class ChartChoiceFragment extends Fragment {
 
         try {
             sensorChangeCallback = (SensorListAdapter.SensorChangeCallback) activity;
-            graphOptionChangeCallback = (GraphOptionChangeCallback) activity;
             if (sensorListAdapter != null) {
                 sensorListAdapter.setSensorChangeCallback(sensorChangeCallback);
             }
@@ -366,7 +364,7 @@ public class ChartChoiceFragment extends Fragment {
                 FrequencyData f = frequencies.get(spinnerFrequency.getSelectedItemPosition());
                 FrequencyData precision = (FrequencyData) spinnerPrecision.getSelectedItem();
                 if (precision != null)
-                    graphOptionChangeCallback.dateChanged(((SpinnerDateData) spinnerDate.getSelectedItem()).getDate(), f.getDelay(), precision.getDelay());
+                    EventBus.getDefault().post(new DateChangedEvent(((SpinnerDateData) spinnerDate.getSelectedItem()).getDate(), f.getDelay(), precision.getDelay()));
             }
 
             @Override
@@ -458,7 +456,7 @@ public class ChartChoiceFragment extends Fragment {
                     FrequencyData f = frequencies.get(spinnerFrequency.getSelectedItemPosition());
                     FrequencyData precision = (FrequencyData) spinnerPrecision.getSelectedItem();
                     if (precision != null)
-                        graphOptionChangeCallback.dateChanged(dates.get(position).getDate(), f.getDelay(), precision.getDelay());
+                        EventBus.getDefault().post(new DateChangedEvent(dates.get(position).getDate(), f.getDelay(), precision.getDelay()));
                 }
 
                 @Override
