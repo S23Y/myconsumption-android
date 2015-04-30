@@ -48,7 +48,6 @@ public class ChartChoiceFragment extends Fragment {
     private LinearLayout mLinearLayout = null;
     private TextView mTextView = null;
     private SensorListAdapter sensorListAdapter;
-    private SensorListAdapter.SensorChangeCallback sensorChangeCallback;
     private Spinner spinnerDate, spinnerFrequency, spinnerPrecision;
     private List<FrequencyData> frequencies;
     private List<SensorData> sensors = null;
@@ -238,23 +237,6 @@ public class ChartChoiceFragment extends Fragment {
 
     }
 
-    @Override
-    public void onAttach(Activity activity) {
-        super.onAttach(activity);
-
-        setUser();
-
-        try {
-            sensorChangeCallback = (SensorListAdapter.SensorChangeCallback) activity;
-            if (sensorListAdapter != null) {
-                sensorListAdapter.setSensorChangeCallback(sensorChangeCallback);
-            }
-        } catch (ClassCastException e) {
-            throw new ClassCastException(activity.toString()
-                    + " must implement SensorSelectedCallback");
-        }
-    }
-
     public void setUser() {
         if (mTextView != null)
             mTextView.setText(SingleInstance.getUserController().getUser().getName());
@@ -265,7 +247,6 @@ public class ChartChoiceFragment extends Fragment {
         if (listViewSensor != null)
             listViewSensor.setAdapter(sensorListAdapter);
 
-        sensorListAdapter.setSensorChangeCallback(sensorChangeCallback);
         if (sensors.size() == 0) {
             if (mLinearLayout != null)
                 mLinearLayout.setVisibility(View.GONE);
