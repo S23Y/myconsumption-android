@@ -5,11 +5,14 @@ import org.starfishrespect.myconsumption.android.SingleInstance;
 import org.starfishrespect.myconsumption.android.data.SensorData;
 import org.starfishrespect.myconsumption.android.data.UserData;
 import org.codehaus.jackson.map.ObjectMapper;
+import org.starfishrespect.myconsumption.android.events.ReloadUser;
 import org.starfishrespect.myconsumption.android.util.AlertUtils;
 
 import java.io.IOException;
 import java.sql.SQLException;
 import java.util.List;
+
+import de.greenrobot.event.EventBus;
 
 /**
  * Created by thibaud on 06.02.15.
@@ -46,12 +49,9 @@ public class UserController {
      * @param refreshData if the data need to be refreshed.
      */
     public void reloadUser(boolean refreshData) {
-        if (SingleInstance.getChartActivity() != null)
-            SingleInstance.getChartActivity().reloadUser(refreshData);
+        EventBus.getDefault().post(new ReloadUser(refreshData));
 
-        // TODO
-//        if (getStatsFragment() != null)
-//            getStatsFragment().reloadUser(refreshData);
+        // TODO handle reload in other activity and fragments
     }
 
     public UserData getUser() {

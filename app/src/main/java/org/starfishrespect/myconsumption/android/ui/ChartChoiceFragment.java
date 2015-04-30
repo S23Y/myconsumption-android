@@ -25,11 +25,15 @@ import org.starfishrespect.myconsumption.android.data.SpinnerDateData;
 import org.springframework.http.converter.FormHttpMessageConverter;
 import org.springframework.http.converter.StringHttpMessageConverter;
 import org.springframework.web.client.RestTemplate;
+import org.starfishrespect.myconsumption.android.events.FragmentsReady;
+import org.starfishrespect.myconsumption.android.events.MessageEvent;
 import org.starfishrespect.myconsumption.android.util.MiscFunctions;
 
 import java.sql.SQLException;
 import java.text.SimpleDateFormat;
 import java.util.*;
+
+import de.greenrobot.event.EventBus;
 
 /**
  * Fragment that contains settings of the graph (which dataset to show, which range,
@@ -121,6 +125,12 @@ public class ChartChoiceFragment extends Fragment {
         });
 
         return view;
+    }
+
+    @Override
+    public void onStart() {
+        super.onStart();
+        EventBus.getDefault().post(new FragmentsReady(this.getClass(), true));
     }
 
     private void editSensor(int index) {

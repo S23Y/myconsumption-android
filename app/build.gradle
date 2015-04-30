@@ -53,4 +53,7 @@ dependencies {
 
     // MPAndroid Chart
     compile 'com.github.PhilJay:MPAndroidChart:v2.0.9'
+
+    // Event bus
+    compile 'de.greenrobot:eventbus:2.4.0'
 }

@@ -1,16 +1,20 @@
 package org.starfishrespect.myconsumption.android.ui;
 
 import android.os.Bundle;
-import android.support.v7.widget.Toolbar;
-import android.view.View;
+import android.widget.Toast;
 
 import org.starfishrespect.myconsumption.android.Config;
 import org.starfishrespect.myconsumption.android.R;
 import org.starfishrespect.myconsumption.android.SingleInstance;
 import org.starfishrespect.myconsumption.android.adapters.SensorListAdapter;
 import org.starfishrespect.myconsumption.android.data.SensorData;
+import org.starfishrespect.myconsumption.android.events.FragmentsReady;
+import org.starfishrespect.myconsumption.android.events.MessageEvent;
+import org.starfishrespect.myconsumption.android.events.ReloadUser;
 
 import java.util.Date;
+
+import de.greenrobot.event.EventBus;
 
 import static org.starfishrespect.myconsumption.android.util.LogUtils.LOGD;
 import static org.starfishrespect.myconsumption.android.util.LogUtils.LOGE;
@@ -22,10 +26,15 @@ public class ChartActivity extends BaseActivity
 
     private static final String TAG = makeLogTag(ChartActivity.class);
     private boolean mFirstLaunchEver;
+    private boolean chartChoiceReady = false;
+    private boolean chartViewReady = false;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
+        // Register to the EventBus
+        EventBus.getDefault().register(this);
 
         if (getIntent().getExtras() != null) {
             mFirstLaunchEver = getIntent().getExtras().getBoolean(Config.EXTRA_FIRST_LAUNCH, false);
@@ -42,7 +51,6 @@ public class ChartActivity extends BaseActivity
         getSupportActionBar().setTitle(getString(R.string.title_chart));
 
         overridePendingTransition(0, 0);
-        init();
     }
 
     @Override
@@ -52,59 +60,69 @@ public class ChartActivity extends BaseActivity
     }
 
 
+    @Override
+    protected void onDestroy() {
+        // Unregister to the EventBus
+        EventBus.getDefault().unregister(this);
+        super.onDestroy();
+    }
+
+    // This method will be called when a MessageEvent is posted
+    public void onEvent(MessageEvent event){
+        Toast.makeText(this, event.message, Toast.LENGTH_SHORT).show();
+    }
+
+    public void onEvent(FragmentsReady event) {
+        if (event.getFragmentClass().getName().equals(ChartChoiceFragment.class.getName())) {
+            this.chartChoiceReady = true;
+            Toast.makeText(this, "Choice ready", Toast.LENGTH_SHORT).show();
+        }
+        if (event.getFragmentClass().getName().equals(ChartViewFragment.class.getName())) {
+            this.chartViewReady = true;
+            Toast.makeText(this, "View ready", Toast.LENGTH_SHORT).show();
+        }
+
+        if (chartChoiceReady && chartViewReady) {
+            Toast.makeText(this, "Both are ready", Toast.LENGTH_SHORT).show();
+            init();
+        }
+    }
+
+    public void onEvent(ReloadUser event) {
+
+    }
+
+
+//    private ChartViewFragment getChartViewFragment() {
+//        // Get the fragment
+//        ChartViewFragment chartViewFragment = (ChartViewFragment)
+//                getSupportFragmentManager().findFragmentById(R.id.chart_viewer);
 //
-//    @Override
-//    public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-//        View inflatedView = inflater.inflate(R.layout.fragment_chart, container, false);
+//        if (chartViewFragment == null) {
+//            LOGE(TAG, "ChartViewFragment not found");
+//            return null;
+//        } else {
+//            return chartViewFragment;
+//        }
+//    }
 //
-//        // get fragment manager
-//        FragmentManager fm = getFragmentManager();
+//    private ChartChoiceFragment getGraphChoiceFragment() {
+//        // Get the fragment
+//        ChartChoiceFragment chartChoiceFragment = (ChartChoiceFragment)
+//                getSupportFragmentManager().findFragmentById(R.id.graph_choice);
 //
-//        // todo: remove this
-//        System.out.println("graphchoicclasss: " + GraphChoiceFragment.class.toString() + "\n"
-//                + "chartviewclass: " + ChartViewFragment.class.toString());
-//        // add
-//        FragmentTransaction ft = fm.beginTransaction();
-//        ft.add(R.id.choice_container, new GraphChoiceFragment(), GraphChoiceFragment.class.toString());
-//        ft.add(R.id.chart_container, new ChartViewFragment(), ChartViewFragment.class.toString());
-//
-//        ft.commit();
-//
-//        return inflatedView;
+//        if (chartChoiceFragment == null) {
+//            LOGE(TAG, "GraphChoiceFragment not found");
+//            return null;
+//        } else {
+//            return chartChoiceFragment;
+//        }
 //    }
 
-    private ChartViewFragment getChartViewFragment() {
-        // Get the fragment
-        ChartViewFragment chartViewFragment = (ChartViewFragment)
-                getSupportFragmentManager().findFragmentById(R.id.chart_viewer);
-
-        if (chartViewFragment == null) {
-            LOGE(TAG, "ChartViewFragment not found");
-            return null;
-        } else {
-            return chartViewFragment;
-        }
-    }
-
-    private ChartChoiceFragment getGraphChoiceFragment() {
-        // Get the fragment
-        ChartChoiceFragment chartChoiceFragment = (ChartChoiceFragment)
-                getSupportFragmentManager().findFragmentById(R.id.graph_choice);
-
-        if (chartChoiceFragment == null) {
-            LOGE(TAG, "GraphChoiceFragment not found");
-            return null;
-        } else {
-            return chartChoiceFragment;
-        }
-    }
-
-    public void init() {
-        if (getChartViewFragment() != null && getGraphChoiceFragment() != null) {
+    private void init() {
             // Reload the user
             SingleInstance.getUserController().reloadUser(isFirstLaunchEver());
             setFirstLaunchEver(false);
-        }
     }
 
     public void reloadUser(boolean refreshData) {

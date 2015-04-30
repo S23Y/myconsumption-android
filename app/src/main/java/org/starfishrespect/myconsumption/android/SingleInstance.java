@@ -179,10 +179,10 @@ public class SingleInstance {
     }
 
     public static void startNotificationService() {
-        if (!serviceStarted) {
-            Intent intent = new Intent(context, NotifierService.class);
-            context.startService(intent);
-            serviceStarted = true;
-        }
+//        if (!serviceStarted) {
+//            Intent intent = new Intent(context, NotifierService.class);
+//            context.startService(intent);
+//            serviceStarted = true;
+//        }
     }
 }
