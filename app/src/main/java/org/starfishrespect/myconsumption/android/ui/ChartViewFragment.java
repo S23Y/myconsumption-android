@@ -95,11 +95,6 @@ public class ChartViewFragment extends Fragment {
         colorViewSelectedData = view.findViewById(R.id.colorViewSelectedData);
         chartLayout = (LinearLayout) view.findViewById(R.id.chartContainer);
 
-        // Reset and init the graph
-        reset();
-        // Load data from local db
-        new loadLocalDataTask().execute();
-
         return view;
     }
 
@@ -121,11 +116,8 @@ public class ChartViewFragment extends Fragment {
      * @param event A ReloadUser event
      */
     public void onEvent(ReloadUserEvent event) {
-        if ((SingleInstance.getUserController().getUser().getSensors().size() == 0) || event.refreshDataFromServer()) {
-            reset();
-        } else {
-            reset();
-        }
+        // Reset and init the graph
+        reset();
     }
 
     /**
@@ -374,20 +366,16 @@ public class ChartViewFragment extends Fragment {
         chartLayout.removeAllViews();
         chart = null;
         data = new HashMap<>();
-        try {
-            List<SensorData> sensors = SingleInstance.getDatabaseHelper().getSensorDao().queryForAll();
-            if (sensors.size() == 0) {
-                textViewNoData.setVisibility(View.VISIBLE);
-                textViewNoData.setText(R.string.chart_text_no_sensor);
-                refreshingView.setVisibility(View.GONE);
-            } else {
-                textViewNoData.setText(R.string.chart_text_no_data);
-            }
-            for (SensorData sensor : sensors) {
-                data.put(sensor.getSensorId(), new ChartSerieRendererContainer(sensor));
-            }
-        } catch (SQLException e) {
-
+        List<SensorData> sensors = SingleInstance.getUserController().getUser().getSensors();
+        if (sensors.size() == 0) {
+            textViewNoData.setVisibility(View.VISIBLE);
+            textViewNoData.setText(R.string.chart_text_no_sensor);
+            refreshingView.setVisibility(View.GONE);
+        } else {
+            textViewNoData.setText(R.string.chart_text_no_data);
+        }
+        for (SensorData sensor : sensors) {
+            data.put(sensor.getSensorId(), new ChartSerieRendererContainer(sensor));
         }
         textViewNoData.setVisibility(View.VISIBLE);
 
