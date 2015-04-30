@@ -30,6 +30,7 @@ import org.achartengine.model.XYSeries;
 import org.achartengine.renderer.XYMultipleSeriesRenderer;
 import org.achartengine.renderer.XYSeriesRenderer;
 import org.achartengine.util.IndexXYMap;
+import org.starfishrespect.myconsumption.android.events.DateChangedEvent;
 import org.starfishrespect.myconsumption.android.events.FragmentsReadyEvent;
 import org.starfishrespect.myconsumption.android.events.ReloadUserEvent;
 
@@ -94,7 +95,10 @@ public class ChartViewFragment extends Fragment {
         colorViewSelectedData = view.findViewById(R.id.colorViewSelectedData);
         chartLayout = (LinearLayout) view.findViewById(R.id.chartContainer);
 
+        // Reset and init the graph
         reset();
+        // Load data from local db
+        new loadLocalDataTask().execute();
 
         return view;
     }
@@ -117,11 +121,23 @@ public class ChartViewFragment extends Fragment {
      * @param event A ReloadUser event
      */
     public void onEvent(ReloadUserEvent event) {
-        if (SingleInstance.getUserController().getUser().getSensors().size() == 0) {
+        if ((SingleInstance.getUserController().getUser().getSensors().size() == 0) || event.refreshDataFromServer()) {
             reset();
-        } else if (!event.refreshData()) {
+        } else {
             reset();
         }
+    }
+
+    /**
+     * Triggered when the date is changed in the spinner of ChartChoiceFragment.
+     * @param event A ReloadUser event
+     */
+    public void onEvent(DateChangedEvent event) {
+        if (event.getDate() == null) {
+            return;
+        }
+        long date = event.getDate().getTime() / 1000;
+        showAllGraphicsWithPrecision((int) date, event.getDateDelay(), event.getValueDelay());
     }
 
     // load data from the local database to a sensor
@@ -339,7 +355,7 @@ public class ChartViewFragment extends Fragment {
         currentValueDelay = valueDelay;
         refreshingView.setVisibility(View.VISIBLE);
         textViewNoData.setVisibility(View.GONE);
-        new loadDataTask().execute();
+        new loadLocalDataTask().execute();
     }
 
     // clears the graph
@@ -517,7 +533,7 @@ public class ChartViewFragment extends Fragment {
         } catch (SQLException e) {
             e.printStackTrace();
         }
-        new loadDataTask().execute(sensor);
+        new loadLocalDataTask().execute(sensor);
     }
 
     // change the color of a sensor of the graph
@@ -533,11 +549,11 @@ public class ChartViewFragment extends Fragment {
         } catch (SQLException e) {
             e.printStackTrace();
         }
-        new loadDataTask().execute(sensor);
+        new loadLocalDataTask().execute(sensor);
     }
 
     // task to load a data serie from the database, to avoid blocking
-    private class loadDataTask extends AsyncTask<SensorData, ChartSerieRendererContainer, Void> {
+    private class loadLocalDataTask extends AsyncTask<SensorData, ChartSerieRendererContainer, Void> {
         @Override
         protected void onPreExecute() {
             refreshing = true;

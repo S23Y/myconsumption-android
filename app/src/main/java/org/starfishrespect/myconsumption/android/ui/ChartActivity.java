@@ -10,9 +10,6 @@ import org.starfishrespect.myconsumption.android.adapters.SensorListAdapter;
 import org.starfishrespect.myconsumption.android.data.SensorData;
 import org.starfishrespect.myconsumption.android.events.FragmentsReadyEvent;
 import org.starfishrespect.myconsumption.android.events.ReloadUserEvent;
-
-import java.util.Date;
-
 import de.greenrobot.event.EventBus;
 
 import static org.starfishrespect.myconsumption.android.util.LogUtils.LOGD;
@@ -20,8 +17,7 @@ import static org.starfishrespect.myconsumption.android.util.LogUtils.LOGE;
 import static org.starfishrespect.myconsumption.android.util.LogUtils.makeLogTag;
 
 public class ChartActivity extends BaseActivity
-        implements
-        SensorListAdapter.SensorChangeCallback, ChartChoiceFragment.GraphOptionChangeCallback {
+        implements SensorListAdapter.SensorChangeCallback {
 
     private static final String TAG = makeLogTag(ChartActivity.class);
     private boolean mFirstLaunchEver;
@@ -42,7 +38,6 @@ public class ChartActivity extends BaseActivity
 
         // Initialize context, database helper, user and so on...
         SingleInstance.init(this);
-        SingleInstance.startNotificationService();
 
         setContentView(R.layout.activity_chart);
 
@@ -87,7 +82,7 @@ public class ChartActivity extends BaseActivity
      * @param event A ReloadUser event
      */
     public void onEvent(ReloadUserEvent event) {
-        if (event.refreshData())
+        if (event.refreshDataFromServer())
             this.refreshData();
     }
 
@@ -119,7 +114,8 @@ public class ChartActivity extends BaseActivity
 
     private void init() {
         // Reload the user
-        SingleInstance.getUserController().reloadUser(isFirstLaunchEver());
+        //SingleInstance.getUserController().reloadUser(isFirstLaunchEver());
+        EventBus.getDefault().post(new ReloadUserEvent(isFirstLaunchEver()));
         setFirstLaunchEver(false);
     }
 
@@ -148,19 +144,7 @@ public class ChartActivity extends BaseActivity
     }
 
 
-    // from callback of GraphChoiceFragment
-    @Override
-    public void dateChanged(Date newDate, int dateDelay, int valueDelay) {
-        if (newDate == null) {
-            return;
-        }
-        long date = newDate.getTime() / 1000;
 
-        ChartViewFragment chartViewFragment = getChartViewFragment();
-        if (chartViewFragment != null) {
-            chartViewFragment.showAllGraphicsWithPrecision((int) date, dateDelay, valueDelay);
-        }
-    }
 
 
     // from SensorChangeCallback

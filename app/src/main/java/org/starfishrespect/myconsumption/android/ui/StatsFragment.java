@@ -42,7 +42,7 @@
 //        return view;
 //    }
 //
-//    public void reloadUser(boolean refreshData) {
+//    public void reloadUser(boolean refreshDataFromServer) {
 //        // todo
 //    }
 //

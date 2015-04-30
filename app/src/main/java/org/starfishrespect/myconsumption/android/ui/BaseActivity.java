@@ -32,12 +32,15 @@ import org.starfishrespect.myconsumption.android.asynctasks.GetUserAsyncTask;
 import org.starfishrespect.myconsumption.android.dao.SensorValuesDao;
 import org.starfishrespect.myconsumption.android.dao.SensorValuesUpdater;
 import org.starfishrespect.myconsumption.android.data.UserData;
+import org.starfishrespect.myconsumption.android.events.ReloadUserEvent;
 import org.starfishrespect.myconsumption.android.ui.widget.ScrimInsetsScrollView;
 import org.starfishrespect.myconsumption.android.util.LUtils;
 import org.starfishrespect.myconsumption.android.util.MiscFunctions;
 import org.starfishrespect.myconsumption.android.util.UIUtils;
 
 import java.util.ArrayList;
+
+import de.greenrobot.event.EventBus;
 
 import static org.starfishrespect.myconsumption.android.util.LogUtils.LOGD;
 import static org.starfishrespect.myconsumption.android.util.LogUtils.LOGE;
@@ -726,7 +729,8 @@ public abstract class BaseActivity extends ActionBarActivity implements SensorVa
     public void onUpdateFinished() {
         showReloadLayout(false);
         //SingleInstance.getUserController().loadUser(false);
-        SingleInstance.getUserController().reloadUser(false);
+        //SingleInstance.getUserController().reloadUser(false);
+        EventBus.getDefault().post(new ReloadUserEvent(false));
     }
 
 }

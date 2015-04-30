@@ -64,6 +64,9 @@ public class SingleInstance {
 
         // Load the user
         SingleInstance.getUserController().loadUser();
+
+        // Start the notification service
+        SingleInstance.startNotificationService();
     }
 
     public static ChartActivity getChartActivity() {

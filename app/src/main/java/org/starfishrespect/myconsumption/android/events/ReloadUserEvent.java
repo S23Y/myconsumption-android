@@ -10,7 +10,7 @@ public class ReloadUserEvent {
         this.refreshData = refresh;
     }
 
-    public boolean refreshData() {
+    public boolean refreshDataFromServer() {
         return refreshData;
     }
 }

@@ -37,20 +37,10 @@ public class UserController {
             sensors = SingleInstance.getDatabaseHelper().getSensorDao().queryForAll();
             user.setSensors(sensors);
             //// Notify the fragments that the user has been modified
-            //SingleInstance.getUserController().reloadUser(refreshData);
+            //SingleInstance.getUserController().reloadUser(refreshDataFromServer);
         } catch (IOException| SQLException e) {
             AlertUtils.buildAlert();
         }
-    }
-
-    /**
-     * Notify the activities that the user has been modified so they can reload it.
-     * @param refreshData if the data need to be refreshed.
-     */
-    public void reloadUser(boolean refreshData) {
-        EventBus.getDefault().post(new ReloadUserEvent(refreshData));
-
-        // TODO handle reload in other activity and fragments
     }
 
     public UserData getUser() {

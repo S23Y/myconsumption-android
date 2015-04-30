@@ -154,9 +154,9 @@ public class ChartChoiceFragment extends Fragment {
         refreshSpinnerFrequencies();
         refreshSpinnerPrecision();
 
-        if (SingleInstance.getUserController().getUser().getSensors().size() == 0) {
+        if ((SingleInstance.getUserController().getUser().getSensors().size() == 0) || event.refreshDataFromServer()) {
             refreshSpinnerDate();
-        } else if (!event.refreshData()) {
+        } else {
             refreshSpinnerDate();
             EventBus.getDefault().post(new DateChangedEvent(getDate(), getDateDelay(), getValueDelay()));
         }
@@ -212,7 +212,8 @@ public class ChartChoiceFragment extends Fragment {
                                             @Override
                                             public void onClick(DialogInterface dialog, int which) {
                                                 //SingleInstance.getUserController().loadUser(false);
-                                                SingleInstance.getUserController().reloadUser(false);
+                                                //SingleInstance.getUserController().reloadUser(false);
+                                                EventBus.getDefault().post(new ReloadUserEvent(false));
                                                 dialog.dismiss();
                                             }
                                         }).show();
@@ -469,16 +470,12 @@ public class ChartChoiceFragment extends Fragment {
             mLinearLayout.setVisibility(View.VISIBLE);
 
         } catch (SQLException e) {
-
+            // todo LOGE e.printStackTrace()
         }
     }
 
     public int getSmoothingValue() {
         return seekBarPosition;
-    }
-
-    public interface GraphOptionChangeCallback {
-        public void dateChanged(Date newDate, int dateDelay, int valueDelay);
     }
 
     public Date getDate() {

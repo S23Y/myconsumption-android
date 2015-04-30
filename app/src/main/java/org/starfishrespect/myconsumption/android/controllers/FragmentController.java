@@ -38,13 +38,13 @@
 //     * Notify the fragments that the user has been modified so they can reload it.
 //     * @param refreshData if the data need to be refreshed.
 //     */
-//    public void reloadUser(boolean refreshData) {
+//    public void reloadUser(boolean refreshDataFromServer) {
 //        if (SingleInstance.getChartActivity() != null)
-//            SingleInstance.getChartActivity().reloadUser(refreshData);
+//            SingleInstance.getChartActivity().reloadUser(refreshDataFromServer);
 //
 //        // TODO
 ////        if (getStatsFragment() != null)
-////            getStatsFragment().reloadUser(refreshData);
+////            getStatsFragment().reloadUser(refreshDataFromServer);
 //    }
 //
 //    private Fragment getFragment(Class<?> fragmentClass) {
