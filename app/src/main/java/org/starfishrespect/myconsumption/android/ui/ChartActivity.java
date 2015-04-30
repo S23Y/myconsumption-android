@@ -118,9 +118,9 @@ public class ChartActivity extends BaseActivity
     }
 
     private void init() {
-            // Reload the user
-            SingleInstance.getUserController().reloadUser(isFirstLaunchEver());
-            setFirstLaunchEver(false);
+        // Reload the user
+        SingleInstance.getUserController().reloadUser(isFirstLaunchEver());
+        setFirstLaunchEver(false);
     }
 
 
