@@ -82,35 +82,8 @@ public class ChartActivity extends BaseActivity {
             this.refreshData();
     }
 
-//    private ChartViewFragment getChartViewFragment() {
-//        // Get the fragment
-//        ChartViewFragment chartViewFragment = (ChartViewFragment)
-//                getSupportFragmentManager().findFragmentById(R.id.chart_viewer);
-//
-//        if (chartViewFragment == null) {
-//            LOGE(TAG, "ChartViewFragment not found");
-//            return null;
-//        } else {
-//            return chartViewFragment;
-//        }
-//    }
-//
-//    private ChartChoiceFragment getGraphChoiceFragment() {
-//        // Get the fragment
-//        ChartChoiceFragment chartChoiceFragment = (ChartChoiceFragment)
-//                getSupportFragmentManager().findFragmentById(R.id.graph_choice);
-//
-//        if (chartChoiceFragment == null) {
-//            LOGE(TAG, "GraphChoiceFragment not found");
-//            return null;
-//        } else {
-//            return chartChoiceFragment;
-//        }
-//    }
-
     private void init() {
         // Reload the user
-        //SingleInstance.getUserController().reloadUser(isFirstLaunchEver());
         EventBus.getDefault().post(new ReloadUserEvent(isFirstLaunchEver()));
         setFirstLaunchEver(false);
     }
