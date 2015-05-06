@@ -9,6 +9,7 @@ import android.support.v4.view.ViewPager;
 import android.support.v7.app.ActionBar;
 import android.support.v7.widget.Toolbar;
 import android.util.TypedValue;
+import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -42,6 +43,7 @@ public class StatActivity extends BaseActivity
     private PagerSlidingTabStrip mTabs;
     private ViewPager mPager;
 
+    private Spinner mSpinner;
     private MyPagerAdapter mPageAdapter;
     private SpinnerSensorAdapter mSpinnerAdapter;
     private List<StatDTO> mStats;
@@ -95,6 +97,7 @@ public class StatActivity extends BaseActivity
                 mToolbar, false);
         ActionBar.LayoutParams lp = new ActionBar.LayoutParams(
                 ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT);
+        lp.gravity = Gravity.RIGHT;
         mToolbar.addView(spinnerContainer, lp);
 
         List<SensorData> sensors = SingleInstance.getUserController().getUser().getSensors();
@@ -105,7 +108,7 @@ public class StatActivity extends BaseActivity
         mSpinnerAdapter = new SpinnerSensorAdapter(StatActivity.this, sensors);
 
         // Populate spinners
-        Spinner spinner = (Spinner) spinnerContainer.findViewById(R.id.actionbar_spinner);
+        mSpinner = (Spinner) spinnerContainer.findViewById(R.id.actionbar_spinner);
 
 //        // Create an ArrayAdapter using the string array and a default spinner layout
 //        ArrayAdapter<CharSequence> spinnerAdapter = ArrayAdapter.createFromResource(this,
@@ -113,22 +116,22 @@ public class StatActivity extends BaseActivity
 //        // Specify the layout to use when the list of choices appears
 //        spinnerAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         // Apply the adapter to the spinner
-        spinner.setAdapter(mSpinnerAdapter);
+        mSpinner.setAdapter(mSpinnerAdapter);
 
-        spinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+        mSpinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> spinner, View view, int position, long itemId) {
 
                 if (!mFirstStart) {
                     //onTopLevelTagSelected(mTopLevelSpinnerAdapter.getTag(position));
-                    Toast.makeText(StatActivity.this,"spinner selected " + mSpinnerAdapter.getItem(position), Toast.LENGTH_SHORT).show();
+                    Toast.makeText(StatActivity.this, "spinner selected " + mSpinnerAdapter.getItem(position), Toast.LENGTH_SHORT).show();
                     mSensorId = (String) mSpinnerAdapter.getItem(position);
                     //onStatUpdateFinished();
                     //getWindow().getDecorView().findViewById(android.R.id.mainLayout).invalidate();
 
                     //Intent intent = new Intent(StatActivity.this, StatActivity.class);
                     Intent intent = getIntent();
-                    intent.putExtra(STATE_SENSOR,mSensorId);
+                    intent.putExtra(STATE_SENSOR, mSensorId);
                     finish();
                     startActivity(intent);
                 }
@@ -170,6 +173,10 @@ public class StatActivity extends BaseActivity
     @Override
     public void onConfigUpdateFinished() {
        // todo : reload the value co2 € kwH day and € kwh night
+    }
+
+    public void openSpinner(View view) {
+        mSpinner.performClick();
     }
 
 

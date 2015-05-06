@@ -47,6 +47,7 @@ public class SpinnerSensorAdapter extends BaseAdapter {
             view = inflater.inflate(android.R.layout.simple_spinner_dropdown_item, null);
         }
         TextView tv = (TextView) view.findViewById(android.R.id.text1);
+        tv.setTextColor(parent.getResources().getColor(R.color.navdrawer_background));
         tv.setText(sensors.get(position).getName());
         return view;
     }
