@@ -3,7 +3,6 @@ package org.starfishrespect.myconsumption.android.ui;
 import android.content.Intent;
 import android.graphics.Color;
 import android.os.Bundle;
-import android.support.v4.view.ViewPager;
 import android.support.v7.app.ActionBar;
 import android.support.v7.widget.Toolbar;
 import android.view.Gravity;
@@ -16,7 +15,6 @@ import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.astuetz.PagerSlidingTabStrip;
 import com.github.mikephil.charting.charts.BarChart;
 import com.github.mikephil.charting.components.Legend;
 import com.github.mikephil.charting.data.BarData;
@@ -148,7 +146,7 @@ public class ComparisonActivity extends BaseActivity implements OnChartValueSele
         SingleInstance.getStatsController().loadStats(sensorId);
         StatDTO stat = SingleInstance.getStatsController().getStats().get(Period.YEAR.getValue());
 
-        double myCons = StatUtils.w2kWh(stat.getConsumption());
+        double myCons = StatUtils.wh2kWh(stat.getConsumption());
         mTxtViewMyCons.setText(String.valueOf((int) myCons));
 
         double percent = (( myCons - profileConsumption) / profileConsumption) * 100.0;

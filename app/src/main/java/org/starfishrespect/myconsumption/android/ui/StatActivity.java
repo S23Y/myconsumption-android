@@ -154,7 +154,7 @@ public class StatActivity extends BaseActivity
         final int pageMargin = (int) TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, 4, getResources()
                 .getDisplayMetrics());
         mPager.setPageMargin(pageMargin);
-        mPager.setCurrentItem(1);
+        mPager.setCurrentItem(0);
     }
 
     @Override
@@ -169,7 +169,7 @@ public class StatActivity extends BaseActivity
 
     public class MyPagerAdapter extends FragmentPagerAdapter {
 
-        private final String[] TITLES = {"ALL TIME", "DAY", "WEEK", "MONTH", "YEAR"};
+        private final String[] TITLES = {"DAY", "WEEK", "MONTH", "YEAR", "ALL TIME"};
 
         public MyPagerAdapter(FragmentManager fm) {
             super(fm);
@@ -187,7 +187,14 @@ public class StatActivity extends BaseActivity
 
         @Override
         public Fragment getItem(int position) {
-            return SlidingStatFragment.newInstance(mStats.get(position));
+            StatDTO stat = null;
+            try {
+                stat = mStats.get(position);
+            } catch (Exception e) {
+                LOGD(TAG, "Stat not found while trying to populate SlidingStatFragment " + e.toString());
+            }
+
+            return SlidingStatFragment.newInstance(stat);
         }
     }
 }

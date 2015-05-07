@@ -58,13 +58,13 @@
 //        for (Period p : Period.values()) {
 //            StatDTO stat = stats.getStatDTOs().get(p.getValue());
 //            text += "\n\n" + p.toString() + "\n"
-//                    + "Consumption over period: " + stat.getConsumption() + "watts (" + w2kWh(stat.getConsumption()) +"kWh.\n"
-//                    + "Average consumption: " + stat.getAverage() + " watts (" + w2kWh(stat.getAverage()) + " kWh).\n"
+//                    + "Consumption over period: " + stat.getConsumption() + "watts (" + wh2kWh(stat.getConsumption()) +"kWh.\n"
+//                    + "Average consumption: " + stat.getAverage() + " watts (" + wh2kWh(stat.getAverage()) + " kWh).\n"
 //                    + "Maximum value (" + timestamp2Date(stat.getMax().getTimestamp()) + ") : "
-//                    + stat.getMax().getValue() + " watts (" + w2kWh(stat.getMax().getValue()) + " kWh).\n"
+//                    + stat.getMax().getValue() + " watts (" + wh2kWh(stat.getMax().getValue()) + " kWh).\n"
 //                    + "Minimum value (" + timestamp2Date(stat.getMin().getTimestamp()) + ") : "
-//                    + stat.getMin().getValue() + " watts (" + w2kWh(stat.getMin().getValue()) + " kWh).\n"
-//                    + "Diff of consumption between last two periods: " + w2kWh(stat.getDiffLastTwo()) + " kWh.";
+//                    + stat.getMin().getValue() + " watts (" + wh2kWh(stat.getMin().getValue()) + " kWh).\n"
+//                    + "Diff of consumption between last two periods: " + wh2kWh(stat.getDiffLastTwo()) + " kWh.";
 //        }
 //
 //        mTextView.setText(text);
@@ -74,7 +74,7 @@
 //     * Convert watt to kWh and round it up with two decimals.
 //     * @param watt the value you want to convert
 //     */
-//    private double w2kWh(int watt) {
+//    private double wh2kWh(int watt) {
 //        double converted = (double)watt/(60*1000);
 //        return Math.round(converted * 100.0) / 100.0;
 //    }

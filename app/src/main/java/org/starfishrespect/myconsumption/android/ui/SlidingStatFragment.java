@@ -61,7 +61,7 @@ public class SlidingStatFragment extends Fragment {
         ViewCompat.setElevation(rootView, 50);
 
         // If no values found for this period, just display info for the user
-        if (mStat.getConsumption() == 0) {
+        if (mStat == null || mStat.getConsumption() == 0) {
             TextView textView = (TextView) rootView.findViewById(R.id.txtVwConsumption);
             textView.setText(getString(R.string.textview_stat_no_value_found));
             return rootView;
@@ -69,10 +69,10 @@ public class SlidingStatFragment extends Fragment {
 
 
         TextView textView = (TextView) rootView.findViewById(R.id.txtVwConsumption);
-        textView.setText(String.valueOf(StatUtils.w2kWh(mStat.getConsumption())));
+        textView.setText(String.valueOf(StatUtils.wh2kWh(mStat.getConsumption())));
 
         textView = (TextView) rootView.findViewById(R.id.txtVwAveragekWh);
-        textView.setText(String.valueOf(StatUtils.w2kWh(mStat.getAverage())));
+        textView.setText(String.valueOf(mStat.getAverage()));
 
         textView = (TextView) rootView.findViewById(R.id.txtVwAverageWatts);
         textView.setText(String.valueOf(mStat.getAverage()));
@@ -90,15 +90,15 @@ public class SlidingStatFragment extends Fragment {
         textView.setText(StatUtils.timestamp2DateString(mStat.getMinTimestamp()));
 
         textView = (TextView) rootView.findViewById(R.id.txtVwCO2);
-        int co2 = (int) (StatUtils.w2kWh(mStat.getConsumption()) * SingleInstance.getkWhToCO2());
+        int co2 = (int) (StatUtils.wh2kWh(mStat.getConsumption()) * SingleInstance.getkWhToCO2());
         textView.setText(String.valueOf(co2));
 
         textView = (TextView) rootView.findViewById(R.id.txtVwEuroHigh);
-        int dayEuro = (int) (StatUtils.w2kWh(mStat.getConsumptionDay()) * SingleInstance.getkWhDayPrice());
+        int dayEuro = (int) (StatUtils.wh2kWh(mStat.getConsumptionDay()) * SingleInstance.getkWhDayPrice());
         textView.setText(String.valueOf(dayEuro));
 
         textView = (TextView) rootView.findViewById(R.id.txtVwEuroOff);
-        int nightEuro = (int) (StatUtils.w2kWh(mStat.getConsumptionNight()) * SingleInstance.getkWhNightPrice());
+        int nightEuro = (int) (StatUtils.wh2kWh(mStat.getConsumptionNight()) * SingleInstance.getkWhNightPrice());
         textView.setText(String.valueOf(nightEuro));
 
         textView = (TextView) rootView.findViewById(R.id.txtVwEuro);
@@ -119,7 +119,7 @@ public class SlidingStatFragment extends Fragment {
             imgView.setImageResource(R.drawable.ic_arrow_stable);
 
         textView = (TextView) rootView.findViewById(R.id.txtVwComparison);
-        textView.setText(text + " " + StatUtils.w2kWh(diff));
+        textView.setText(text + " " + StatUtils.wh2kWh(diff));
 
 
         // Piechart
@@ -142,13 +142,13 @@ public class SlidingStatFragment extends Fragment {
         ArrayList<Entry> entries1 = new ArrayList<Entry>();
         ArrayList<String> xVals = new ArrayList<String>();
 
-        xVals.add("PEAK TIME: " + StatUtils.w2kWh(mStat.getConsumptionDay()) + " " + getString(R.string.textview_stat_kWh));
-        xVals.add("OFF-PEAK TIME: " + StatUtils.w2kWh(mStat.getConsumptionNight()) + " " + getString(R.string.textview_stat_kWh));
+        xVals.add("PEAK TIME: " + StatUtils.wh2kWh(mStat.getConsumptionDay()) + " " + getString(R.string.textview_stat_kWh));
+        xVals.add("OFF-PEAK TIME: " + StatUtils.wh2kWh(mStat.getConsumptionNight()) + " " + getString(R.string.textview_stat_kWh));
 
         //xVals.add("entry" + (1));
         //xVals.add("entry" + (2));
-        entries1.add(new Entry((float) StatUtils.w2kWh(mStat.getConsumptionDay()), 0));
-        entries1.add(new Entry((float) StatUtils.w2kWh(mStat.getConsumptionNight()), 1));
+        entries1.add(new Entry((float) StatUtils.wh2kWh(mStat.getConsumptionDay()), 0));
+        entries1.add(new Entry((float) StatUtils.wh2kWh(mStat.getConsumptionNight()), 1));
 
 
         PieDataSet ds1 = new PieDataSet(entries1, "");

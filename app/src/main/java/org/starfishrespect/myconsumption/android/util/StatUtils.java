@@ -9,12 +9,11 @@ import java.util.Date;
  */
 public class StatUtils {
     /**
-     * Convert watt to kWh and round it up with two decimals.
-     * @param watt the value you want to convert as a String
+     * Convert Wh to kWh and round it up with two decimals.
+     * @param Wh the value you want to convert as a String
      */
-    public static double w2kWh(int watt) {
-        //double converted = ((double) watt*60.0) / 1000.0;
-        double converted = watt / (60.0 * 60.0 * 1000.0); // TODO correct?
+    public static double wh2kWh(int Wh) {
+        double converted = Wh / 1000.0;
         return Math.round(converted * 100.0) / 100.0;
     }
 
