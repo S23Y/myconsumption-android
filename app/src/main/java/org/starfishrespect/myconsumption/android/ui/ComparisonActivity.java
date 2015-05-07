@@ -28,6 +28,7 @@ import org.starfishrespect.myconsumption.android.R;
 import org.starfishrespect.myconsumption.android.SingleInstance;
 import org.starfishrespect.myconsumption.android.adapters.SpinnerSensorAdapter;
 import org.starfishrespect.myconsumption.android.data.SensorData;
+import org.starfishrespect.myconsumption.android.events.ReloadStatEvent;
 import org.starfishrespect.myconsumption.android.events.ReloadUserEvent;
 import org.starfishrespect.myconsumption.android.util.PrefUtils;
 import org.starfishrespect.myconsumption.android.util.StatUtils;
@@ -255,5 +256,13 @@ public class ComparisonActivity extends BaseActivity implements OnChartValueSele
     public void onEvent(ReloadUserEvent event) {
         if (event.refreshDataFromServer())
             this.refreshData();
+    }
+
+    /**
+     * Triggered when the reload of stats from server is done.
+     * @param event A ReloadStat event
+     */
+    public void onEvent(ReloadStatEvent event) {
+        populateView();
     }
 }
