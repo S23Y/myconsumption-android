@@ -676,20 +676,10 @@ public abstract class BaseActivity extends ActionBarActivity implements SensorVa
         }
 
         showReloadLayout(true);
-        /*PingTask.ping(Controller.getServerAddress(), new PingTask.PingResultCallback() {
-            @Override
-            public void pingResult(String url, boolean accessible) {
-                if (accessible) {*/
+
         GetUserAsyncTask getUserAsyncTask = new GetUserAsyncTask(SingleInstance.getUserController().getUser().getName());
         getUserAsyncTask.setGetUserCallback(this);
         getUserAsyncTask.execute();
-                /*}
-                else {
-                    showReloadLayout(false);
-                    Toast.makeText(MainActivity.this, "Cannot ping server", Toast.LENGTH_SHORT).show();
-                }
-            }
-        });*/
     }
 
     private void showReloadLayout(boolean visible) {

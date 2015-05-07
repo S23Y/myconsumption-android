@@ -28,6 +28,7 @@ import org.starfishrespect.myconsumption.android.R;
 import org.starfishrespect.myconsumption.android.SingleInstance;
 import org.starfishrespect.myconsumption.android.adapters.SpinnerSensorAdapter;
 import org.starfishrespect.myconsumption.android.data.SensorData;
+import org.starfishrespect.myconsumption.android.events.ReloadUserEvent;
 import org.starfishrespect.myconsumption.android.util.PrefUtils;
 import org.starfishrespect.myconsumption.android.util.StatUtils;
 import org.starfishrespect.myconsumption.server.api.dto.Period;
@@ -35,6 +36,8 @@ import org.starfishrespect.myconsumption.server.api.dto.StatDTO;
 
 import java.util.ArrayList;
 import java.util.List;
+
+import de.greenrobot.event.EventBus;
 
 import static org.starfishrespect.myconsumption.android.util.LogUtils.LOGD;
 import static org.starfishrespect.myconsumption.android.util.LogUtils.makeLogTag;
@@ -59,6 +62,10 @@ public class ComparisonActivity extends BaseActivity implements OnChartValueSele
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
+        // Register to the EventBus
+        EventBus.getDefault().register(this);
+
         setContentView(R.layout.activity_comparison);
 
         mToolbar = getActionBarToolbar();
@@ -78,6 +85,13 @@ public class ComparisonActivity extends BaseActivity implements OnChartValueSele
         populateView();
 
         overridePendingTransition(0, 0);
+    }
+
+    @Override
+    protected void onDestroy() {
+        // Unregister to the EventBus
+        EventBus.getDefault().unregister(this);
+        super.onDestroy();
     }
 
     private void initBarChart() {
@@ -144,9 +158,9 @@ public class ComparisonActivity extends BaseActivity implements OnChartValueSele
         SingleInstance.getStatsController().loadStats(sensorId);
 
         SingleInstance.getStatsController().loadStats(sensorId);
-        StatDTO stat = SingleInstance.getStatsController().getStats().get(Period.YEAR.getValue());
+        StatDTO stat = SingleInstance.getStatsController().getStats().get(Period.WEEK.getValue() - 1);
 
-        double myCons = StatUtils.wh2kWh(stat.getConsumption());
+        double myCons = StatUtils.wh2kWh(stat.getConsumption() * 52);
         mTxtViewMyCons.setText(String.valueOf((int) myCons));
 
         double percent = (( myCons - profileConsumption) / profileConsumption) * 100.0;
@@ -232,5 +246,14 @@ public class ComparisonActivity extends BaseActivity implements OnChartValueSele
 
     public void openSpinner(View view) {
         mSpinner.performClick();
+    }
+
+    /**
+     * Triggered when the user wants to reload data.
+     * @param event A ReloadUser event
+     */
+    public void onEvent(ReloadUserEvent event) {
+        if (event.refreshDataFromServer())
+            this.refreshData();
     }
 }

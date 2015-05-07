@@ -25,9 +25,12 @@ import org.starfishrespect.myconsumption.android.adapters.SpinnerSensorAdapter;
 import org.starfishrespect.myconsumption.android.dao.ConfigUpdater;
 import org.starfishrespect.myconsumption.android.dao.StatValuesUpdater;
 import org.starfishrespect.myconsumption.android.data.SensorData;
+import org.starfishrespect.myconsumption.android.events.ReloadUserEvent;
 import org.starfishrespect.myconsumption.server.api.dto.StatDTO;
 
 import java.util.List;
+
+import de.greenrobot.event.EventBus;
 
 import static org.starfishrespect.myconsumption.android.util.LogUtils.LOGD;
 import static org.starfishrespect.myconsumption.android.util.LogUtils.LOGE;
@@ -53,6 +56,10 @@ public class StatActivity extends BaseActivity
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
+        // Register to the EventBus
+        EventBus.getDefault().register(this);
+
         setContentView(R.layout.activity_stat);
 
         mToolbar = getActionBarToolbar();
@@ -81,6 +88,13 @@ public class StatActivity extends BaseActivity
         });
 
         overridePendingTransition(0, 0);
+    }
+
+    @Override
+    protected void onDestroy() {
+        // Unregister to the EventBus
+        EventBus.getDefault().unregister(this);
+        super.onDestroy();
     }
 
     private void setUpActionBarSpinner() {
@@ -137,10 +151,6 @@ public class StatActivity extends BaseActivity
         return NAVDRAWER_ITEM_STATS;
     }
 
-    public void reloadUser(boolean refreshData) {
-        // todo
-    }
-
     @Override
     public void onStatUpdateFinished() {
         String sensorId = SingleInstance.getUserController().getUser().getSensors().get(SingleInstance.getSpinnerSensorPosition()).getSensorId();
@@ -160,6 +170,15 @@ public class StatActivity extends BaseActivity
     @Override
     public void onConfigUpdateFinished() {
        // todo : reload the value co2 € kwH day and € kwh night
+    }
+
+    /**
+     * Triggered when the user wants to reload data.
+     * @param event A ReloadUser event
+     */
+    public void onEvent(ReloadUserEvent event) {
+        if (event.refreshDataFromServer())
+            this.refreshData();
     }
 
     public void openSpinner(View view) {
