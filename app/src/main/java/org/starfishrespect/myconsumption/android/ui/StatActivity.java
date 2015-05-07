@@ -48,20 +48,12 @@ public class StatActivity extends BaseActivity
     private SpinnerSensorAdapter mSpinnerAdapter;
     private List<StatDTO> mStats;
 
-    static final String STATE_SENSOR = "sensorId";
-
-    private String mSensorId;
     private boolean mFirstStart = true;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_stat);
-
-        Intent intent = getIntent();
-        Bundle extras = intent.getExtras();
-        if (extras != null)
-            mSensorId = extras.getString(STATE_SENSOR);
 
         mToolbar = getActionBarToolbar();
         getSupportActionBar().setTitle(getString(R.string.title_stat));
@@ -102,9 +94,6 @@ public class StatActivity extends BaseActivity
 
         List<SensorData> sensors = SingleInstance.getUserController().getUser().getSensors();
 
-        if (mSensorId == null)
-            mSensorId = sensors.get(0).getSensorId();
-
         mSpinnerAdapter = new SpinnerSensorAdapter(StatActivity.this, sensors);
 
         // Populate spinners
@@ -117,21 +106,18 @@ public class StatActivity extends BaseActivity
 //        spinnerAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         // Apply the adapter to the spinner
         mSpinner.setAdapter(mSpinnerAdapter);
+        mSpinner.setSelection(SingleInstance.getSpinnerSensorPosition());
 
         mSpinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> spinner, View view, int position, long itemId) {
 
                 if (!mFirstStart) {
-                    //onTopLevelTagSelected(mTopLevelSpinnerAdapter.getTag(position));
-                    Toast.makeText(StatActivity.this, "spinner selected " + mSpinnerAdapter.getItem(position), Toast.LENGTH_SHORT).show();
-                    mSensorId = (String) mSpinnerAdapter.getItem(position);
-                    //onStatUpdateFinished();
-                    //getWindow().getDecorView().findViewById(android.R.id.mainLayout).invalidate();
+                    Toast.makeText(StatActivity.this, "Sensor selected " + mSpinnerAdapter.getItem(position), Toast.LENGTH_SHORT).show();
+                    //mSensorId = (String) mSpinnerAdapter.getItem(position);
+                    SingleInstance.setSpinnerSensorPosition(position);
 
-                    //Intent intent = new Intent(StatActivity.this, StatActivity.class);
                     Intent intent = getIntent();
-                    intent.putExtra(STATE_SENSOR, mSensorId);
                     finish();
                     startActivity(intent);
                 }
@@ -157,7 +143,8 @@ public class StatActivity extends BaseActivity
 
     @Override
     public void onStatUpdateFinished() {
-        SingleInstance.getStatsController().loadStats(mSensorId);
+        String sensorId = SingleInstance.getUserController().getUser().getSensors().get(SingleInstance.getSpinnerSensorPosition()).getSensorId();
+        SingleInstance.getStatsController().loadStats(sensorId);
         mStats = SingleInstance.getStatsController().getStats();
 
         mPageAdapter = new MyPagerAdapter(getSupportFragmentManager());
