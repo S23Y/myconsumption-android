@@ -27,6 +27,8 @@ public class SingleInstance {
 //    private static FragmentController fragmentController;
     private static UserController userController;
     //private static MainActivity mainActivity;
+    private static int spinnerSensorPosition = 0;
+
     protected static Context context;
 
     // TODO put those config in Config.java or in an xml file
@@ -67,6 +69,34 @@ public class SingleInstance {
 
         // Start the notification service
         SingleInstance.startNotificationService();
+    }
+
+    // removes all the data of the current user and go back to the login
+    public static void disconnect(ChartActivity chartActivity) {
+        KeyValueData userKey = getDatabaseHelper().getValueForKey("user");
+        try {
+            if (userKey != null) {
+                getDatabaseHelper().getKeyValueDao().delete(userKey);
+            }
+            SensorValuesDao sensorValuesDao = new SensorValuesDao(getDatabaseHelper());
+            for (SensorData s : getDatabaseHelper().getSensorDao().queryForAll()) {
+                sensorValuesDao.removeSensor(s.getSensorId());
+            }
+            getDatabaseHelper().clearTable("sensors");
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+
+        chartActivity.startActivity(new Intent(chartActivity, LoginActivity.class));
+        chartActivity.finish();
+    }
+
+    public static void startNotificationService() {
+//        if (!serviceStarted) {
+//            Intent intent = new Intent(context, NotifierService.class);
+//            context.startService(intent);
+//            serviceStarted = true;
+//        }
     }
 
     public static ChartActivity getChartActivity() {
@@ -161,31 +191,11 @@ public class SingleInstance {
             return Double.parseDouble(valueData.getValue());
     }
 
-    // removes all the data of the current user and go back to the login
-    public static void disconnect(ChartActivity chartActivity) {
-        KeyValueData userKey = getDatabaseHelper().getValueForKey("user");
-        try {
-            if (userKey != null) {
-                getDatabaseHelper().getKeyValueDao().delete(userKey);
-            }
-            SensorValuesDao sensorValuesDao = new SensorValuesDao(getDatabaseHelper());
-            for (SensorData s : getDatabaseHelper().getSensorDao().queryForAll()) {
-                sensorValuesDao.removeSensor(s.getSensorId());
-            }
-            getDatabaseHelper().clearTable("sensors");
-        } catch (SQLException e) {
-            e.printStackTrace();
-        }
-
-        chartActivity.startActivity(new Intent(chartActivity, LoginActivity.class));
-        chartActivity.finish();
+    public static int getSpinnerSensorPosition() {
+        return spinnerSensorPosition;
     }
 
-    public static void startNotificationService() {
-//        if (!serviceStarted) {
-//            Intent intent = new Intent(context, NotifierService.class);
-//            context.startService(intent);
-//            serviceStarted = true;
-//        }
+    public static void setSpinnerSensorPosition(int spinnerSensorPosition) {
+        SingleInstance.spinnerSensorPosition = spinnerSensorPosition;
     }
 }
