@@ -3,11 +3,20 @@ package org.starfishrespect.myconsumption.android.ui;
 import android.content.Intent;
 import android.graphics.Color;
 import android.os.Bundle;
+import android.support.v4.view.ViewPager;
+import android.support.v7.app.ActionBar;
 import android.support.v7.widget.Toolbar;
+import android.view.Gravity;
+import android.view.LayoutInflater;
 import android.view.View;
+import android.view.ViewGroup;
+import android.widget.AdapterView;
 import android.widget.ImageView;
+import android.widget.Spinner;
 import android.widget.TextView;
+import android.widget.Toast;
 
+import com.astuetz.PagerSlidingTabStrip;
 import com.github.mikephil.charting.charts.BarChart;
 import com.github.mikephil.charting.components.Legend;
 import com.github.mikephil.charting.data.BarData;
@@ -19,6 +28,7 @@ import com.github.mikephil.charting.utils.Highlight;
 
 import org.starfishrespect.myconsumption.android.R;
 import org.starfishrespect.myconsumption.android.SingleInstance;
+import org.starfishrespect.myconsumption.android.adapters.SpinnerSensorAdapter;
 import org.starfishrespect.myconsumption.android.data.SensorData;
 import org.starfishrespect.myconsumption.android.util.PrefUtils;
 import org.starfishrespect.myconsumption.android.util.StatUtils;
@@ -40,23 +50,23 @@ public class ComparisonActivity extends BaseActivity implements OnChartValueSele
     private ImageView mImageView;
     private TextView mTxtViewProfile, mTxtViewAvgCons, mTxtViewMyCons;
     private TextView mTxtViewPercent, mTxtViewUnderOver;
-    private String mSensorId;
     private BarChart mChart;
 
-    static final String STATE_SENSOR = "sensorId";
+    private Toolbar mToolbar;
+    private Spinner mSpinner;
+    private SpinnerSensorAdapter mSpinnerAdapter;
+
+    private boolean mFirstStart = true;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_comparison);
 
-        Intent intent = getIntent();
-        Bundle extras = intent.getExtras();
-        if (extras != null)
-            mSensorId = extras.getString(STATE_SENSOR);
-
-        getActionBarToolbar();
+        mToolbar = getActionBarToolbar();
         getSupportActionBar().setTitle(getString(R.string.title_comp));
+
+        setUpActionBarSpinner();
 
         mImageView = (ImageView) findViewById(R.id.imageViewComp);
         mTxtViewProfile = (TextView) findViewById(R.id.txtVwProfileDescription);
@@ -132,12 +142,10 @@ public class ComparisonActivity extends BaseActivity implements OnChartValueSele
         double profileConsumption = PrefUtils.getProfileConsumption(this);
         mTxtViewAvgCons.setText(String.valueOf((int) profileConsumption));
 
-        List<SensorData> sensors = SingleInstance.getUserController().getUser().getSensors();
+        String sensorId = SingleInstance.getUserController().getUser().getSensors().get(SingleInstance.getSpinnerSensorPosition()).getSensorId();
+        SingleInstance.getStatsController().loadStats(sensorId);
 
-        if (mSensorId == null)
-            mSensorId = sensors.get(0).getSensorId();
-
-        SingleInstance.getStatsController().loadStats(mSensorId);
+        SingleInstance.getStatsController().loadStats(sensorId);
         StatDTO stat = SingleInstance.getStatsController().getStats().get(Period.YEAR.getValue());
 
         double myCons = StatUtils.w2kWh(stat.getConsumption());
@@ -174,5 +182,57 @@ public class ComparisonActivity extends BaseActivity implements OnChartValueSele
     @Override
     public void onNothingSelected() {
         LOGD("Activity", "Nothing selected.");
+    }
+
+    private void setUpActionBarSpinner() {
+        LOGD(TAG, "Configuring Action Bar spinner.");
+        View spinnerContainer = LayoutInflater.from(this).inflate(R.layout.actionbar_spinner,
+                mToolbar, false);
+        ActionBar.LayoutParams lp = new ActionBar.LayoutParams(
+                ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT);
+        lp.gravity = Gravity.RIGHT;
+        mToolbar.addView(spinnerContainer, lp);
+
+        List<SensorData> sensors = SingleInstance.getUserController().getUser().getSensors();
+
+        mSpinnerAdapter = new SpinnerSensorAdapter(ComparisonActivity.this, sensors);
+
+        // Populate spinners
+        mSpinner = (Spinner) spinnerContainer.findViewById(R.id.actionbar_spinner);
+
+//        // Create an ArrayAdapter using the string array and a default spinner layout
+//        ArrayAdapter<CharSequence> spinnerAdapter = ArrayAdapter.createFromResource(this,
+//                R.array.iam_array, android.R.layout.simple_spinner_item);
+//        // Specify the layout to use when the list of choices appears
+//        spinnerAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+        // Apply the adapter to the spinner
+        mSpinner.setAdapter(mSpinnerAdapter);
+        mSpinner.setSelection(SingleInstance.getSpinnerSensorPosition());
+
+        mSpinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+            @Override
+            public void onItemSelected(AdapterView<?> spinner, View view, int position, long itemId) {
+
+                if (!mFirstStart) {
+                    Toast.makeText(ComparisonActivity.this, "Sensor selected " + mSpinnerAdapter.getItem(position), Toast.LENGTH_SHORT).show();
+                    //mSensorId = (String) mSpinnerAdapter.getItem(position);
+                    SingleInstance.setSpinnerSensorPosition(position);
+
+                    Intent intent = getIntent();
+                    finish();
+                    startActivity(intent);
+                }
+
+                mFirstStart = false;
+            }
+
+            @Override
+            public void onNothingSelected(AdapterView<?> adapterView) {
+            }
+        });
+    }
+
+    public void openSpinner(View view) {
+        mSpinner.performClick();
     }
 }
