@@ -5,7 +5,6 @@ import android.animation.ObjectAnimator;
 import android.animation.TypeEvaluator;
 import android.animation.ValueAnimator;
 import android.app.AlertDialog;
-import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.graphics.Color;
@@ -17,6 +16,7 @@ import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.ActionBarActivity;
 import android.support.v7.widget.Toolbar;
+import android.util.TypedValue;
 import android.view.Gravity;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -29,9 +29,13 @@ import android.widget.TextView;
 import org.starfishrespect.myconsumption.android.R;
 import org.starfishrespect.myconsumption.android.SingleInstance;
 import org.starfishrespect.myconsumption.android.asynctasks.GetUserAsyncTask;
+import org.starfishrespect.myconsumption.android.dao.ConfigUpdater;
 import org.starfishrespect.myconsumption.android.dao.SensorValuesDao;
 import org.starfishrespect.myconsumption.android.dao.SensorValuesUpdater;
+import org.starfishrespect.myconsumption.android.dao.StatValuesUpdater;
 import org.starfishrespect.myconsumption.android.data.UserData;
+import org.starfishrespect.myconsumption.android.events.ReloadConfigEvent;
+import org.starfishrespect.myconsumption.android.events.ReloadStatEvent;
 import org.starfishrespect.myconsumption.android.events.ReloadUserEvent;
 import org.starfishrespect.myconsumption.android.ui.widget.ScrimInsetsScrollView;
 import org.starfishrespect.myconsumption.android.util.LUtils;
@@ -49,7 +53,8 @@ import static org.starfishrespect.myconsumption.android.util.LogUtils.LOGW;
 import static org.starfishrespect.myconsumption.android.util.LogUtils.makeLogTag;
 
 public abstract class BaseActivity extends ActionBarActivity implements SensorValuesUpdater.UpdateFinishedCallback,
-        GetUserAsyncTask.GetUserCallback {
+        GetUserAsyncTask.GetUserCallback, StatValuesUpdater.StatUpdateFinishedCallback,
+        ConfigUpdater.ConfigUpdateFinishedCallback{
     private static final String TAG = makeLogTag(BaseActivity.class);
 
     private ObjectAnimator mStatusBarColorAnimator;
@@ -677,6 +682,7 @@ public abstract class BaseActivity extends ActionBarActivity implements SensorVa
 
         showReloadLayout(true);
 
+        // Reload the user from server to see if new sensors have been added
         GetUserAsyncTask getUserAsyncTask = new GetUserAsyncTask(SingleInstance.getUserController().getUser().getName());
         getUserAsyncTask.setGetUserCallback(this);
         getUserAsyncTask.execute();
@@ -694,9 +700,21 @@ public abstract class BaseActivity extends ActionBarActivity implements SensorVa
     @Override
     public void userFound(UserData user) {
         new SensorValuesDao(SingleInstance.getDatabaseHelper()).updateSensorList(user.getSensors());
+
+        // Fetch sensor values from server
         SensorValuesUpdater updater = new SensorValuesUpdater();
         updater.setUpdateFinishedCallback(this);
         updater.refreshDB();
+
+        // Fetch the stats from the server
+        StatValuesUpdater statUpdater = new StatValuesUpdater();
+        statUpdater.setUpdateFinishedCallback(this);
+        statUpdater.refreshDB();
+
+        // Fetch the config from the server
+        ConfigUpdater configUpdater = new ConfigUpdater();
+        configUpdater.setUpdateFinishedCallback(this);
+        configUpdater.refreshDB();
     }
 
     // from callback of GetUserAsyncTask
@@ -722,6 +740,16 @@ public abstract class BaseActivity extends ActionBarActivity implements SensorVa
         //SingleInstance.getUserController().loadUser(false);
         //SingleInstance.getUserController().reloadUser(false);
         EventBus.getDefault().post(new ReloadUserEvent(false));
+    }
+
+    @Override
+    public void onStatUpdateFinished() {
+        EventBus.getDefault().post(new ReloadStatEvent(true));
+    }
+
+    @Override
+    public void onConfigUpdateFinished() {
+        EventBus.getDefault().post(new ReloadConfigEvent(true));
     }
 
 }

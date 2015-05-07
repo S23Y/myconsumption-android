@@ -25,6 +25,8 @@ import org.starfishrespect.myconsumption.android.adapters.SpinnerSensorAdapter;
 import org.starfishrespect.myconsumption.android.dao.ConfigUpdater;
 import org.starfishrespect.myconsumption.android.dao.StatValuesUpdater;
 import org.starfishrespect.myconsumption.android.data.SensorData;
+import org.starfishrespect.myconsumption.android.events.ReloadConfigEvent;
+import org.starfishrespect.myconsumption.android.events.ReloadStatEvent;
 import org.starfishrespect.myconsumption.android.events.ReloadUserEvent;
 import org.starfishrespect.myconsumption.server.api.dto.StatDTO;
 
@@ -36,9 +38,7 @@ import static org.starfishrespect.myconsumption.android.util.LogUtils.LOGD;
 import static org.starfishrespect.myconsumption.android.util.LogUtils.LOGE;
 import static org.starfishrespect.myconsumption.android.util.LogUtils.makeLogTag;
 
-public class StatActivity extends BaseActivity
-        implements StatValuesUpdater.StatUpdateFinishedCallback,
-        ConfigUpdater.ConfigUpdateFinishedCallback {
+public class StatActivity extends BaseActivity {
 
     private static final String TAG = makeLogTag(StatActivity.class);
 
@@ -52,6 +52,8 @@ public class StatActivity extends BaseActivity
     private List<StatDTO> mStats;
 
     private boolean mFirstStart = true;
+    private boolean statReloaded = false;
+    private boolean configReloaded = false;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -70,16 +72,6 @@ public class StatActivity extends BaseActivity
         mTabs = (PagerSlidingTabStrip) findViewById(R.id.tabs);
         mPager = (ViewPager) findViewById(R.id.pager);
 
-        // TODO only on reload
-        // Fetch the data from the server
-        StatValuesUpdater statUpdater = new StatValuesUpdater();
-        statUpdater.setUpdateFinishedCallback(this);
-        statUpdater.refreshDB();
-        // TODO only on reload
-        ConfigUpdater configUpdater = new ConfigUpdater();
-        configUpdater.setUpdateFinishedCallback(this);
-        configUpdater.refreshDB();
-
         mTabs.setOnTabReselectedListener(new PagerSlidingTabStrip.OnTabReselectedListener() {
             @Override
             public void onTabReselected(int position) {
@@ -87,6 +79,7 @@ public class StatActivity extends BaseActivity
             }
         });
 
+        reloadPager();
         overridePendingTransition(0, 0);
     }
 
@@ -151,8 +144,7 @@ public class StatActivity extends BaseActivity
         return NAVDRAWER_ITEM_STATS;
     }
 
-    @Override
-    public void onStatUpdateFinished() {
+    private void reloadPager() {
         String sensorId = SingleInstance.getUserController().getUser().getSensors().get(SingleInstance.getSpinnerSensorPosition()).getSensorId();
         SingleInstance.getStatsController().loadStats(sensorId);
         mStats = SingleInstance.getStatsController().getStats();
@@ -167,9 +159,30 @@ public class StatActivity extends BaseActivity
         mPager.setCurrentItem(0);
     }
 
-    @Override
-    public void onConfigUpdateFinished() {
-       // todo : reload the value co2 € kwH day and € kwh night
+    /**
+     * Triggered when the reload of stats from server is done.
+     * @param event A ReloadStat event
+     */
+    public void onEvent(ReloadStatEvent event) {
+        statReloaded = true;
+
+        if (configReloaded && statReloaded) {
+            configReloaded = statReloaded = false;
+            reloadPager();
+        }
+    }
+
+    /**
+     * Triggered when the reload of configs from server is done.
+     * @param event A ReloadConfig event
+     */
+    public void onEvent(ReloadConfigEvent event) {
+        configReloaded = true;
+
+        if (configReloaded && statReloaded) {
+            configReloaded = statReloaded = false;
+            reloadPager();
+        }
     }
 
     /**
