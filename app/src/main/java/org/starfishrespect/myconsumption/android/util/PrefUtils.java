@@ -89,8 +89,11 @@ public class PrefUtils  {
 
     public static void setRegistrationId(Context context, String id) {
         final SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(context);
+        int appVersion = getAppVersion(context);
+        Log.i(TAG, "Saving regId on app version " + appVersion);
         SharedPreferences.Editor editor = prefs.edit();
         editor.putString(PROPERTY_REG_ID, id);
+        editor.putInt(PROPERTY_APP_VERSION, appVersion);
         editor.commit();
     }
 
