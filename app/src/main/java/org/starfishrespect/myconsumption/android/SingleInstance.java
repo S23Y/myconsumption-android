@@ -30,10 +30,10 @@ public class SingleInstance {
 
     // TODO put those config in Config.java or in an xml file
     //private static String serverAddress = "pahe.manex.biz";
-    private static String serverAddress = "212.166.22.110"; // public vm address
+    //private static String serverAddress = "212.166.22.110"; // public vm address
     //private static String serverAddress = "172.20.1.75"; // @manex (bridged)
     //private static String serverAddress = "192.168.242.129";  // @ans (nat)
-    //private static String serverAddress = "192.168.1.9"; // @ans bridged ethernet
+    private static String serverAddress = "192.168.1.5"; // @ans bridged ethernet
     //private static String serverAddress = "192.168.1.32";   // @lw (bridged)
     private static int port = 8080;
     private static String protocol = "http://";

@@ -672,8 +672,8 @@ public abstract class BaseActivity extends ActionBarActivity implements SensorVa
 //            LOGW(TAG, "C2DM unregistration error", e);
 //        }
 
-        SharedPreferences sp = PreferenceManager.getDefaultSharedPreferences(this);
-        sp.unregisterOnSharedPreferenceChangeListener(this);
+//        SharedPreferences sp = PreferenceManager.getDefaultSharedPreferences(this);
+//        sp.unregisterOnSharedPreferenceChangeListener(this);
     }
 
     private boolean isSeparator(int itemId) {
