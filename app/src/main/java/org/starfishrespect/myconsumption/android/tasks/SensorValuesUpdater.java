@@ -1,9 +1,11 @@
-package org.starfishrespect.myconsumption.android.dao;
+package org.starfishrespect.myconsumption.android.tasks;
 
 import android.os.AsyncTask;
 import android.util.Log;
 
 import org.starfishrespect.myconsumption.android.SingleInstance;
+import org.starfishrespect.myconsumption.android.dao.DatabaseHelper;
+import org.starfishrespect.myconsumption.android.dao.SensorValuesDao;
 import org.starfishrespect.myconsumption.android.data.SensorData;
 import org.starfishrespect.myconsumption.android.data.SensorValue;
 import org.springframework.http.converter.json.MappingJacksonHttpMessageConverter;
@@ -32,7 +34,7 @@ public class SensorValuesUpdater {
 
     public void refreshDB() {
 
-        AsyncTask<Void, List, Void> dltest = new AsyncTask<Void, List, Void>() {
+        AsyncTask<Void, List, Void> task = new AsyncTask<Void, List, Void>() {
             @Override
             protected Void doInBackground(Void... params) {
                 DatabaseHelper db = SingleInstance.getDatabaseHelper();
@@ -81,6 +83,6 @@ public class SensorValuesUpdater {
             }
         };
 
-        dltest.execute();
+        task.execute();
     }
 }

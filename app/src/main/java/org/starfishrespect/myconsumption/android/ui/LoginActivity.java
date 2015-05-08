@@ -13,7 +13,7 @@ import android.widget.Toast;
 
 import org.starfishrespect.myconsumption.android.Config;
 import org.starfishrespect.myconsumption.android.R;
-import org.starfishrespect.myconsumption.android.asynctasks.GetUserAsyncTask;
+import org.starfishrespect.myconsumption.android.tasks.UserUpdater;
 import org.starfishrespect.myconsumption.android.dao.DatabaseHelper;
 import org.starfishrespect.myconsumption.android.dao.SensorValuesDao;
 import org.starfishrespect.myconsumption.android.data.KeyValueData;
@@ -31,7 +31,7 @@ import static org.starfishrespect.myconsumption.android.util.LogUtils.makeLogTag
 /**
  * Login Activity
  */
-public class LoginActivity extends Activity implements View.OnClickListener, GetUserAsyncTask.GetUserCallback {
+public class LoginActivity extends Activity implements View.OnClickListener, UserUpdater.GetUserCallback {
     private static final int REQUEST_CREATE_ACCOUNT = 43;
     private static final String TAG = makeLogTag(LoginActivity.class);
 
@@ -74,7 +74,7 @@ public class LoginActivity extends Activity implements View.OnClickListener, Get
                     Toast.makeText(this, "Username is mandatory !", Toast.LENGTH_LONG).show();
                     return;
                 }
-                new GetUserAsyncTask(editTextUsername.getText().toString()).setGetUserCallback(this).execute();
+                new UserUpdater(editTextUsername.getText().toString()).setGetUserCallback(this).execute();
                 break;
             case R.id.buttonCreateAccount:
                 if (!MiscFunctions.isOnline(this)) {

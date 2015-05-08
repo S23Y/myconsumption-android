@@ -4,14 +4,11 @@ import android.content.Context;
 import android.content.Intent;
 
 import org.starfishrespect.myconsumption.android.controllers.StatsController;
-//import org.starfishrespect.myconsumption.android.controllers.FragmentController;
 import org.starfishrespect.myconsumption.android.controllers.UserController;
 import org.starfishrespect.myconsumption.android.dao.DatabaseHelper;
 import org.starfishrespect.myconsumption.android.dao.SensorValuesDao;
 import org.starfishrespect.myconsumption.android.data.KeyValueData;
 import org.starfishrespect.myconsumption.android.data.SensorData;
-import org.starfishrespect.myconsumption.android.data.UserData;
-import org.starfishrespect.myconsumption.android.notifications.NotifierService;
 import org.starfishrespect.myconsumption.android.ui.ChartActivity;
 import org.starfishrespect.myconsumption.android.ui.LoginActivity;
 
@@ -66,9 +63,6 @@ public class SingleInstance {
 
         // Load the user
         SingleInstance.getUserController().loadUser();
-
-        // Start the notification service
-        SingleInstance.startNotificationService();
     }
 
     // removes all the data of the current user and go back to the login
@@ -89,14 +83,6 @@ public class SingleInstance {
 
         chartActivity.startActivity(new Intent(chartActivity, LoginActivity.class));
         chartActivity.finish();
-    }
-
-    public static void startNotificationService() {
-//        if (!serviceStarted) {
-//            Intent intent = new Intent(context, NotifierService.class);
-//            context.startService(intent);
-//            serviceStarted = true;
-//        }
     }
 
     public static ChartActivity getChartActivity() {

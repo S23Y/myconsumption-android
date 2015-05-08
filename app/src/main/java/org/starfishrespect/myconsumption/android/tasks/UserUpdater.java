@@ -1,4 +1,4 @@
-package org.starfishrespect.myconsumption.android.asynctasks;
+package org.starfishrespect.myconsumption.android.tasks;
 
 import android.os.AsyncTask;
 import org.starfishrespect.myconsumption.android.data.SensorData;
@@ -13,7 +13,7 @@ import org.starfishrespect.myconsumption.android.SingleInstance;
 /**
  * Task that retrieves all the data of an user from the server
  */
-public class GetUserAsyncTask extends AsyncTask<Void, UserData, Void> {
+public class UserUpdater extends AsyncTask<Void, UserData, Void> {
 
     /**
      * Callback for the result
@@ -27,11 +27,11 @@ public class GetUserAsyncTask extends AsyncTask<Void, UserData, Void> {
     private GetUserCallback getUserCallback;
     private String username;
 
-    public GetUserAsyncTask(String username) {
+    public UserUpdater(String username) {
         this.username = username;
     }
 
-    public GetUserAsyncTask setGetUserCallback(GetUserCallback getUserCallback) {
+    public UserUpdater setGetUserCallback(GetUserCallback getUserCallback) {
         this.getUserCallback = getUserCallback;
         return this;
     }

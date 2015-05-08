@@ -1,4 +1,4 @@
-package org.starfishrespect.myconsumption.android.ui;
+package org.starfishrespect.myconsumption.android.ui
 
 import android.animation.ArgbEvaluator;
 import android.animation.ObjectAnimator;
@@ -16,7 +16,7 @@ import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.ActionBarActivity;
 import android.support.v7.widget.Toolbar;
-import android.util.TypedValue;
+import android.text.TextUtils;
 import android.view.Gravity;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -26,13 +26,15 @@ import android.view.animation.DecelerateInterpolator;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.google.android.gms.gcm.GoogleCloudMessaging;
+
 import org.starfishrespect.myconsumption.android.R;
 import org.starfishrespect.myconsumption.android.SingleInstance;
-import org.starfishrespect.myconsumption.android.asynctasks.GetUserAsyncTask;
-import org.starfishrespect.myconsumption.android.dao.ConfigUpdater;
+import org.starfishrespect.myconsumption.android.tasks.UserUpdater;
+import org.starfishrespect.myconsumption.android.tasks.ConfigUpdater;
 import org.starfishrespect.myconsumption.android.dao.SensorValuesDao;
-import org.starfishrespect.myconsumption.android.dao.SensorValuesUpdater;
-import org.starfishrespect.myconsumption.android.dao.StatValuesUpdater;
+import org.starfishrespect.myconsumption.android.tasks.SensorValuesUpdater;
+import org.starfishrespect.myconsumption.android.tasks.StatValuesUpdater;
 import org.starfishrespect.myconsumption.android.data.UserData;
 import org.starfishrespect.myconsumption.android.events.ReloadConfigEvent;
 import org.starfishrespect.myconsumption.android.events.ReloadStatEvent;
@@ -40,6 +42,8 @@ import org.starfishrespect.myconsumption.android.events.ReloadUserEvent;
 import org.starfishrespect.myconsumption.android.ui.widget.ScrimInsetsScrollView;
 import org.starfishrespect.myconsumption.android.util.LUtils;
 import org.starfishrespect.myconsumption.android.util.MiscFunctions;
+import org.starfishrespect.myconsumption.android.util.PlayServicesUtils;
+import org.starfishrespect.myconsumption.android.util.PrefUtils;
 import org.starfishrespect.myconsumption.android.util.UIUtils;
 
 import java.util.ArrayList;
@@ -53,7 +57,7 @@ import static org.starfishrespect.myconsumption.android.util.LogUtils.LOGW;
 import static org.starfishrespect.myconsumption.android.util.LogUtils.makeLogTag;
 
 public abstract class BaseActivity extends ActionBarActivity implements SensorValuesUpdater.UpdateFinishedCallback,
-        GetUserAsyncTask.GetUserCallback, StatValuesUpdater.StatUpdateFinishedCallback,
+        UserUpdater.GetUserCallback, StatValuesUpdater.StatUpdateFinishedCallback,
         ConfigUpdater.ConfigUpdateFinishedCallback{
     private static final String TAG = makeLogTag(BaseActivity.class);
 
@@ -154,6 +158,10 @@ public abstract class BaseActivity extends ActionBarActivity implements SensorVa
         // Intent in the app.
         UIUtils.enableDisableActivitiesByFormFactor(this);
 
+        if (savedInstanceState == null) {
+            registerGCMClient();
+        }
+
         ActionBar ab = getSupportActionBar();
         if (ab != null) {
             ab.setDisplayHomeAsUpEnabled(true);
@@ -180,6 +188,14 @@ public abstract class BaseActivity extends ActionBarActivity implements SensorVa
         } else {
             LOGW(TAG, "No view with ID main_content to fade in.");
         }
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+
+        // Verifies the proper version of Google Play Services exists on the device.
+        PlayServicesUtils.checkGooglePlaySevices(this);
     }
 
     private void trySetupSwipeRefresh() {
@@ -574,6 +590,95 @@ public abstract class BaseActivity extends ActionBarActivity implements SensorVa
                 getResources().getColor(R.color.navdrawer_icon_tint));
     }
 
+    /** Registers device on the GCM server, if necessary. */
+    private void registerGCMClient() {
+        // Check device for Play Services APK. If check succeeds, proceed with
+        //  GCM registration.
+        if (PlayServicesUtils.checkGooglePlaySevices(this)) {
+            GoogleCloudMessaging gcm = GoogleCloudMessaging.getInstance(this);
+            String regid = PrefUtils.getRegistrationId(this);
+
+            if (regid.isEmpty()) {
+                registerInBackground();
+            }
+        } else {
+            LOGI(TAG, "No valid Google Play Services APK found.");
+        }
+
+        GCMRegistrar.checkDevice(this);
+        GCMRegistrar.checkManifest(this);
+
+        final String regId = GCMRegistrar.getRegistrationId(this);
+
+        if (TextUtils.isEmpty(regId)) {
+            // Automatically registers application on startup.
+            GCMRegistrar.register(this, Config.GCM_SENDER_ID);
+
+        } else {
+            // Get the correct GCM key for the user. GCM key is a somewhat non-standard
+            // approach we use in this app. For more about this, check GCM.TXT.
+            final String gcmKey = AccountUtils.hasActiveAccount(this) ?
+                    AccountUtils.getGcmKey(this, AccountUtils.getActiveAccountName(this)) : null;
+            // Device is already registered on GCM, needs to check if it is
+            // registered on our server as well.
+            if (ServerUtilities.isRegisteredOnServer(this, gcmKey)) {
+                // Skips registration.
+                LOGI(TAG, "Already registered on the GCM server with right GCM key.");
+            } else {
+                // Try to register again, but not in the UI thread.
+                // It's also necessary to cancel the thread onDestroy(),
+                // hence the use of AsyncTask instead of a raw thread.
+                mGCMRegisterTask = new AsyncTask<Void, Void, Void>() {
+                    @Override
+                    protected Void doInBackground(Void... params) {
+                        LOGI(TAG, "Registering on the GCM server with GCM key: "
+                                + AccountUtils.sanitizeGcmKey(gcmKey));
+                        boolean registered = ServerUtilities.register(BaseActivity.this,
+                                regId, gcmKey);
+                        // At this point all attempts to register with the app
+                        // server failed, so we need to unregister the device
+                        // from GCM - the app will try to register again when
+                        // it is restarted. Note that GCM will send an
+                        // unregistered callback upon completion, but
+                        // GCMIntentService.onUnregistered() will ignore it.
+                        if (!registered) {
+                            LOGI(TAG, "GCM registration failed.");
+                            GCMRegistrar.unregister(BaseActivity.this);
+                        } else {
+                            LOGI(TAG, "GCM registration successful.");
+                        }
+                        return null;
+                    }
+
+                    @Override
+                    protected void onPostExecute(Void result) {
+                        mGCMRegisterTask = null;
+                    }
+                };
+                mGCMRegisterTask.execute(null, null, null);
+            }
+        }
+    }
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+
+        if (mGCMRegisterTask != null) {
+            LOGD(TAG, "Cancelling GCM registration task.");
+            mGCMRegisterTask.cancel(true);
+        }
+
+        try {
+            GCMRegistrar.onDestroy(this);
+        } catch (Exception e) {
+            LOGW(TAG, "C2DM unregistration error", e);
+        }
+
+        SharedPreferences sp = PreferenceManager.getDefaultSharedPreferences(this);
+        sp.unregisterOnSharedPreferenceChangeListener(this);
+    }
+
     private boolean isSeparator(int itemId) {
         return itemId == NAVDRAWER_ITEM_SEPARATOR || itemId == NAVDRAWER_ITEM_SEPARATOR_SPECIAL;
     }
@@ -683,11 +788,15 @@ public abstract class BaseActivity extends ActionBarActivity implements SensorVa
         showReloadLayout(true);
 
         // Reload the user from server to see if new sensors have been added
-        GetUserAsyncTask getUserAsyncTask = new GetUserAsyncTask(SingleInstance.getUserController().getUser().getName());
-        getUserAsyncTask.setGetUserCallback(this);
-        getUserAsyncTask.execute();
+        UserUpdater userUpdater = new UserUpdater(SingleInstance.getUserController().getUser().getName());
+        userUpdater.setGetUserCallback(this);
+        userUpdater.execute();
     }
 
+    /**
+     * Show or hide a reload layout while loading data from server.
+     * @param visible
+     */
     private void showReloadLayout(boolean visible) {
         if (visible) {
             findViewById(R.id.layoutGlobalReloading).setVisibility(View.VISIBLE);

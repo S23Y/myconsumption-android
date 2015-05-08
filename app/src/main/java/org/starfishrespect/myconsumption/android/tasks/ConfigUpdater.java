@@ -1,4 +1,4 @@
-package org.starfishrespect.myconsumption.android.dao;
+package org.starfishrespect.myconsumption.android.tasks;
 
 import android.os.AsyncTask;
 
@@ -7,6 +7,7 @@ import org.springframework.web.client.HttpClientErrorException;
 import org.springframework.web.client.ResourceAccessException;
 import org.springframework.web.client.RestTemplate;
 import org.starfishrespect.myconsumption.android.SingleInstance;
+import org.starfishrespect.myconsumption.android.dao.DatabaseHelper;
 import org.starfishrespect.myconsumption.android.data.KeyValueData;
 
 import java.sql.SQLException;
@@ -35,7 +36,7 @@ public class ConfigUpdater {
 
     public void refreshDB() {
 
-        AsyncTask<Void, List, Void> dltest = new AsyncTask<Void, List, Void>() {
+        AsyncTask<Void, List, Void> task = new AsyncTask<Void, List, Void>() {
             @Override
             protected Void doInBackground(Void... params) {
                 DatabaseHelper db = SingleInstance.getDatabaseHelper();
@@ -103,6 +104,6 @@ public class ConfigUpdater {
             }
         };
 
-        dltest.execute();
+        task.execute();
     }
 }

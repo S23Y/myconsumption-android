@@ -22,8 +22,6 @@ import com.astuetz.PagerSlidingTabStrip;
 import org.starfishrespect.myconsumption.android.R;
 import org.starfishrespect.myconsumption.android.SingleInstance;
 import org.starfishrespect.myconsumption.android.adapters.SpinnerSensorAdapter;
-import org.starfishrespect.myconsumption.android.dao.ConfigUpdater;
-import org.starfishrespect.myconsumption.android.dao.StatValuesUpdater;
 import org.starfishrespect.myconsumption.android.data.SensorData;
 import org.starfishrespect.myconsumption.android.events.ReloadConfigEvent;
 import org.starfishrespect.myconsumption.android.events.ReloadStatEvent;

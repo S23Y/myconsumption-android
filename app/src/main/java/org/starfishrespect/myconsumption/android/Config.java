@@ -23,6 +23,8 @@ public class Config {
 
     public static final String EXTRA_FIRST_LAUNCH = "firstLaunch";
 
+    public static final String SENDER_ID = "225408614844";
+
     // Warning messages for dogfood build
     public static final String DOGFOOD_BUILD_WARNING_TITLE = "Test build";
     public static final String DOGFOOD_BUILD_WARNING_TEXT = "This is a test build.";

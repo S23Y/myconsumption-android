@@ -1,4 +1,4 @@
-package org.starfishrespect.myconsumption.android.asynctasks;
+package org.starfishrespect.myconsumption.android.tasks;
 
 import android.os.AsyncTask;
 import android.util.Log;

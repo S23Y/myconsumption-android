@@ -1,4 +1,4 @@
-package org.starfishrespect.myconsumption.android.dao;
+package org.starfishrespect.myconsumption.android.tasks;
 
 import android.os.AsyncTask;
 
@@ -6,6 +6,7 @@ import org.codehaus.jackson.map.ObjectMapper;
 import org.springframework.web.client.HttpClientErrorException;
 import org.springframework.web.client.ResourceAccessException;
 import org.starfishrespect.myconsumption.android.SingleInstance;
+import org.starfishrespect.myconsumption.android.dao.DatabaseHelper;
 import org.starfishrespect.myconsumption.android.data.KeyValueData;
 import org.starfishrespect.myconsumption.android.data.SensorData;
 import org.springframework.http.converter.json.MappingJacksonHttpMessageConverter;
@@ -41,7 +42,7 @@ public class StatValuesUpdater {
 
     public void refreshDB() {
 
-        AsyncTask<Void, List, Void> dltest = new AsyncTask<Void, List, Void>() {
+        AsyncTask<Void, List, Void> task = new AsyncTask<Void, List, Void>() {
             @Override
             protected Void doInBackground(Void... params) {
                 DatabaseHelper db = SingleInstance.getDatabaseHelper();
@@ -90,6 +91,6 @@ public class StatValuesUpdater {
             }
         };
 
-        dltest.execute();
+        task.execute();
     }
 }
