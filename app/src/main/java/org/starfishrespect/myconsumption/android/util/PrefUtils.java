@@ -87,6 +87,13 @@ public class PrefUtils  {
         return registrationId;
     }
 
+    public static void setRegistrationId(Context context, String id) {
+        final SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(context);
+        SharedPreferences.Editor editor = prefs.edit();
+        editor.putString(PROPERTY_REG_ID, id);
+        editor.commit();
+    }
+
     /**
      * @return Application's version code from the {@code PackageManager}.
      */
