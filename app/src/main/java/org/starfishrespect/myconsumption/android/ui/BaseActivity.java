@@ -7,10 +7,12 @@ import android.animation.ValueAnimator;
 import android.app.AlertDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.graphics.Color;
 import android.graphics.Rect;
 import android.os.Bundle;
 import android.os.Handler;
+import android.preference.PreferenceManager;
 import android.support.v4.view.ViewCompat;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBar;
@@ -30,6 +32,7 @@ import com.google.android.gms.gcm.GoogleCloudMessaging;
 
 import org.starfishrespect.myconsumption.android.R;
 import org.starfishrespect.myconsumption.android.SingleInstance;
+import org.starfishrespect.myconsumption.android.tasks.GCMRegister;
 import org.starfishrespect.myconsumption.android.tasks.UserUpdater;
 import org.starfishrespect.myconsumption.android.tasks.ConfigUpdater;
 import org.starfishrespect.myconsumption.android.dao.SensorValuesDao;
@@ -599,81 +602,75 @@ public abstract class BaseActivity extends ActionBarActivity implements SensorVa
             String regid = PrefUtils.getRegistrationId(this);
 
             if (regid.isEmpty()) {
-                registerInBackground();
+                GCMRegister task = new GCMRegister();
+                task.registerInBackground(this);
             }
         } else {
             LOGI(TAG, "No valid Google Play Services APK found.");
         }
 
-        GCMRegistrar.checkDevice(this);
-        GCMRegistrar.checkManifest(this);
 
-        final String regId = GCMRegistrar.getRegistrationId(this);
-
-        if (TextUtils.isEmpty(regId)) {
-            // Automatically registers application on startup.
-            GCMRegistrar.register(this, Config.GCM_SENDER_ID);
-
-        } else {
-            // Get the correct GCM key for the user. GCM key is a somewhat non-standard
-            // approach we use in this app. For more about this, check GCM.TXT.
-            final String gcmKey = AccountUtils.hasActiveAccount(this) ?
-                    AccountUtils.getGcmKey(this, AccountUtils.getActiveAccountName(this)) : null;
-            // Device is already registered on GCM, needs to check if it is
-            // registered on our server as well.
-            if (ServerUtilities.isRegisteredOnServer(this, gcmKey)) {
-                // Skips registration.
-                LOGI(TAG, "Already registered on the GCM server with right GCM key.");
-            } else {
-                // Try to register again, but not in the UI thread.
-                // It's also necessary to cancel the thread onDestroy(),
-                // hence the use of AsyncTask instead of a raw thread.
-                mGCMRegisterTask = new AsyncTask<Void, Void, Void>() {
-                    @Override
-                    protected Void doInBackground(Void... params) {
-                        LOGI(TAG, "Registering on the GCM server with GCM key: "
-                                + AccountUtils.sanitizeGcmKey(gcmKey));
-                        boolean registered = ServerUtilities.register(BaseActivity.this,
-                                regId, gcmKey);
-                        // At this point all attempts to register with the app
-                        // server failed, so we need to unregister the device
-                        // from GCM - the app will try to register again when
-                        // it is restarted. Note that GCM will send an
-                        // unregistered callback upon completion, but
-                        // GCMIntentService.onUnregistered() will ignore it.
-                        if (!registered) {
-                            LOGI(TAG, "GCM registration failed.");
-                            GCMRegistrar.unregister(BaseActivity.this);
-                        } else {
-                            LOGI(TAG, "GCM registration successful.");
-                        }
-                        return null;
-                    }
-
-                    @Override
-                    protected void onPostExecute(Void result) {
-                        mGCMRegisterTask = null;
-                    }
-                };
-                mGCMRegisterTask.execute(null, null, null);
-            }
-        }
+// TODO if login with google account ?
+//            // Get the correct GCM key for the user. GCM key is a somewhat non-standard
+//            // approach we use in this app. For more about this, check GCM.TXT.
+//            final String gcmKey = AccountUtils.hasActiveAccount(this) ?
+//                    AccountUtils.getGcmKey(this, AccountUtils.getActiveAccountName(this)) : null;
+//            // Device is already registered on GCM, needs to check if it is
+//            // registered on our server as well.
+//            if (ServerUtilities.isRegisteredOnServer(this, gcmKey)) {
+//                // Skips registration.
+//                LOGI(TAG, "Already registered on the GCM server with right GCM key.");
+//            } else {
+//                // Try to register again, but not in the UI thread.
+//                // It's also necessary to cancel the thread onDestroy(),
+//                // hence the use of AsyncTask instead of a raw thread.
+//                mGCMRegisterTask = new AsyncTask<Void, Void, Void>() {
+//                    @Override
+//                    protected Void doInBackground(Void... params) {
+//                        LOGI(TAG, "Registering on the GCM server with GCM key: "
+//                                + AccountUtils.sanitizeGcmKey(gcmKey));
+//                        boolean registered = ServerUtilities.register(BaseActivity.this,
+//                                regId, gcmKey);
+//                        // At this point all attempts to register with the app
+//                        // server failed, so we need to unregister the device
+//                        // from GCM - the app will try to register again when
+//                        // it is restarted. Note that GCM will send an
+//                        // unregistered callback upon completion, but
+//                        // GCMIntentService.onUnregistered() will ignore it.
+//                        if (!registered) {
+//                            LOGI(TAG, "GCM registration failed.");
+//                            GCMRegistrar.unregister(BaseActivity.this);
+//                        } else {
+//                            LOGI(TAG, "GCM registration successful.");
+//                        }
+//                        return null;
+//                    }
+//
+//                    @Override
+//                    protected void onPostExecute(Void result) {
+//                        mGCMRegisterTask = null;
+//                    }
+//                };
+//                mGCMRegisterTask.execute(null, null, null);
+//            }
+//        }
     }
 
     @Override
     protected void onDestroy() {
         super.onDestroy();
 
-        if (mGCMRegisterTask != null) {
-            LOGD(TAG, "Cancelling GCM registration task.");
-            mGCMRegisterTask.cancel(true);
-        }
-
-        try {
-            GCMRegistrar.onDestroy(this);
-        } catch (Exception e) {
-            LOGW(TAG, "C2DM unregistration error", e);
-        }
+        // TODO if login with google account ? related to registerGCMClient
+//        if (mGCMRegisterTask != null) {
+//            LOGD(TAG, "Cancelling GCM registration task.");
+//            mGCMRegisterTask.cancel(true);
+//        }
+//
+//        try {
+//            GCMRegistrar.onDestroy(this);
+//        } catch (Exception e) {
+//            LOGW(TAG, "C2DM unregistration error", e);
+//        }
 
         SharedPreferences sp = PreferenceManager.getDefaultSharedPreferences(this);
         sp.unregisterOnSharedPreferenceChangeListener(this);
