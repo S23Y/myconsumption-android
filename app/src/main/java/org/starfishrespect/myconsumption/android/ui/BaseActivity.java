@@ -607,6 +607,8 @@ public abstract class BaseActivity extends ActionBarActivity implements SensorVa
         }
 
 
+
+
 // TODO if login with google account ?
 //            // Get the correct GCM key for the user. GCM key is a somewhat non-standard
 //            // approach we use in this app. For more about this, check GCM.TXT.

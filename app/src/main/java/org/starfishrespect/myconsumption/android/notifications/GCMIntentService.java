@@ -18,15 +18,16 @@ import static org.starfishrespect.myconsumption.android.util.LogUtils.makeLogTag
 /**
  * Service that manages push notifications
  */
-public class GcmIntentService extends IntentService {
-    private static final String TAG = makeLogTag(GcmIntentService.class);
+public class GCMIntentService extends IntentService {
+    private static final String TAG = makeLogTag(GCMIntentService.class);
 
     public static final int NOTIFICATION_ID = 1;
     private NotificationManager mNotificationManager;
     NotificationCompat.Builder builder;
 
-    public GcmIntentService() {
-        super("GcmIntentService");
+    public GCMIntentService() {
+        super("GCMIntentService");
+        LOGI(TAG,  "GCMIntentService started");
     }
 
     @Override
@@ -70,7 +71,7 @@ public class GcmIntentService extends IntentService {
             }
         }
         // Release the wake lock provided by the WakefulBroadcastReceiver.
-        GcmBroadcastReceiver.completeWakefulIntent(intent);
+        GCMBroadcastReceiver.completeWakefulIntent(intent);
     }
 
     // Put the message into a notification and post it.
