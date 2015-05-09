@@ -1,4 +1,4 @@
-package org.starfishrespect.myconsumption.android.notifications;
+package org.starfishrespect.myconsumption.android;
 
 import android.app.IntentService;
 import android.app.NotificationManager;
@@ -7,7 +7,8 @@ import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.NotificationCompat;
-import org.starfishrespect.myconsumption.android.R;
+
+import org.starfishrespect.myconsumption.android.notifications.GCMBroadcastReceiver;
 import org.starfishrespect.myconsumption.android.ui.BaseActivity;
 
 import com.google.android.gms.gcm.GoogleCloudMessaging;

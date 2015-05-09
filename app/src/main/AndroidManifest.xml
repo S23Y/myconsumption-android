@@ -23,10 +23,10 @@
             <intent-filter>
                 <action android:name="com.google.android.c2dm.intent.RECEIVE" />
                 <action android:name="com.google.android.c2dm.intent.REGISTRATION" />
-                <category android:name="org.starfishrespect.myconsumption.android.notifications" />
+                <category android:name="org.starfishrespect.myconsumption.android" />
             </intent-filter>
         </receiver>
-        <service android:name=".notifications.GCMIntentService" android:enabled="true" />
+        <service android:name=".GCMIntentService" android:enabled="true" />
 
 
         <activity
