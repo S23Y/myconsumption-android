@@ -35,9 +35,9 @@
         <!--Reload layout-->
         <LinearLayout
             android:id="@+id/layoutGlobalReloading"
-            android:layout_alignParentBottom="true"
+            android:gravity="center"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
+            android:layout_height="match_parent"
             android:visibility="gone"
             android:paddingTop="?actionBarSize">
 
@@ -45,15 +45,14 @@
                 style="?android:attr/progressBarStyleLarge"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-
                 android:id="@+id/progressBar"
-                android:layout_gravity="center_horizontal"/>
+                android:gravity="center"/>
 
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="@string/text_reload"
-                android:layout_gravity="center_vertical"
+                android:gravity="center"
                 android:id="@+id/textView"/>
         </LinearLayout>
 
