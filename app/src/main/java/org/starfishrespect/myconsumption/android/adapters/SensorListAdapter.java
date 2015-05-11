@@ -9,7 +9,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.*;
 import org.starfishrespect.myconsumption.android.R;
-import org.starfishrespect.myconsumption.android.component.ColorDialog;
+import org.starfishrespect.myconsumption.android.ui.widget.ColorDialog;
 import org.starfishrespect.myconsumption.android.data.SensorData;
 import org.starfishrespect.myconsumption.android.events.ColorChangedEvent;
 import org.starfishrespect.myconsumption.android.events.VisibilityChangedEvent;

@@ -1,4 +1,4 @@
-package org.starfishrespect.myconsumption.android.component;
+package org.starfishrespect.myconsumption.android.ui.widget;
 
 import android.app.Dialog;
 import android.content.Context;
