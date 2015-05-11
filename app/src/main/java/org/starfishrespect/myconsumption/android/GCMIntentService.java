@@ -9,8 +9,6 @@ import android.os.Bundle;
 import android.support.v4.app.NotificationCompat;
 
 import org.starfishrespect.myconsumption.android.notifications.GCMBroadcastReceiver;
-import org.starfishrespect.myconsumption.android.ui.BaseActivity;
-import org.starfishrespect.myconsumption.android.ui.ChartActivity;
 import org.starfishrespect.myconsumption.android.ui.LoginActivity;
 
 import com.google.android.gms.gcm.GoogleCloudMessaging;
@@ -24,9 +22,7 @@ import static org.starfishrespect.myconsumption.android.util.LogUtils.makeLogTag
 public class GCMIntentService extends IntentService {
     private static final String TAG = makeLogTag(GCMIntentService.class);
 
-    public static final int NOTIFICATION_ID = 1;
     private NotificationManager mNotificationManager;
-    NotificationCompat.Builder builder;
 
     public GCMIntentService() {
         super("GCMIntentService");
@@ -57,7 +53,7 @@ public class GCMIntentService extends IntentService {
                     break;
                 case GoogleCloudMessaging.MESSAGE_TYPE_MESSAGE: // If it's a regular GCM message
                     // Post notification of received message.
-                    sendNotification(extras.get("message").toString());
+                    sendNotification(extras.get("sensor").toString(), extras.get("message").toString());
                     LOGI(TAG, "Received: " + extras.toString());
                     break;
             }
@@ -69,7 +65,7 @@ public class GCMIntentService extends IntentService {
     // Put the message into a notification and post it.
     // This is just one simple example of what you might choose to do with
     // a GCM message.
-    private void sendNotification(String msg) {
+    private void sendNotification(String sensor, String msg) {
         mNotificationManager = (NotificationManager)
                 this.getSystemService(Context.NOTIFICATION_SERVICE);
 
@@ -85,6 +81,6 @@ public class GCMIntentService extends IntentService {
                         .setContentText(msg);
 
         mBuilder.setContentIntent(contentIntent);
-        mNotificationManager.notify(NOTIFICATION_ID, mBuilder.build());
+        mNotificationManager.notify(sensor.hashCode(), mBuilder.build());
     }
 }
