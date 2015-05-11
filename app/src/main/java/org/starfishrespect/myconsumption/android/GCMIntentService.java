@@ -10,6 +10,8 @@ import android.support.v4.app.NotificationCompat;
 
 import org.starfishrespect.myconsumption.android.notifications.GCMBroadcastReceiver;
 import org.starfishrespect.myconsumption.android.ui.BaseActivity;
+import org.starfishrespect.myconsumption.android.ui.ChartActivity;
+import org.starfishrespect.myconsumption.android.ui.LoginActivity;
 
 import com.google.android.gms.gcm.GoogleCloudMessaging;
 
@@ -39,7 +41,7 @@ public class GCMIntentService extends IntentService {
         // in your BroadcastReceiver.
         String messageType = gcm.getMessageType(intent);
 
-        if (!extras.isEmpty()) {  // has effect of unparcelling Bundle
+        if (!(extras == null || extras.isEmpty() || messageType == null || messageType.isEmpty())) {  // has effect of unparcelling Bundle
             /*
              * Filter messages based on message type. Since it is likely that GCM
              * will be extended in the future with new message types, just ignore
@@ -48,25 +50,15 @@ public class GCMIntentService extends IntentService {
              */
             switch (messageType) {
                 case GoogleCloudMessaging.MESSAGE_TYPE_SEND_ERROR:
-                    sendNotification("Send error: " + extras.toString());
+                    LOGI(TAG, "Send error: " + extras.toString());
                     break;
                 case GoogleCloudMessaging.MESSAGE_TYPE_DELETED:
-                    sendNotification("Deleted messages on server: " + extras.toString());
+                    LOGI(TAG, "Deleted messages on server: " + extras.toString());
 
                     break;
                 case GoogleCloudMessaging.MESSAGE_TYPE_MESSAGE: // If it's a regular GCM message
-//                // This loop represents the service doing some work.
-//                for (int i=0; i<5; i++) {
-//                    Log.i(TAG, "Working... " + (i+1)
-//                            + "/5 @ " + SystemClock.elapsedRealtime());
-//                    try {
-//                        Thread.sleep(5000);
-//                    } catch (InterruptedException e) {
-//                    }
-//                }
-//                Log.i(TAG, "Completed work @ " + SystemClock.elapsedRealtime());
                     // Post notification of received message.
-                    sendNotification("Received: " + extras.toString());
+                    sendNotification(extras.get("message").toString());
                     LOGI(TAG, "Received: " + extras.toString());
                     break;
             }
@@ -83,7 +75,7 @@ public class GCMIntentService extends IntentService {
                 this.getSystemService(Context.NOTIFICATION_SERVICE);
 
         PendingIntent contentIntent = PendingIntent.getActivity(this, 0,
-                new Intent(this, BaseActivity.class), 0);
+                new Intent(this, LoginActivity.class), 0);
 
         NotificationCompat.Builder mBuilder =
                 new NotificationCompat.Builder(this)
