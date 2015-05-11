@@ -54,7 +54,6 @@ public class GCMIntentService extends IntentService {
                     break;
                 case GoogleCloudMessaging.MESSAGE_TYPE_DELETED:
                     LOGI(TAG, "Deleted messages on server: " + extras.toString());
-
                     break;
                 case GoogleCloudMessaging.MESSAGE_TYPE_MESSAGE: // If it's a regular GCM message
                     // Post notification of received message.
