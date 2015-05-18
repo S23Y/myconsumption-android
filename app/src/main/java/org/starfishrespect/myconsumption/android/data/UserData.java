@@ -13,6 +13,7 @@ import java.util.List;
 public class UserData implements Serializable {
 
     private String name;
+    private String password;
     @JsonIgnore
     private List<SensorData> sensors;
 
@@ -31,6 +32,14 @@ public class UserData implements Serializable {
 
     public void setName(String name) {
         this.name = name;
+    }
+
+    public String getPassword() {
+        return password;
+    }
+
+    public void setPassword(String password) {
+        this.password = password;
     }
 
     public List<SensorData> getSensors() {

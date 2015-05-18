@@ -43,6 +43,7 @@ public class LoginActivity extends Activity implements View.OnClickListener, Use
 
 
         // todo: not sure that this code belongs here with the MVC and DAO stuffs...
+        // plus, database helper should be accessed through single instance...
         DatabaseHelper db = new DatabaseHelper(this);
         KeyValueData userJson = db.getValueForKey("user");
         if (userJson != null) {
@@ -128,19 +129,5 @@ public class LoginActivity extends Activity implements View.OnClickListener, Use
             return;
         }
         super.onActivityResult(requestCode, resultCode, data);
-    }
-
-    @Override
-    protected void onResume() {
-        super.onResume();
-        //@TODO: uncomment (caused the app to crash)
-/*        int resultCode = GooglePlayServicesUtil
-                .isGooglePlayServicesAvailable(getApplicationContext());
-
-        if (resultCode == ConnectionResult.SUCCESS) {
-            Log.d(TAG, "Google play services OK");
-        } else {
-            GooglePlayServicesUtil.getErrorDialog(resultCode, this, 1).show();
-        }*/
     }
 }

@@ -5,6 +5,7 @@ import android.app.AlertDialog;
 import android.content.DialogInterface;
 import android.os.AsyncTask;
 import android.os.Bundle;
+import android.util.Base64;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
@@ -24,13 +25,22 @@ import org.springframework.web.client.HttpClientErrorException;
 import org.springframework.web.client.RestTemplate;
 
 import java.io.IOException;
+import java.io.UnsupportedEncodingException;
+import java.security.MessageDigest;
+import java.security.NoSuchAlgorithmException;
+import java.security.SecureRandom;
+import java.util.Random;
+
+import static org.starfishrespect.myconsumption.android.util.LogUtils.LOGD;
+import static org.starfishrespect.myconsumption.android.util.LogUtils.LOGE;
+import static org.starfishrespect.myconsumption.android.util.LogUtils.makeLogTag;
 
 /**
  * Create account activity
  */
 public class CreateAccountActivity extends Activity {
 
-    private static final String TAG = "createAccountActivity";
+    private static final String TAG = makeLogTag(CreateAccountActivity.class);
 
     public EditText editTextUsername, editTextPassword, editTextPassword2;
     public Button buttonCreateAccount;
@@ -87,7 +97,8 @@ public class CreateAccountActivity extends Activity {
                                     builder.setMessage(R.string.dialog_message_error_user_already_exists);
                                     break;
                                 default:
-                                    builder.setMessage("Unknown error");
+                                    builder.setMessage("An error has occurred. You might want to " +
+                                            "check your internet connection or contact the application provider.");
                                     break;
 
                             }
@@ -104,21 +115,37 @@ public class CreateAccountActivity extends Activity {
         template.getMessageConverters().add(new FormHttpMessageConverter());
         template.getMessageConverters().add(new StringHttpMessageConverter());
         MultiValueMap<String, String> postParams = new LinkedMultiValueMap<>();
-        postParams.add("password", editTextPassword.getText().toString());
+        postParams.add("password", sha256(editTextPassword.getText().toString()));
         try {
             String result = template.postForObject(SingleInstance.getServerUrl() + "users/" + editTextUsername.getText().toString(),
                     postParams, String.class);
-            Log.d(TAG, result);
+            LOGD(TAG, result);
 
             SimpleResponseDTO response = new ObjectMapper().readValue(result, SimpleResponseDTO.class);
             return response.getStatus();
 
-        } catch (HttpClientErrorException e) {
-            e.printStackTrace();
-            return -1;
-        } catch (IOException e) {
+        } catch (Exception e) {
             e.printStackTrace();
             return -1;
         }
+    }
+
+    private String sha256(String input) {
+        MessageDigest digest = null;
+        try {
+            digest = MessageDigest.getInstance("SHA-256");
+        } catch (NoSuchAlgorithmException e) {
+            LOGE(TAG, e.toString());
+        }
+        byte[] hash = new byte[0];
+        if (digest != null) {
+            try {
+                hash =  digest.digest(input.getBytes("UTF-8"));
+            } catch (UnsupportedEncodingException e) {
+                LOGE(TAG, e.toString());
+            }
+
+        }
+        return Base64.encodeToString(hash, Base64.NO_WRAP);
     }
 }
