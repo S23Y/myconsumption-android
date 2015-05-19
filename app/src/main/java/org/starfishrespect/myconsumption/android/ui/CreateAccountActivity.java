@@ -14,6 +14,7 @@ import android.widget.Toast;
 
 import org.starfishrespect.myconsumption.android.R;
 import org.starfishrespect.myconsumption.android.SingleInstance;
+import org.starfishrespect.myconsumption.android.util.CryptoUtils;
 import org.starfishrespect.myconsumption.android.util.MiscFunctions;
 import org.starfishrespect.myconsumption.server.api.dto.SimpleResponseDTO;
 import org.codehaus.jackson.map.ObjectMapper;
@@ -115,7 +116,7 @@ public class CreateAccountActivity extends Activity {
         template.getMessageConverters().add(new FormHttpMessageConverter());
         template.getMessageConverters().add(new StringHttpMessageConverter());
         MultiValueMap<String, String> postParams = new LinkedMultiValueMap<>();
-        postParams.add("password", sha256(editTextPassword.getText().toString()));
+        postParams.add("password", CryptoUtils.sha256(editTextPassword.getText().toString()));
         try {
             String result = template.postForObject(SingleInstance.getServerUrl() + "users/" + editTextUsername.getText().toString(),
                     postParams, String.class);
@@ -128,24 +129,5 @@ public class CreateAccountActivity extends Activity {
             e.printStackTrace();
             return -1;
         }
-    }
-
-    private String sha256(String input) {
-        MessageDigest digest = null;
-        try {
-            digest = MessageDigest.getInstance("SHA-256");
-        } catch (NoSuchAlgorithmException e) {
-            LOGE(TAG, e.toString());
-        }
-        byte[] hash = new byte[0];
-        if (digest != null) {
-            try {
-                hash =  digest.digest(input.getBytes("UTF-8"));
-            } catch (UnsupportedEncodingException e) {
-                LOGE(TAG, e.toString());
-            }
-
-        }
-        return Base64.encodeToString(hash, Base64.NO_WRAP);
     }
 }

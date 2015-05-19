@@ -1,8 +1,16 @@
 package org.starfishrespect.myconsumption.android.tasks;
 
 import android.os.AsyncTask;
+
+import org.springframework.http.HttpEntity;
+import org.springframework.http.HttpHeaders;
+import org.springframework.http.HttpMethod;
+import org.springframework.http.ResponseEntity;
+import org.springframework.util.LinkedMultiValueMap;
+import org.springframework.util.MultiValueMap;
 import org.starfishrespect.myconsumption.android.data.SensorData;
 import org.starfishrespect.myconsumption.android.data.UserData;
+import org.starfishrespect.myconsumption.android.util.CryptoUtils;
 import org.starfishrespect.myconsumption.server.api.dto.SensorDTO;
 import org.starfishrespect.myconsumption.server.api.dto.UserDTO;
 import org.springframework.http.converter.json.MappingJacksonHttpMessageConverter;
@@ -26,9 +34,11 @@ public class UserUpdater extends AsyncTask<Void, UserData, Void> {
 
     private GetUserCallback getUserCallback;
     private String username;
+    private String password;
 
-    public UserUpdater(String username) {
+    public UserUpdater(String username, String password) {
         this.username = username;
+        this.password = password;
     }
 
     public UserUpdater setGetUserCallback(GetUserCallback getUserCallback) {
@@ -39,9 +49,13 @@ public class UserUpdater extends AsyncTask<Void, UserData, Void> {
     @Override
     protected Void doInBackground(Void... params) {
         RestTemplate template = new RestTemplate();
+        HttpHeaders httpHeaders = CryptoUtils.createHeaders(username, password);
+        ResponseEntity<UserDTO> response;
         template.getMessageConverters().add(new MappingJacksonHttpMessageConverter());
         try {
-            UserDTO user = template.getForObject(SingleInstance.getServerUrl() + "users/" + username, UserDTO.class);
+            response = template.exchange(SingleInstance.getServerUrl() + "users/" + username,
+                    HttpMethod.GET, new HttpEntity<>(httpHeaders), UserDTO.class);
+            UserDTO user = response.getBody();
             UserData userData = new UserData(user);
             for (String sensor : user.getSensors()) {
                 try {

@@ -15,6 +15,8 @@ public class UserData implements Serializable {
     private String name;
     private String password;
     @JsonIgnore
+    private byte[] salt;
+    @JsonIgnore
     private List<SensorData> sensors;
 
     public UserData() {
@@ -40,6 +42,14 @@ public class UserData implements Serializable {
 
     public void setPassword(String password) {
         this.password = password;
+    }
+
+    public byte[] getSalt() {
+        return salt;
+    }
+
+    public void setSalt(byte[] salt) {
+        this.salt = salt;
     }
 
     public List<SensorData> getSensors() {

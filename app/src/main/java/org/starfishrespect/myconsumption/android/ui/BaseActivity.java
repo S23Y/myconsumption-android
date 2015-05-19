@@ -784,7 +784,8 @@ public abstract class BaseActivity extends ActionBarActivity implements SensorVa
         showReloadLayout(true);
 
         // Reload the user from server to see if new sensors have been added
-        UserUpdater userUpdater = new UserUpdater(SingleInstance.getUserController().getUser().getName());
+        UserUpdater userUpdater = new UserUpdater(SingleInstance.getUserController().getUser().getName(),
+                SingleInstance.getUserController().getUser().getPassword());
         userUpdater.setGetUserCallback(this);
         userUpdater.execute();
     }

@@ -18,9 +18,8 @@ import org.starfishrespect.myconsumption.android.dao.DatabaseHelper;
 import org.starfishrespect.myconsumption.android.dao.SensorValuesDao;
 import org.starfishrespect.myconsumption.android.data.KeyValueData;
 import org.starfishrespect.myconsumption.android.data.UserData;
+import org.starfishrespect.myconsumption.android.util.CryptoUtils;
 import org.starfishrespect.myconsumption.android.util.MiscFunctions;
-/*import com.google.android.gms.common.ConnectionResult;
-import com.google.android.gms.common.GooglePlayServicesUtil;*/
 import org.codehaus.jackson.map.ObjectMapper;
 
 import java.io.IOException;
@@ -75,7 +74,12 @@ public class LoginActivity extends Activity implements View.OnClickListener, Use
                     Toast.makeText(this, "Username is mandatory !", Toast.LENGTH_LONG).show();
                     return;
                 }
-                new UserUpdater(editTextUsername.getText().toString()).setGetUserCallback(this).execute();
+                if (editTextPassword.getText().toString().equals("")) {
+                    Toast.makeText(this, "Password is mandatory !", Toast.LENGTH_LONG).show();
+                    return;
+                }
+                new UserUpdater(editTextUsername.getText().toString(),
+                        CryptoUtils.sha256(editTextPassword.getText().toString())).setGetUserCallback(this).execute();
                 break;
             case R.id.buttonCreateAccount:
                 if (!MiscFunctions.isOnline(this)) {
