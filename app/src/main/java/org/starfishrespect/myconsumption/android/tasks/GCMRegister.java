@@ -7,6 +7,10 @@ import android.util.Log;
 import com.google.android.gms.gcm.GoogleCloudMessaging;
 
 import org.codehaus.jackson.map.ObjectMapper;
+import org.springframework.http.HttpEntity;
+import org.springframework.http.HttpHeaders;
+import org.springframework.http.HttpMethod;
+import org.springframework.http.ResponseEntity;
 import org.springframework.http.converter.FormHttpMessageConverter;
 import org.springframework.http.converter.StringHttpMessageConverter;
 import org.springframework.http.converter.json.MappingJacksonHttpMessageConverter;
@@ -15,8 +19,10 @@ import org.springframework.util.MultiValueMap;
 import org.springframework.web.client.RestTemplate;
 import org.starfishrespect.myconsumption.android.Config;
 import org.starfishrespect.myconsumption.android.SingleInstance;
+import org.starfishrespect.myconsumption.android.util.CryptoUtils;
 import org.starfishrespect.myconsumption.android.util.PrefUtils;
 import org.starfishrespect.myconsumption.server.api.dto.SimpleResponseDTO;
+import org.starfishrespect.myconsumption.server.api.dto.UserDTO;
 
 import java.io.IOException;
 import java.util.List;
@@ -43,6 +49,8 @@ public class GCMRegister {
             @Override
             protected String doInBackground(Void... params) {
                 RestTemplate template = new RestTemplate();
+                HttpHeaders httpHeaders = CryptoUtils.createHeadersCurrentUser();
+                ResponseEntity<String> responseEnt;
                 template.getMessageConverters().add(new FormHttpMessageConverter());
                 template.getMessageConverters().add(new StringHttpMessageConverter());
                 String msg = "";
@@ -57,10 +65,9 @@ public class GCMRegister {
                     // Send the registration ID to the server
                     String url = SingleInstance.getServerUrl() + "notifs/"
                             + SingleInstance.getUserController().getUser().getName() + "/id/" + regid;
-                    String result = template.postForObject(url, null, String.class);
-                    LOGD(TAG, result);
 
-                    SimpleResponseDTO response = new ObjectMapper().readValue(result, SimpleResponseDTO.class);
+                    responseEnt = template.exchange(url, HttpMethod.POST, new HttpEntity<>(httpHeaders), String.class);
+                    SimpleResponseDTO response = new ObjectMapper().readValue(responseEnt.getBody(), SimpleResponseDTO.class);
 
                     if (response.getStatus() != SimpleResponseDTO.STATUS_SUCCESS) {
                         msg = "Error: " + response.getStatus() + " Cannot post register id on server side.";

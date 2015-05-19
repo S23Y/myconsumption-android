@@ -3,6 +3,7 @@ package org.starfishrespect.myconsumption.android.util;
 import android.util.Base64;
 
 import org.springframework.http.HttpHeaders;
+import org.starfishrespect.myconsumption.android.SingleInstance;
 
 import java.io.UnsupportedEncodingException;
 import java.nio.charset.Charset;
@@ -60,6 +61,12 @@ public class CryptoUtils {
         headers.add("Accept", "*/*");
 
         return headers;
+    }
+
+    public static HttpHeaders createHeadersCurrentUser() {
+        String username = SingleInstance.getUserController().getUser().getName();
+        String password = SingleInstance.getUserController().getUser().getPassword();
+        return createHeaders(username, password);
     }
 
 

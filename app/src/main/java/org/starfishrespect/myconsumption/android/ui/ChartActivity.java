@@ -32,9 +32,6 @@ public class ChartActivity extends BaseActivity {
         }
         LOGD(TAG, "first launch " + mFirstLaunchEver);
 
-        // Initialize context, database helper, user and so on...
-        SingleInstance.init(this);
-
         setContentView(R.layout.activity_chart);
 
         getActionBarToolbar();

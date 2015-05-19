@@ -29,6 +29,7 @@ import com.google.android.gms.gcm.GoogleCloudMessaging;
 
 import org.starfishrespect.myconsumption.android.R;
 import org.starfishrespect.myconsumption.android.SingleInstance;
+import org.starfishrespect.myconsumption.android.events.BuildAlertEvent;
 import org.starfishrespect.myconsumption.android.tasks.GCMRegister;
 import org.starfishrespect.myconsumption.android.tasks.UserUpdater;
 import org.starfishrespect.myconsumption.android.tasks.ConfigUpdater;
@@ -157,6 +158,9 @@ public abstract class BaseActivity extends ActionBarActivity implements SensorVa
         // in the Intent, so there should only be one enabled Activity that handles each
         // Intent in the app.
         UIUtils.enableDisableActivitiesByFormFactor(this);
+
+        // Initialize context, database helper, user and so on...
+        SingleInstance.init(this);
 
         if (savedInstanceState == null) {
             registerGCMClient();
@@ -858,4 +862,20 @@ public abstract class BaseActivity extends ActionBarActivity implements SensorVa
         EventBus.getDefault().post(new ReloadConfigEvent(true));
     }
 
+    public void onEvent(BuildAlertEvent event) {
+        if (!event.buildAlert())
+            return;
+
+        AlertDialog.Builder builder = new AlertDialog.Builder(this);
+        builder.setTitle(R.string.dialog_title_error)
+                .setMessage(this.getString(R.string.dialog_message_error_when_loading_please_reconnect))
+                .setPositiveButton(R.string.button_ok, new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        dialog.dismiss();
+                        SingleInstance.disconnect();
+                    }
+                });
+        builder.show();
+    }
 }

@@ -1,6 +1,7 @@
 package org.starfishrespect.myconsumption.android.ui;
 
 
+import android.app.Activity;
 import android.graphics.Color;
 import android.os.AsyncTask;
 import android.os.Bundle;
@@ -49,6 +50,8 @@ import de.greenrobot.event.EventBus;
  * Fragment that display the data
  */
 public class ChartViewFragment extends Fragment {
+
+    protected ChartActivity mActivity;
 
     private static final String TAG = "ChartViewFragment";
 
@@ -106,6 +109,12 @@ public class ChartViewFragment extends Fragment {
     public void onStart() {
         super.onStart();
         EventBus.getDefault().post(new FragmentsReadyEvent(this.getClass(), true));
+    }
+
+    @Override
+    public void onAttach(Activity activity) {
+        super.onAttach(activity);
+        mActivity = (ChartActivity) activity;
     }
 
     @Override
@@ -226,7 +235,7 @@ public class ChartViewFragment extends Fragment {
             container.setSerie(serie);
 
             if (chart == null) {
-                chart = ChartFactory.getLineChartView(SingleInstance.getChartActivity(), currentChartDataset, chartRenderer);
+                chart = ChartFactory.getLineChartView(mActivity, currentChartDataset, chartRenderer);
                 chartLayout.addView(chart, new LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT,
                         LinearLayout.LayoutParams.MATCH_PARENT));
                 chart.setClickable(true);

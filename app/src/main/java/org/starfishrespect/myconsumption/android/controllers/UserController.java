@@ -4,8 +4,7 @@ import org.starfishrespect.myconsumption.android.SingleInstance;
 import org.starfishrespect.myconsumption.android.data.SensorData;
 import org.starfishrespect.myconsumption.android.data.UserData;
 import org.codehaus.jackson.map.ObjectMapper;
-import org.starfishrespect.myconsumption.android.events.ReloadUserEvent;
-import org.starfishrespect.myconsumption.android.util.AlertUtils;
+import org.starfishrespect.myconsumption.android.events.BuildAlertEvent;
 
 import java.io.IOException;
 import java.sql.SQLException;
@@ -36,10 +35,8 @@ public class UserController {
             // Get sensors
             sensors = SingleInstance.getDatabaseHelper().getSensorDao().queryForAll();
             user.setSensors(sensors);
-            //// Notify the fragments that the user has been modified
-            //SingleInstance.getUserController().reloadUser(refreshDataFromServer);
         } catch (IOException| SQLException e) {
-            AlertUtils.buildAlert();
+            EventBus.getDefault().post(new BuildAlertEvent(true));
         }
     }
 

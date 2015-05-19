@@ -3,11 +3,13 @@ package org.starfishrespect.myconsumption.android.controllers;
 import org.codehaus.jackson.map.ObjectMapper;
 import org.codehaus.jackson.type.TypeReference;
 import org.starfishrespect.myconsumption.android.SingleInstance;
-import org.starfishrespect.myconsumption.android.util.AlertUtils;
+import org.starfishrespect.myconsumption.android.events.BuildAlertEvent;
 import org.starfishrespect.myconsumption.server.api.dto.StatDTO;
 
 import java.io.IOException;
 import java.util.List;
+
+import de.greenrobot.event.EventBus;
 
 import static org.starfishrespect.myconsumption.android.util.LogUtils.LOGE;
 import static org.starfishrespect.myconsumption.android.util.LogUtils.makeLogTag;
@@ -41,7 +43,7 @@ public class StatsController {
             // Read json
             stats = mapper.readValue(statsJSON, new TypeReference<List<StatDTO>>(){});
         } catch (IOException e) {
-            AlertUtils.buildAlert();
+            EventBus.getDefault().post(new BuildAlertEvent(true));
         }
     }
 

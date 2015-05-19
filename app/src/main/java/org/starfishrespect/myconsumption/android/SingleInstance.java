@@ -1,5 +1,6 @@
 package org.starfishrespect.myconsumption.android;
 
+import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 
@@ -9,7 +10,6 @@ import org.starfishrespect.myconsumption.android.dao.DatabaseHelper;
 import org.starfishrespect.myconsumption.android.dao.SensorValuesDao;
 import org.starfishrespect.myconsumption.android.data.KeyValueData;
 import org.starfishrespect.myconsumption.android.data.SensorData;
-import org.starfishrespect.myconsumption.android.ui.ChartActivity;
 import org.starfishrespect.myconsumption.android.ui.LoginActivity;
 
 import java.sql.SQLException;
@@ -21,52 +21,29 @@ import java.util.Random;
 public class SingleInstance {
 
     private static DatabaseHelper databaseHelper;
-//    private static FragmentController fragmentController;
     private static UserController userController;
-    //private static MainActivity mainActivity;
     private static int spinnerSensorPosition = 0;
-
     protected static Context context;
-
-    // TODO put those config in Config.java or in an xml file
-    //private static String serverAddress = "pahe.manex.biz";
-    //private static String serverAddress = "212.166.22.110"; // public vm address
-    private static String serverAddress = "172.20.1.75"; // @manex (bridged)
-    //private static String serverAddress = "192.168.242.129";  // @ans (nat)
-    //private static String serverAddress = "192.168.1.8"; // @ans bridged ethernet
-    //private static String serverAddress = "192.168.1.32";   // @lw (bridged)
-    private static int port = 8080;
-    private static String protocol = "http://";
-    // TODO serverDir = "myconsumption"
-    private static String serverDir = "";
-
     private static StatsController statsController;
+    private static boolean init = true;
 
     private static int[] colors = {0xffff0000, 0xff0000ff, 0xff000000,
             0xff000060, 0xff008000, 0xff600000, 0xff661144, 0xff606060, 0xffaa6611};
 
-    private static boolean init = true;
-    private static boolean serviceStarted = false;
-
-//    // Since it is a Singleton, the constructor is private (we can't instantiate this class) => faux, ceci est une classe qui regroupe des singletons et non un singleton en elle meme
-//    private SingleInstance() {
-//    }
-
     public static void init(Context c) {
-        if (init) {
+        if (init)
             context = c; // TODO check this. Context might point to smthg not useful after screen rotation
-        }
         init = false;
 
         // Init database helper
-        SingleInstance.getDatabaseHelper();
+        getDatabaseHelper();
 
         // Load the user
-        SingleInstance.getUserController().loadUser();
+        getUserController().loadUser();
     }
 
     // removes all the data of the current user and go back to the login
-    public static void disconnect(ChartActivity chartActivity) {
+    public static void disconnect() {
         KeyValueData userKey = getDatabaseHelper().getValueForKey("user");
         try {
             if (userKey != null) {
@@ -81,14 +58,9 @@ public class SingleInstance {
             e.printStackTrace();
         }
 
-        chartActivity.startActivity(new Intent(chartActivity, LoginActivity.class));
-        chartActivity.finish();
+        context.startActivity(new Intent(context, LoginActivity.class));
+        ((Activity) context).finish();
     }
-
-    public static ChartActivity getChartActivity() {
-        return (ChartActivity) context;
-    }
-
 
     public static DatabaseHelper getDatabaseHelper() {
         if (databaseHelper == null)
@@ -102,12 +74,6 @@ public class SingleInstance {
         return userController;
     }
 
-//    public static FragmentController getFragmentController() {
-//        if (fragmentController == null)
-//            fragmentController = new FragmentController();
-//        return fragmentController;
-//    }
-
     public static StatsController getStatsController() {
         if (statsController == null)
             statsController = new StatsController();
@@ -115,31 +81,7 @@ public class SingleInstance {
     }
 
     public static String getServerUrl() {
-        return protocol + serverAddress + ":" + port + "/" + serverDir;
-    }
-
-    public static String getServerAddress() {
-        return serverAddress;
-    }
-
-    public static int getPort() {
-        return port;
-    }
-
-    public static String getProtocol() {
-        return protocol;
-    }
-
-    public static void setServerAddress(String serverAddress) {
-        SingleInstance.serverAddress = serverAddress;
-    }
-
-    public static void setServerPort(int port) {
-        SingleInstance.port = port;
-    }
-
-    public static void setProtocol(String protocol) {
-        SingleInstance.protocol = protocol;
+        return Config.protocol + Config.serverAddress + ":" + Config.port + "/" + Config.serverDir;
     }
 
     public static void destroyDatabaseHelper() {

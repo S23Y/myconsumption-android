@@ -43,7 +43,8 @@ import de.greenrobot.event.EventBus;
  */
 public class ChartChoiceFragment extends Fragment {
 
-    //private UserData user; // not needed anymore, accessed through the controller
+    protected ChartActivity mActivity;
+    
     private ListView listViewSensor;
     private LinearLayout mLinearLayout = null;
     private TextView mTextView = null;
@@ -99,22 +100,22 @@ public class ChartChoiceFragment extends Fragment {
             @Override
             public boolean onItemLongClick(AdapterView<?> parent, View view, int position, long id) {
                 lastLongClickItem = position;
-                PopupMenu popup = new PopupMenu(SingleInstance.getChartActivity(), view);
+                PopupMenu popup = new PopupMenu(mActivity, view);
                 popup.inflate(R.menu.menu_sensor_dropdown);
                 popup.setOnMenuItemClickListener(new PopupMenu.OnMenuItemClickListener() {
                     @Override
                     public boolean onMenuItemClick(MenuItem item) {
                         switch (item.getItemId()) {
                             case R.id.action_delete_sensor:
-                                if (!MiscFunctions.isOnline(SingleInstance.getChartActivity())) {
-                                    MiscFunctions.makeOfflineDialog(SingleInstance.getChartActivity()).show();
+                                if (!MiscFunctions.isOnline(mActivity)) {
+                                    MiscFunctions.makeOfflineDialog(mActivity).show();
                                     return false;
                                 }
                                 deleteSensor(lastLongClickItem);
                                 break;
                             case R.id.action_edit_sensor:
-                                if (!MiscFunctions.isOnline(SingleInstance.getChartActivity())) {
-                                    MiscFunctions.makeOfflineDialog(SingleInstance.getChartActivity()).show();
+                                if (!MiscFunctions.isOnline(mActivity)) {
+                                    MiscFunctions.makeOfflineDialog(mActivity).show();
                                     return false;
                                 }
                                 editSensor(lastLongClickItem);
@@ -135,6 +136,12 @@ public class ChartChoiceFragment extends Fragment {
     public void onStart() {
         super.onStart();
         EventBus.getDefault().post(new FragmentsReadyEvent(this.getClass(), true));
+    }
+
+    @Override
+    public void onAttach(Activity activity) {
+        super.onAttach(activity);
+        mActivity = (ChartActivity) activity;
     }
 
     @Override
@@ -163,13 +170,13 @@ public class ChartChoiceFragment extends Fragment {
 
     private void editSensor(int index) {
         SensorData sensor = sensors.get(index);
-        Intent intent = new Intent(SingleInstance.getChartActivity(), AddSensorActivity.class);
+        Intent intent = new Intent(mActivity, AddSensorActivity.class);
         intent.putExtra("edit", sensor.getSensorId());
         startActivityForResult(intent, REQUEST_EDIT_SENSOR);
     }
 
     private void deleteSensor(int index) {
-        AlertDialog.Builder builder = new AlertDialog.Builder(SingleInstance.getChartActivity());
+        AlertDialog.Builder builder = new AlertDialog.Builder(mActivity);
         builder.setTitle(R.string.dialog_title_confirmation);
         builder.setMessage(String.format(getResources().getString(R.string.dialog_message_confirmation_delete_sensor), sensors.get(lastLongClickItem).getName()));
         builder.setNegativeButton(R.string.button_no, new DialogInterface.OnClickListener() {
@@ -205,7 +212,7 @@ public class ChartChoiceFragment extends Fragment {
                     protected void onProgressUpdate(Boolean... values) {
                         for (boolean b : values) {
                             if (b) {
-                                new AlertDialog.Builder(SingleInstance.getChartActivity()).setTitle(R.string.dialog_title_information)
+                                new AlertDialog.Builder(mActivity).setTitle(R.string.dialog_title_information)
                                         .setMessage(R.string.dialog_message_information_sensor_deleted)
                                         .setPositiveButton(R.string.button_ok, new DialogInterface.OnClickListener() {
                                             @Override
@@ -217,7 +224,7 @@ public class ChartChoiceFragment extends Fragment {
                                             }
                                         }).show();
                             } else {
-                                new AlertDialog.Builder(SingleInstance.getChartActivity()).setTitle(R.string.dialog_title_information)
+                                new AlertDialog.Builder(mActivity).setTitle(R.string.dialog_title_information)
                                         .setMessage("unknown error while deleting from DB")
                                         .setPositiveButton(R.string.button_ok, new DialogInterface.OnClickListener() {
                                             @Override
@@ -242,7 +249,7 @@ public class ChartChoiceFragment extends Fragment {
             mTextView.setText(SingleInstance.getUserController().getUser().getName());
 
         sensors = SingleInstance.getUserController().getUser().getSensors();
-        sensorListAdapter = new SensorListAdapter(SingleInstance.getChartActivity(), sensors);
+        sensorListAdapter = new SensorListAdapter(mActivity, sensors);
 
         if (listViewSensor != null)
             listViewSensor.setAdapter(sensorListAdapter);
@@ -279,7 +286,7 @@ public class ChartChoiceFragment extends Fragment {
         frequencies.add(new FrequencyData("Month", FrequencyData.DELAY_MONTH));
         frequencies.add(new FrequencyData("Year", FrequencyData.DELAY_YEAR));
         frequencies.add(new FrequencyData("Everything", FrequencyData.DELAY_EVERYTHING));
-        spinnerFrequency.setAdapter(new SpinnerFrequencyAdapter(SingleInstance.getChartActivity(), frequencies));
+        spinnerFrequency.setAdapter(new SpinnerFrequencyAdapter(mActivity, frequencies));
         spinnerFrequency.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
@@ -333,7 +340,7 @@ public class ChartChoiceFragment extends Fragment {
                 break;
         }
         spinnerPrecision.setOnItemSelectedListener(null);
-        spinnerPrecision.setAdapter(new SpinnerFrequencyAdapter(SingleInstance.getChartActivity(), precisionData));
+        spinnerPrecision.setAdapter(new SpinnerFrequencyAdapter(mActivity, precisionData));
         if (precision == FrequencyData.DELAY_EVERYTHING) {
             spinnerPrecision.setSelection(precisionData.size() - 2);
         }
@@ -430,7 +437,7 @@ public class ChartChoiceFragment extends Fragment {
         }
         spinnerDate.setOnItemSelectedListener(null);
         //spinnerDate.setAdapter(new SpinnerDateAdapter(getActivity(), dates));
-        spinnerDate.setAdapter(new SpinnerDateAdapter(SingleInstance.getChartActivity(), dates));
+        spinnerDate.setAdapter(new SpinnerDateAdapter(mActivity, dates));
         spinnerDate.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
@@ -477,7 +484,7 @@ public class ChartChoiceFragment extends Fragment {
     @Override
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
         if (requestCode == REQUEST_EDIT_SENSOR && resultCode == Activity.RESULT_OK) {
-            SingleInstance.getChartActivity().refreshData();
+            mActivity.refreshData();
             return;
         }
         super.onActivityResult(requestCode, resultCode, data);
