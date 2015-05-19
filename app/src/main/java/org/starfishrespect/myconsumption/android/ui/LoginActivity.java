@@ -94,6 +94,9 @@ public class LoginActivity extends Activity implements View.OnClickListener, Use
     @Override
     public void userFound(UserData user) {
         DatabaseHelper db = new DatabaseHelper(this);
+
+        user.setPassword(CryptoUtils.sha256(editTextPassword.getText().toString()));
+
         try {
             ObjectMapper mapper = new ObjectMapper();
             String json = mapper.writeValueAsString(user);

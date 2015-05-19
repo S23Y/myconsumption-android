@@ -105,11 +105,12 @@ public class CryptoUtils {
                 String auth = username + ":" + password;
                 byte[] encodedAuth = Base64.encode(auth.getBytes(Charset.forName("US-ASCII")), Base64.NO_WRAP);
                 String authHeader = "Basic " + new String( encodedAuth );
-                set( "Authorization", authHeader );
+                //String authHeader = "Basic " + auth;
+                set("Authorization", authHeader);
             }
         };
-        headers.add("Content-Type", "application/xml");
-        headers.add("Accept", "application/xml");
+        headers.add("Content-Type", "application/json");
+        headers.add("Accept", "*/*");
 
         return headers;
     }
