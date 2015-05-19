@@ -1,83 +1,91 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout
+<LinearLayout
         xmlns:android="http://schemas.android.com/apk/res/android"
         android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical">
+
+    <include layout="@layout/toolbar_actionbar_with_headerbar" />
+
+    <RelativeLayout
+        android:layout_width="match_parent"
         android:layout_height="match_parent">
-
-    <LinearLayout
-            android:orientation="horizontal"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:layout_above="@+id/buttonCreateSensor">
-
         <LinearLayout
-                android:orientation="vertical"
-                android:layout_width="0dp"
+                android:orientation="horizontal"
+                android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:layout_weight="1"
-                android:padding="10dp">
-
-            <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="@string/label_title_global_settings"
-                    style="@style/label_add_sensor_title"
-                    android:id="@+id/textView2"/>
-
-            <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="@string/label_sensor_name"
-                    android:id="@+id/textView"/>
-
-            <EditText
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:id="@+id/editTextSensorName"/>
-
-            <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="@string/label_sensor_type"
-                    android:id="@+id/textView3"/>
-
-            <Spinner
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:id="@+id/spinnerSensorType"/>
-        </LinearLayout>
-
-        <LinearLayout
-                android:orientation="vertical"
-                android:layout_width="0dp"
-                android:padding="10dp"
-                android:layout_height="match_parent"
-                android:layout_weight="1"
-                >
-
-            <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="@string/label_title_sensor_specific_settings"
-                    style="@style/label_add_sensor_title"
-                    android:id="@+id/textView4"/>
+                android:layout_above="@+id/buttonCreateSensor">
 
             <LinearLayout
                     android:orientation="vertical"
-                    android:layout_width="match_parent"
+                    android:layout_width="0dp"
                     android:layout_height="match_parent"
-                    android:id="@+id/layoutSensorSpecificSettings">
+                    android:layout_weight="1"
+                    android:padding="10dp">
+
+                <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="@string/label_title_global_settings"
+                        style="@style/label_add_sensor_title"
+                        android:id="@+id/textView2"/>
+
+                <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="@string/label_sensor_name"
+                        android:id="@+id/textView"/>
+
+                <EditText
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:id="@+id/editTextSensorName"/>
+
+                <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="@string/label_sensor_type"
+                        android:id="@+id/textView3"/>
+
+                <Spinner
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:id="@+id/spinnerSensorType"/>
             </LinearLayout>
 
+            <LinearLayout
+                    android:orientation="vertical"
+                    android:layout_width="0dp"
+                    android:padding="10dp"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1"
+                    >
 
+                <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="@string/label_title_sensor_specific_settings"
+                        style="@style/label_add_sensor_title"
+                        android:id="@+id/textView4"/>
+
+                <LinearLayout
+                        android:orientation="vertical"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:id="@+id/layoutSensorSpecificSettings">
+                </LinearLayout>
+
+
+            </LinearLayout>
         </LinearLayout>
-    </LinearLayout>
 
-    <Button
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="@string/button_create_sensor"
-            android:id="@+id/buttonCreateSensor"
-            android:layout_alignParentBottom="true"
-            android:layout_centerHorizontal="true"/>
-</RelativeLayout>
+        <Button
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/button_create_sensor"
+                android:id="@+id/buttonCreateSensor"
+                android:layout_alignParentBottom="true"
+                android:layout_centerHorizontal="true"/>
+
+    </RelativeLayout>
+</LinearLayout>

@@ -13,6 +13,11 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.*;
 
+import org.codehaus.jackson.map.ObjectMapper;
+import org.springframework.http.HttpEntity;
+import org.springframework.http.HttpHeaders;
+import org.springframework.http.HttpMethod;
+import org.springframework.http.ResponseEntity;
 import org.starfishrespect.myconsumption.android.R;
 import org.starfishrespect.myconsumption.android.SingleInstance;
 import org.starfishrespect.myconsumption.android.adapters.SensorListAdapter;
@@ -29,7 +34,9 @@ import org.starfishrespect.myconsumption.android.events.DateChangedEvent;
 import org.starfishrespect.myconsumption.android.events.FragmentsReadyEvent;
 import org.starfishrespect.myconsumption.android.events.ReloadUserEvent;
 import org.starfishrespect.myconsumption.android.events.UpdateMovingAverageEvent;
+import org.starfishrespect.myconsumption.android.util.CryptoUtils;
 import org.starfishrespect.myconsumption.android.util.MiscFunctions;
+import org.starfishrespect.myconsumption.server.api.dto.SimpleResponseDTO;
 
 import java.sql.SQLException;
 import java.text.SimpleDateFormat;
@@ -192,12 +199,17 @@ public class ChartChoiceFragment extends Fragment {
                     @Override
                     protected Void doInBackground(Void... params) {
                         RestTemplate template = new RestTemplate();
+                        HttpHeaders httpHeaders = CryptoUtils.createHeadersCurrentUser();
                         template.getMessageConverters().add(new FormHttpMessageConverter());
                         template.getMessageConverters().add(new StringHttpMessageConverter());
-                        template.delete(SingleInstance.getServerUrl() + "users/" +
+
+                        String url = SingleInstance.getServerUrl() + "users/" +
                                 SingleInstance.getUserController().getUser().getName() +
                                 "/sensor/" +
-                                sensors.get(lastLongClickItem).getSensorId());
+                                sensors.get(lastLongClickItem).getSensorId();
+
+                        template.exchange(url, HttpMethod.DELETE, new HttpEntity<>(httpHeaders), String.class);
+
                         try {
                             SingleInstance.getDatabaseHelper().getSensorDao().delete(sensors.get(lastLongClickItem));
                             new SensorValuesDao(SingleInstance.getDatabaseHelper()).removeSensor(sensors.get(lastLongClickItem).getSensorId());

@@ -3,6 +3,10 @@ package org.starfishrespect.myconsumption.android.tasks;
 import android.os.AsyncTask;
 
 import org.codehaus.jackson.map.ObjectMapper;
+import org.springframework.http.HttpEntity;
+import org.springframework.http.HttpHeaders;
+import org.springframework.http.HttpMethod;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.client.HttpClientErrorException;
 import org.springframework.web.client.ResourceAccessException;
 import org.starfishrespect.myconsumption.android.SingleInstance;
@@ -11,6 +15,8 @@ import org.starfishrespect.myconsumption.android.data.KeyValueData;
 import org.starfishrespect.myconsumption.android.data.SensorData;
 import org.springframework.http.converter.json.MappingJacksonHttpMessageConverter;
 import org.springframework.web.client.RestTemplate;
+import org.starfishrespect.myconsumption.android.util.CryptoUtils;
+import org.starfishrespect.myconsumption.server.api.dto.SimpleResponseDTO;
 import org.starfishrespect.myconsumption.server.api.dto.StatDTO;
 
 import java.io.IOException;
@@ -47,6 +53,8 @@ public class StatValuesUpdater {
             protected Void doInBackground(Void... params) {
                 DatabaseHelper db = SingleInstance.getDatabaseHelper();
                 RestTemplate template = new RestTemplate();
+                HttpHeaders httpHeaders = CryptoUtils.createHeadersCurrentUser();
+                ResponseEntity<StatDTO[]> responseEnt;
                 template.getMessageConverters().add(new MappingJacksonHttpMessageConverter());
 
                 try {
@@ -54,7 +62,8 @@ public class StatValuesUpdater {
                         // Stats
                         String url = String.format(SingleInstance.getServerUrl() + "stats/sensor/%s", sensor.getSensorId());
 
-                        StatDTO[] statsArray = template.getForObject(url, StatDTO[].class);
+                        responseEnt = template.exchange(url, HttpMethod.GET, new HttpEntity<>(httpHeaders), StatDTO[].class);
+                        StatDTO[] statsArray = responseEnt.getBody();
                         List<StatDTO> stats = new ArrayList<>(Arrays.asList(statsArray));
 
                         ObjectMapper mapper = new ObjectMapper();

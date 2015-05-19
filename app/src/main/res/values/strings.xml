@@ -158,4 +158,5 @@
     <string name="text_enter_password">Enter a password</string>
     <string name="text_enter_password_again">Enter the same password again</string>
     <string name="text_create_account">Create Account</string>
+    <string name="title_add_sensor">Add sensor</string>
 </resources>

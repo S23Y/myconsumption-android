@@ -537,7 +537,6 @@ public abstract class BaseActivity extends ActionBarActivity implements SensorVa
             case NAVDRAWER_ITEM_ADD_SENSOR:
                 intent = new Intent(this, AddSensorActivity.class);
                 startActivity(intent);
-                finish();
                 break;
 //            case NAVDRAWER_ITEM_EXPERTS_DIRECTORY:
 //                intent = new Intent(this, HelloWorldActivity.class);
@@ -609,74 +608,11 @@ public abstract class BaseActivity extends ActionBarActivity implements SensorVa
         } else {
             LOGI(TAG, "No valid Google Play Services APK found.");
         }
-
-
-
-
-// TODO if login with google account ?
-//            // Get the correct GCM key for the user. GCM key is a somewhat non-standard
-//            // approach we use in this app. For more about this, check GCM.TXT.
-//            final String gcmKey = AccountUtils.hasActiveAccount(this) ?
-//                    AccountUtils.getGcmKey(this, AccountUtils.getActiveAccountName(this)) : null;
-//            // Device is already registered on GCM, needs to check if it is
-//            // registered on our server as well.
-//            if (ServerUtilities.isRegisteredOnServer(this, gcmKey)) {
-//                // Skips registration.
-//                LOGI(TAG, "Already registered on the GCM server with right GCM key.");
-//            } else {
-//                // Try to register again, but not in the UI thread.
-//                // It's also necessary to cancel the thread onDestroy(),
-//                // hence the use of AsyncTask instead of a raw thread.
-//                mGCMRegisterTask = new AsyncTask<Void, Void, Void>() {
-//                    @Override
-//                    protected Void doInBackground(Void... params) {
-//                        LOGI(TAG, "Registering on the GCM server with GCM key: "
-//                                + AccountUtils.sanitizeGcmKey(gcmKey));
-//                        boolean registered = ServerUtilities.register(BaseActivity.this,
-//                                regId, gcmKey);
-//                        // At this point all attempts to register with the app
-//                        // server failed, so we need to unregister the device
-//                        // from GCM - the app will try to register again when
-//                        // it is restarted. Note that GCM will send an
-//                        // unregistered callback upon completion, but
-//                        // GCMIntentService.onUnregistered() will ignore it.
-//                        if (!registered) {
-//                            LOGI(TAG, "GCM registration failed.");
-//                            GCMRegistrar.unregister(BaseActivity.this);
-//                        } else {
-//                            LOGI(TAG, "GCM registration successful.");
-//                        }
-//                        return null;
-//                    }
-//
-//                    @Override
-//                    protected void onPostExecute(Void result) {
-//                        mGCMRegisterTask = null;
-//                    }
-//                };
-//                mGCMRegisterTask.execute(null, null, null);
-//            }
-//        }
     }
 
     @Override
     protected void onDestroy() {
         super.onDestroy();
-
-        // TODO if login with google account ? related to registerGCMClient
-//        if (mGCMRegisterTask != null) {
-//            LOGD(TAG, "Cancelling GCM registration task.");
-//            mGCMRegisterTask.cancel(true);
-//        }
-//
-//        try {
-//            GCMRegistrar.onDestroy(this);
-//        } catch (Exception e) {
-//            LOGW(TAG, "C2DM unregistration error", e);
-//        }
-
-//        SharedPreferences sp = PreferenceManager.getDefaultSharedPreferences(this);
-//        sp.unregisterOnSharedPreferenceChangeListener(this);
     }
 
     private boolean isSeparator(int itemId) {

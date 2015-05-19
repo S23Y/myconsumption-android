@@ -50,16 +50,17 @@ public class UserUpdater extends AsyncTask<Void, UserData, Void> {
     protected Void doInBackground(Void... params) {
         RestTemplate template = new RestTemplate();
         HttpHeaders httpHeaders = CryptoUtils.createHeaders(username, password);
-        ResponseEntity<UserDTO> response;
         template.getMessageConverters().add(new MappingJacksonHttpMessageConverter());
         try {
-            response = template.exchange(SingleInstance.getServerUrl() + "users/" + username,
+            ResponseEntity<UserDTO> response = template.exchange(SingleInstance.getServerUrl() + "users/" + username,
                     HttpMethod.GET, new HttpEntity<>(httpHeaders), UserDTO.class);
             UserDTO user = response.getBody();
             UserData userData = new UserData(user);
             for (String sensor : user.getSensors()) {
                 try {
-                    SensorDTO SensorDTO = template.getForObject(SingleInstance.getServerUrl() + "sensors/" + sensor, SensorDTO.class);
+                    ResponseEntity<SensorDTO> responseSensor = template.exchange(SingleInstance.getServerUrl() + "sensors/" + sensor,
+                            HttpMethod.GET, new HttpEntity<>(httpHeaders), SensorDTO.class);
+                    SensorDTO SensorDTO = responseSensor.getBody();
                     userData.addSensor(new SensorData(SensorDTO));
                 } catch (RestClientException e) {
                     e.printStackTrace();

@@ -3,19 +3,33 @@ package org.starfishrespect.myconsumption.android.ui;
 import android.app.Activity;
 import android.app.AlertDialog;
 import android.app.ProgressDialog;
+import android.content.ComponentName;
 import android.content.DialogInterface;
 import android.os.AsyncTask;
 import android.os.Bundle;
+import android.support.v4.content.IntentCompat;
 import android.util.Log;
 import android.view.View;
-import android.widget.*;
+import android.support.v7.widget.Toolbar;
+import android.widget.AdapterView;
+import android.widget.ArrayAdapter;
+import android.widget.Button;
+import android.widget.EditText;
+import android.widget.LinearLayout;
+import android.widget.Spinner;
 
+import org.springframework.http.HttpEntity;
+import org.springframework.http.HttpHeaders;
+import org.springframework.http.HttpMethod;
+import org.springframework.http.ResponseEntity;
+import org.springframework.web.util.UriComponentsBuilder;
 import org.starfishrespect.myconsumption.android.R;
 import org.starfishrespect.myconsumption.android.SingleInstance;
 import org.starfishrespect.myconsumption.android.dao.DatabaseHelper;
 import org.starfishrespect.myconsumption.android.data.KeyValueData;
 import org.starfishrespect.myconsumption.android.data.SensorData;
 import org.starfishrespect.myconsumption.android.data.UserData;
+import org.starfishrespect.myconsumption.android.util.CryptoUtils;
 import org.starfishrespect.myconsumption.android.util.MiscFunctions;
 import org.starfishrespect.myconsumption.android.sensorviews.AbstractSensorView;
 import org.starfishrespect.myconsumption.android.sensorviews.SensorViewFactory;
@@ -34,7 +48,7 @@ import java.sql.SQLException;
 /**
  * Add sensor Activity
  */
-public class AddSensorActivity extends Activity {
+public class AddSensorActivity extends BaseActivity {
 
     private static final String TAG = "AddSensorActivity";
 
@@ -51,6 +65,19 @@ public class AddSensorActivity extends Activity {
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_add_sensor);
+
+        Toolbar toolbar = getActionBarToolbar();
+        getSupportActionBar().setTitle(getString(R.string.title_add_sensor));
+        toolbar.setNavigationIcon(R.drawable.ic_up);
+
+        toolbar.setNavigationOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                navigateUpToFromChild(AddSensorActivity.this,
+                        IntentCompat.makeMainActivity(new ComponentName(AddSensorActivity.this,
+                                ChartActivity.class)));
+            }
+        });
 
         spinnerSensorType = (Spinner) findViewById(R.id.spinnerSensorType);
         editTextSensorName = (EditText) findViewById(R.id.editTextSensorName);
@@ -151,7 +178,7 @@ public class AddSensorActivity extends Activity {
                                                 public void onClick(DialogInterface dialog, int which) {
                                                     dialog.dismiss();
                                                     setResult(RESULT_OK);
-                                                    finish();
+                                                    //finish();
                                                 }
                                             }).show();
                                 } else {
@@ -254,15 +281,22 @@ public class AddSensorActivity extends Activity {
             return false;
         }
         RestTemplate template = new RestTemplate();
+        HttpHeaders httpHeaders = CryptoUtils.createHeadersCurrentUser();
+        ResponseEntity<String> responseEnt;
         template.getMessageConverters().add(new FormHttpMessageConverter());
         template.getMessageConverters().add(new StringHttpMessageConverter());
-        MultiValueMap<String, String> postParams = new LinkedMultiValueMap<>();
-        postParams.add("name", editTextSensorName.getText().toString());
-        postParams.add("type", selectedSensorType);
-        postParams.add("user", user);
+
         try {
-            postParams.add("settings", mapper.writeValueAsString(sensorView.getSensorSettings()));
-            String result = template.postForObject(SingleInstance.getServerUrl() + "sensors/", postParams, String.class);
+            UriComponentsBuilder builder = UriComponentsBuilder.fromHttpUrl(SingleInstance.getServerUrl() + "sensors/")
+                    .queryParam("name", editTextSensorName.getText().toString())
+                    .queryParam("type", selectedSensorType)
+                    .queryParam("user", user)
+                    .queryParam("settings", mapper.writeValueAsString(sensorView.getSensorSettings()));
+
+            responseEnt = template.exchange(builder.build().encode().toUri(),
+                    HttpMethod.POST, new HttpEntity<>(httpHeaders), String.class);
+
+            String result = responseEnt.getBody();
             Log.d(TAG, result);
 
             SimpleResponseDTO response = mapper.readValue(result, SimpleResponseDTO.class);
@@ -282,14 +316,22 @@ public class AddSensorActivity extends Activity {
     private boolean edit() {
         ObjectMapper mapper = new ObjectMapper();
         RestTemplate template = new RestTemplate();
+        HttpHeaders httpHeaders = CryptoUtils.createHeadersCurrentUser();
+        ResponseEntity<String> responseEnt;
         template.getMessageConverters().add(new FormHttpMessageConverter());
         template.getMessageConverters().add(new StringHttpMessageConverter());
-        MultiValueMap<String, String> postParams = new LinkedMultiValueMap<>();
-        postParams.add("name", editTextSensorName.getText().toString());
-        postParams.add("type", selectedSensorType);
+
         try {
-            postParams.add("settings", mapper.writeValueAsString(sensorView.getSensorSettings()));
-            String result = template.postForObject(SingleInstance.getServerUrl() + "sensors/" + editSensor.getSensorId(), postParams, String.class);
+            UriComponentsBuilder builder = UriComponentsBuilder.fromHttpUrl(SingleInstance.getServerUrl() + "sensors/" + editSensor.getSensorId())
+                    .queryParam("name", editTextSensorName.getText().toString())
+                    .queryParam("type", selectedSensorType)
+                    .queryParam("settings", mapper.writeValueAsString(sensorView.getSensorSettings()));
+
+            responseEnt = template.exchange(builder.build().encode().toUri(),
+                    HttpMethod.POST, new HttpEntity<>(httpHeaders), String.class);
+
+            String result = responseEnt.getBody();
+
             Log.d(TAG, result);
 
             SimpleResponseDTO response = mapper.readValue(result, SimpleResponseDTO.class);

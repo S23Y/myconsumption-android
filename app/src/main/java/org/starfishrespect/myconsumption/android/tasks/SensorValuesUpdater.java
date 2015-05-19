@@ -3,6 +3,10 @@ package org.starfishrespect.myconsumption.android.tasks;
 import android.os.AsyncTask;
 import android.util.Log;
 
+import org.springframework.http.HttpEntity;
+import org.springframework.http.HttpHeaders;
+import org.springframework.http.HttpMethod;
+import org.springframework.http.ResponseEntity;
 import org.starfishrespect.myconsumption.android.SingleInstance;
 import org.starfishrespect.myconsumption.android.dao.DatabaseHelper;
 import org.starfishrespect.myconsumption.android.dao.SensorValuesDao;
@@ -10,7 +14,9 @@ import org.starfishrespect.myconsumption.android.data.SensorData;
 import org.starfishrespect.myconsumption.android.data.SensorValue;
 import org.springframework.http.converter.json.MappingJacksonHttpMessageConverter;
 import org.springframework.web.client.RestTemplate;
+import org.starfishrespect.myconsumption.android.util.CryptoUtils;
 
+import java.lang.reflect.ParameterizedType;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.Date;
@@ -39,6 +45,8 @@ public class SensorValuesUpdater {
             protected Void doInBackground(Void... params) {
                 DatabaseHelper db = SingleInstance.getDatabaseHelper();
                 RestTemplate template = new RestTemplate();
+                HttpHeaders httpHeaders = CryptoUtils.createHeadersCurrentUser();
+                ResponseEntity<List> responseEnt;
                 template.getMessageConverters().add(new MappingJacksonHttpMessageConverter());
 
                 try {
@@ -47,7 +55,8 @@ public class SensorValuesUpdater {
                         int startTime = (int) (sensor.getLastLocalValue().getTime() / 1000);
                         String url = String.format(SingleInstance.getServerUrl() + "sensors/%s/data?start=%d", sensor.getSensorId(), startTime);
                         Log.d(TAG, url);
-                        List<List<Integer>> sensorData = template.getForObject(url, List.class);
+                        responseEnt = template.exchange(url, HttpMethod.GET, new HttpEntity<>(httpHeaders), List.class);
+                        List<List<Integer>> sensorData = responseEnt.getBody();
                         List<SensorValue> values = new ArrayList<>();
                         long last = 0;
                         long first = Long.MAX_VALUE;

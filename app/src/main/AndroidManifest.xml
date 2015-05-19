@@ -55,8 +55,13 @@
 
         <activity
             android:name=".ui.AddSensorActivity"
-            android:windowSoftInputMode="stateHidden|adjustPan"
-            android:label="Create Sensor"/>
+            android:parentActivityName=".ui.ChartActivity"
+            android:windowSoftInputMode="stateHidden|adjustPan" >
+            <!-- Parent activity meta-data to support 4.0 and lower -->
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value=".ui.ChartActivity" />
+        </activity>
 
         <activity
             android:name=".ui.CreateAccountActivity"
