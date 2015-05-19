@@ -29,12 +29,12 @@ public class Config {
     public static final String DOGFOOD_BUILD_WARNING_TITLE = "Test build";
     public static final String DOGFOOD_BUILD_WARNING_TEXT = "This is a test build.";
 
-    //public static String serverAddress = "212.166.22.110"; // public vm address // TODO
-    public static String serverAddress = "172.20.1.75"; // @manex (bridged)
-    //public static String serverAddress = "192.168.242.129";  // @ans (nat)
-    //public static String serverAddress = "192.168.1.8"; // @ans bridged ethernet
-    //public static String serverAddress = "192.168.1.32";   // @lw (bridged)
-    public static int port = 8080;
-    public static String protocol = "http://";
-    public static String serverDir = ""; // "myconsumption"
+    //public static final String serverAddress = "212.166.22.110"; // public vm address // TODO
+    public static final String serverAddress = "172.20.1.75"; // @manex (bridged)
+    //public static final String serverAddress = "192.168.242.129";  // @ans (nat)
+    //public static final String serverAddress = "192.168.1.8"; // @ans bridged ethernet
+    //public static final String serverAddress = "192.168.1.32";   // @lw (bridged)
+    public static final int port = 8080;
+    public static final String protocol = "http://";
+    public static final String serverDir = ""; // "myconsumption"
 }
