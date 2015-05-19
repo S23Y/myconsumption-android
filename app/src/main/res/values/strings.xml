@@ -154,4 +154,8 @@
     <string name="title_stat">MyConsumption - Statistics</string>
     <string name="navdrawer_item_add_sensor">Add a sensor</string>
     <string name="text_sensor_spinner">Sensor:</string>
+    <string name="text_enter_username">Enter wanted Username</string>
+    <string name="text_enter_password">Enter a password</string>
+    <string name="text_enter_password_again">Enter the same password again</string>
+    <string name="text_create_account">Create Account</string>
 </resources>

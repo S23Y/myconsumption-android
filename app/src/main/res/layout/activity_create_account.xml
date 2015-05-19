@@ -2,13 +2,14 @@
 
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
                 android:layout_width="match_parent"
-                android:layout_height="match_parent">
+                android:layout_height="match_parent"
+                android:gravity="center">
 
     <EditText
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:id="@+id/editTextUsername"
-            android:hint="Enter wanted Username"
+            android:hint="@string/text_enter_username"
             />
 
     <EditText
@@ -16,7 +17,7 @@
             android:layout_height="wrap_content"
             android:inputType="textPassword"
             android:ems="10"
-            android:hint="Enter a password"
+            android:hint="@string/text_enter_password"
             android:id="@+id/editTextPassword"
             android:layout_below="@+id/editTextUsername"/>
 
@@ -24,7 +25,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:inputType="textPassword"
-            android:hint="Enter the same password again"
+            android:hint="@string/text_enter_password_again"
             android:ems="10"
             android:id="@+id/editTextPassword2"
             android:layout_below="@+id/editTextPassword"
@@ -33,7 +34,7 @@
     <Button
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Create Account"
+            android:text="@string/text_create_account"
             android:id="@+id/buttonCreateAccount"
             android:layout_below="@+id/editTextPassword2"
             android:layout_centerHorizontal="true"/>

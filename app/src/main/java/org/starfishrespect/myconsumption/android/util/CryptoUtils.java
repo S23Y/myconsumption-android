@@ -62,7 +62,7 @@ public class CryptoUtils {
         return headers;
     }
 
-    
+
 //  The code below implement the hash + salt but it is not supported in the current version of the app
 
 
