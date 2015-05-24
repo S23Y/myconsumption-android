@@ -12,6 +12,7 @@
     <color name="navdrawer_text_color_selected">@color/theme_primary</color>
     <color name="navdrawer_icon_tint">#888</color>
     <color name="navdrawer_icon_tint_selected">@color/theme_primary</color>
+    <color name="background_square_stat">#ffc9c9c9</color>
 
     <color name="session_photo_scrim">#6000</color>
 
