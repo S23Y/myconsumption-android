@@ -30,7 +30,7 @@ public class PrefUtils  {
 
     public static int getProfileIndex(final Context context) {
         SharedPreferences sp = PreferenceManager.getDefaultSharedPreferences(context);
-        return Integer.valueOf(sp.getString(PREF_PROFILE_HOUSE, "-1"));
+        return Integer.valueOf(sp.getString(PREF_PROFILE_HOUSE, "1"));
     }
 
     public static String getProfileTextDescription(final Context context) {
