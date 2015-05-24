@@ -5,6 +5,7 @@ import android.app.AlertDialog;
 import android.app.ProgressDialog;
 import android.content.ComponentName;
 import android.content.DialogInterface;
+import android.content.Intent;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.v4.content.IntentCompat;
@@ -23,6 +24,7 @@ import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpMethod;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.util.UriComponentsBuilder;
+import org.starfishrespect.myconsumption.android.Config;
 import org.starfishrespect.myconsumption.android.R;
 import org.starfishrespect.myconsumption.android.SingleInstance;
 import org.starfishrespect.myconsumption.android.dao.DatabaseHelper;
@@ -178,7 +180,9 @@ public class AddSensorActivity extends BaseActivity {
                                                 public void onClick(DialogInterface dialog, int which) {
                                                     dialog.dismiss();
                                                     setResult(RESULT_OK);
-                                                    //finish();
+                                                    Intent intent = new Intent(AddSensorActivity.this, ChartActivity.class);
+                                                    intent.putExtra(Config.EXTRA_FIRST_LAUNCH, true);
+                                                    startActivity(intent);
                                                 }
                                             }).show();
                                 } else {
