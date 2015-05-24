@@ -65,7 +65,7 @@ public class ChartActivity extends BaseActivity {
             this.chartViewReady = true;
 
         if (chartChoiceReady && chartViewReady) {
-            Toast.makeText(this, "Both are ready", Toast.LENGTH_SHORT).show();
+            //Toast.makeText(this, "Both are ready", Toast.LENGTH_SHORT).show();
             init();
         }
     }
