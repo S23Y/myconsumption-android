@@ -1,6 +1,7 @@
 package org.starfishrespect.myconsumption.android.ui;
 
 import android.os.Bundle;
+import android.view.View;
 import android.widget.Toast;
 
 import org.starfishrespect.myconsumption.android.Config;
