@@ -12,6 +12,14 @@
         card_view:cardBackgroundColor="@android:color/white"
         card_view:cardCornerRadius="8dp">
 
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:text="@string/textview_stat_no_value_found"
+            android:gravity="center"
+            android:visibility="gone"
+            android:id="@+id/txtViewNoValues"/>
+
         <ScrollView
             android:layout_width="fill_parent"
             android:layout_height="wrap_content">
@@ -19,6 +27,7 @@
             <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:id="@+id/stat_container"
                 android:paddingLeft="3dp"
                 android:paddingRight="3dp"
                 android:orientation="vertical">

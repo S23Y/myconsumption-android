@@ -10,6 +10,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.github.mikephil.charting.charts.PieChart;
@@ -62,8 +63,11 @@ public class SlidingStatFragment extends Fragment {
 
         // If no values found for this period, just display info for the user
         if (mStat == null || mStat.getConsumption() == 0) {
-            TextView textView = (TextView) rootView.findViewById(R.id.txtVwConsumption);
-            textView.setText(getString(R.string.textview_stat_no_value_found));
+            LinearLayout layout = (LinearLayout) rootView.findViewById(R.id.stat_container);
+            layout.setVisibility(View.GONE);
+
+            TextView textView = (TextView) rootView.findViewById(R.id.txtViewNoValues);
+            textView.setVisibility(View.VISIBLE);
             return rootView;
         }
 
