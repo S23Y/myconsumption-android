@@ -18,17 +18,17 @@ package org.starfishrespect.myconsumption.android;
 public class Config {
     // General configuration
 
-    // Is this an internal dogfood build?
-    public static final boolean IS_DOGFOOD_BUILD = false;
+    // Is this an internal build? (debug mode for the log in LogUtils)
+    public static final boolean IS_INTERNAL_BUILD = false;
 
     public static final String EXTRA_FIRST_LAUNCH = "firstLaunch";
 
     public static final String SENDER_ID = "225408614844";
 
-    //public static final String serverAddress = "212.166.22.110"; // public vm address // TODO
+    public static final String serverAddress = "212.166.22.110"; // public vm address // TODO
     //public static final String serverAddress = "172.20.1.75"; // @manex (bridged)
     //public static final String serverAddress = "192.168.242.129";  // @ans (nat)
-    public static final String serverAddress = "192.168.1.8"; // @ans bridged ethernet
+    //public static final String serverAddress = "192.168.1.8"; // @ans bridged ethernet
     //public static final String serverAddress = "192.168.1.32";   // @lw (bridged)
     public static final int port = 8080;
     public static final String protocol = "http://";
