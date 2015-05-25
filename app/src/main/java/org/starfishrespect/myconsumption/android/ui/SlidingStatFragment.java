@@ -75,9 +75,6 @@ public class SlidingStatFragment extends Fragment {
         TextView textView = (TextView) rootView.findViewById(R.id.txtVwConsumption);
         textView.setText(String.valueOf(StatUtils.wh2kWh(mStat.getConsumption())));
 
-        textView = (TextView) rootView.findViewById(R.id.txtVwAveragekWh);
-        textView.setText(String.valueOf(mStat.getAverage()));
-
         textView = (TextView) rootView.findViewById(R.id.txtVwAverageWatts);
         textView.setText(String.valueOf(mStat.getAverage()));
 

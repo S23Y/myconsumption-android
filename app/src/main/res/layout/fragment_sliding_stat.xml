@@ -251,33 +251,6 @@
                             android:text="@string/textview_stat_watts"
                             android:textSize="14sp" />
 
-
-                        <TextView
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:text="("
-                            android:textSize="14sp" />
-
-                        <TextView
-                            android:id="@+id/txtVwAveragekWh"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:padding="3dp"
-                            android:text=""
-                            android:textSize="14sp" />
-
-                        <TextView
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:padding="3dp"
-                            android:text="@string/textview_stat_kWh"
-                            android:textSize="14sp" />
-
-                        <TextView
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:text=")"
-                            android:textSize="14sp" />
                     </LinearLayout>
 
 
