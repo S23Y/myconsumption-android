@@ -25,6 +25,7 @@ import org.starfishrespect.myconsumption.android.SingleInstance;
 import org.starfishrespect.myconsumption.android.util.StatUtils;
 import org.starfishrespect.myconsumption.server.api.dto.StatDTO;
 
+import java.text.DecimalFormat;
 import java.util.ArrayList;
 
 /**
@@ -71,6 +72,7 @@ public class SlidingStatFragment extends Fragment {
             return rootView;
         }
 
+        DecimalFormat df = new DecimalFormat("0.00");
 
         TextView textView = (TextView) rootView.findViewById(R.id.txtVwConsumption);
         textView.setText(String.valueOf(StatUtils.wh2kWh(mStat.getConsumption())));
@@ -91,20 +93,20 @@ public class SlidingStatFragment extends Fragment {
         textView.setText(StatUtils.timestamp2DateString(mStat.getMinTimestamp()));
 
         textView = (TextView) rootView.findViewById(R.id.txtVwCO2);
-        int co2 = (int) (StatUtils.wh2kWh(mStat.getConsumption()) * SingleInstance.getkWhToCO2());
-        textView.setText(String.valueOf(co2));
+        double co2 = (StatUtils.wh2kWh(mStat.getConsumption()) * SingleInstance.getkWhToCO2());
+        textView.setText(df.format(co2));
 
         textView = (TextView) rootView.findViewById(R.id.txtVwEuroHigh);
-        int dayEuro = (int) (StatUtils.wh2kWh(mStat.getConsumptionDay()) * SingleInstance.getkWhDayPrice());
-        textView.setText(String.valueOf(dayEuro));
+        double dayEuro = (StatUtils.wh2kWh(mStat.getConsumptionDay()) * SingleInstance.getkWhDayPrice());
+        textView.setText(df.format(dayEuro));
 
         textView = (TextView) rootView.findViewById(R.id.txtVwEuroOff);
-        int nightEuro = (int) (StatUtils.wh2kWh(mStat.getConsumptionNight()) * SingleInstance.getkWhNightPrice());
-        textView.setText(String.valueOf(nightEuro));
+        double nightEuro = (StatUtils.wh2kWh(mStat.getConsumptionNight()) * SingleInstance.getkWhNightPrice());
+        textView.setText(df.format(nightEuro));
 
         textView = (TextView) rootView.findViewById(R.id.txtVwEuro);
-        int totEuro = dayEuro + nightEuro;
-        textView.setText(String.valueOf(totEuro));
+        double totEuro = dayEuro + nightEuro;
+        textView.setText(df.format(totEuro));
 
         // Adding arrow
         ImageView imgView = (ImageView) rootView.findViewById(R.id.imageView);

@@ -14,7 +14,7 @@ public class StatUtils {
      */
     public static double wh2kWh(int Wh) {
         double converted = Wh / 1000.0;
-        return Math.round(converted * 100.0) / 100.0;
+        return Math.round(converted * 100.00) / 100.00;
     }
 
     /**
