@@ -461,22 +461,20 @@ public class ChartViewFragment extends Fragment {
         if (seekBarPosition < 0)
             return;
 
-        int index = 0;
+        currentChartDataset.clear();
 
         // Take into account each sensor and its associated series.
         for (XYSeries series : originalChartDataset.getSeries()) {
             XYSeries moving = movingAverage(series, seekBarPosition);
 
-            currentChartDataset.removeSeries(
-                    currentChartDataset.getSeriesAt(index++));
             currentChartDataset.addSeries(moving);
-
-            if (chart != null) {
-                chart.repaint();
-            }
-            else
-                Log.d(TAG, "in method updateMovingAverage: chart is null while it shouldn't");
         }
+
+        if (chart != null) {
+            chart.repaint();
+        }
+        else
+            Log.d(TAG, "in method updateMovingAverage: chart is null while it shouldn't");
     }
 
     // Computes the moving average from a given series
@@ -490,7 +488,7 @@ public class ChartViewFragment extends Fragment {
         Log.d(TAG, "method movingAverage called; slider position = " + N);
 
         XYSeries moving = new XYSeries(series.getTitle());
-        IndexXYMap<Double, Double> iXY = series.getXYMap();
+        IndexXYMap<Double, Double> iXY = (IndexXYMap<Double, Double>) series.getXYMap().clone();
 
         Double y_n_1 = 0.0;
 
