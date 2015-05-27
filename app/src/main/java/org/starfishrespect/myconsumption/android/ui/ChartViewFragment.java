@@ -217,6 +217,7 @@ public class ChartViewFragment extends Fragment {
                 if (x < minimalX) minimalX = x;
                 serie.add(x, y);
             }
+
             double lateralDelta = maximalX - minimalX;
             lateralDelta /= 20;
             double[] limits = {minimalX - lateralDelta, maximalX + lateralDelta, 0.0, maximalY};
