@@ -64,6 +64,7 @@ public abstract class BaseActivity extends ActionBarActivity implements SensorVa
 
     private ObjectAnimator mStatusBarColorAnimator;
     private Handler mHandler;
+    private Handler mReloadHandler;
 
     // Helper methods for L APIs
     private LUtils mLUtils;
@@ -171,10 +172,24 @@ public abstract class BaseActivity extends ActionBarActivity implements SensorVa
             ab.setDisplayHomeAsUpEnabled(true);
         }
 
+        if (SingleInstance.reloadHandlerOff()) { // TODO necessary?
+            mReloadHandler = new Handler();
+            mReloadHandler.postDelayed(runnable, 1000 * 60 * PrefUtils.getSyncRefresh(this));
+        }
+
         mLUtils = LUtils.getInstance(this);
         mThemedStatusBarColor = getResources().getColor(R.color.theme_primary_dark);
         mNormalStatusBarColor = mThemedStatusBarColor;
     }
+
+    private Runnable runnable = new Runnable() {
+        @Override
+        public void run() {
+            refreshData();
+            mReloadHandler.postDelayed(this, 1000 * 60 * PrefUtils.getSyncRefresh(BaseActivity.this));
+        }
+    };
+
 
     @Override
     protected void onPostCreate(Bundle savedInstanceState) {

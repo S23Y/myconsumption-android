@@ -26,6 +26,7 @@ public class SingleInstance {
     protected static Context context;
     private static StatsController statsController;
     private static boolean init = true;
+    private static boolean reloadHandlerOff = true;
 
     private static int[] colors = {0xffff0000, 0xff0000ff, 0xff000000,
             0xff000060, 0xff008000, 0xff600000, 0xff661144, 0xff606060, 0xffaa6611};
@@ -125,5 +126,11 @@ public class SingleInstance {
 
     public static void setSpinnerSensorPosition(int spinnerSensorPosition) {
         SingleInstance.spinnerSensorPosition = spinnerSensorPosition;
+    }
+
+    public static boolean reloadHandlerOff() {
+        boolean temp = reloadHandlerOff;
+        reloadHandlerOff = false;
+        return temp;
     }
 }

@@ -23,10 +23,24 @@ public class PrefUtils  {
     public static final String PREF_PROFILE_PRO = "pref_profile_professional";
     public static final String PREF_PROFILE_ANNUAL = "pref_profile_annual_consumption";
     public static final String PREF_PROFILE_HOUSE = "pref_profile_house";
+    public static final String PREF_SYNC_REFRESH = "pref_sync_refresh";
 
     // For registration id (google play services)
     public static final String PROPERTY_REG_ID = "registration_id";
     private static final String PROPERTY_APP_VERSION = "appVersion";
+
+    public static int getSyncRefreshIndex(final Context context) {
+        SharedPreferences sp = PreferenceManager.getDefaultSharedPreferences(context);
+        return Integer.valueOf(sp.getString(PREF_SYNC_REFRESH, "1"));
+    }
+
+    public static int getSyncRefresh(final Context context) {
+        int position = getSyncRefreshIndex(context);
+        if (position < 0)
+            return -1;
+        else
+            return context.getResources().getIntArray(R.array.pref_sync_refresh_minutes_values)[position];
+    }
 
     public static int getProfileIndex(final Context context) {
         SharedPreferences sp = PreferenceManager.getDefaultSharedPreferences(context);
