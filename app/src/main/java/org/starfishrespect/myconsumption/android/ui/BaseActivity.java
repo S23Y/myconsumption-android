@@ -172,10 +172,8 @@ public abstract class BaseActivity extends ActionBarActivity implements SensorVa
             ab.setDisplayHomeAsUpEnabled(true);
         }
 
-        if (SingleInstance.reloadHandlerOff()) { // TODO necessary?
-            mReloadHandler = new Handler();
-            mReloadHandler.postDelayed(runnable, 1000 * 60 * PrefUtils.getSyncRefresh(this));
-        }
+        mReloadHandler = new Handler();
+        mReloadHandler.postDelayed(runnable, 1000 * 60 * PrefUtils.getSyncRefresh(this));
 
         mLUtils = LUtils.getInstance(this);
         mThemedStatusBarColor = getResources().getColor(R.color.theme_primary_dark);

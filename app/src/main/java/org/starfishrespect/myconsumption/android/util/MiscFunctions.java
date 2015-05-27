@@ -27,7 +27,7 @@ public class MiscFunctions {
     public static Dialog makeOfflineDialog(Context context) {
         return new AlertDialog.Builder(context)
                 .setTitle(R.string.dialog_title_error)
-                .setMessage("An active internet connection is needed to use this function")
+                .setMessage("An active internet connection is needed to reload the data")
                 .setPositiveButton(R.string.button_ok, new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
