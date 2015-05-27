@@ -10,6 +10,7 @@ import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.v4.content.IntentCompat;
 import android.util.Log;
+import android.view.Menu;
 import android.view.View;
 import android.support.v7.widget.Toolbar;
 import android.widget.AdapterView;
@@ -266,6 +267,11 @@ public class AddSensorActivity extends BaseActivity {
             });
 
         }
+    }
+
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        return true;
     }
 
     private boolean create() {
