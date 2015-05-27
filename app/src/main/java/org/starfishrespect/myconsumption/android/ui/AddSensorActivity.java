@@ -274,6 +274,10 @@ public class AddSensorActivity extends BaseActivity {
         return true;
     }
 
+    @Override
+    public void refreshData() {
+    }
+
     private boolean create() {
         DatabaseHelper db = new DatabaseHelper(this);
         String user = null;

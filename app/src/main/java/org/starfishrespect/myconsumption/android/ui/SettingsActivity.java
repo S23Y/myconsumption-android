@@ -63,6 +63,10 @@ public class SettingsActivity extends BaseActivity {
         return true;
     }
 
+    @Override
+    public void refreshData() {
+    }
+
     public static class SettingsFragment extends PreferenceFragment implements SharedPreferences.OnSharedPreferenceChangeListener {
         public SettingsFragment() {
         }
