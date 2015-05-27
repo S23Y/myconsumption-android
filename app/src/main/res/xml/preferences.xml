@@ -22,14 +22,16 @@
             android:key="pref_profile_professional"
             android:title="@string/pref_user_profile_professional_sum"
             android:summary="@string/pref_user_profile_professional"
-            android:defaultValue="false" />
+            android:defaultValue="false"
+            android:enabled="false"/>
 
         <EditTextPreference
             android:key="pref_profile_annual_consumption"
             android:title="@string/pref_user_profile_consumption_sum"
             android:summary="@string/pref_user_profile_consumption"
             android:inputType="number"
-            android:dialogTitle="@string/pref_user_profile_consumption_edit" />
+            android:dialogTitle="@string/pref_user_profile_consumption_edit"
+            android:enabled="false"/>
 
         <ListPreference
             android:key="pref_profile_house"
@@ -54,38 +56,5 @@
             android:summary="@string/pref_sync_notif"
             android:defaultValue="true" />
     </PreferenceCategory>
-
-<!--
-    textview_user_profile_choose-->
-
-<!--    <CheckBoxPreference
-        android:key="pref_attendee_at_venue"
-        android:title="@string/pref_attendee_at_venue_title"
-        android:summary="@string/pref_attendee_at_venue_description"
-        android:defaultValue="true" />
-
-    <CheckBoxPreference
-        android:key="pref_analytics_enabled"
-        android:title="@string/pref_analytics_enabled_title"
-        android:summary="@string/pref_analytics_enabled_description"
-        android:defaultValue="true" />
-
-    <CheckBoxPreference
-        android:key="pref_sync_calendar"
-        android:title="@string/pref_sync_with_calendar_title"
-        android:summary="@string/pref_sync_with_calendar_description"
-        android:defaultValue="false" />
-
-    <CheckBoxPreference
-        android:key="pref_show_session_reminders"
-        android:title="@string/pref_notify_starred_sessions_title"
-        android:summary="@string/pref_notify_starred_sessions_description"
-        android:defaultValue="true" />
-
-    <CheckBoxPreference
-        android:key="pref_show_session_feedback_reminders"
-        android:title="@string/pref_notify_feedback_title"
-        android:summary="@string/pref_notify_feedback_description"
-        android:defaultValue="true" />-->
 
 </PreferenceScreen>
