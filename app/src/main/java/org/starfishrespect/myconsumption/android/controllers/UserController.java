@@ -1,6 +1,7 @@
 package org.starfishrespect.myconsumption.android.controllers;
 
 import org.starfishrespect.myconsumption.android.SingleInstance;
+import org.starfishrespect.myconsumption.android.data.KeyValueData;
 import org.starfishrespect.myconsumption.android.data.SensorData;
 import org.starfishrespect.myconsumption.android.data.UserData;
 import org.codehaus.jackson.map.ObjectMapper;
@@ -25,7 +26,12 @@ public class UserController {
      *  Load the user from the database and set the sensors associated to him.
      */
     public void loadUser() {
-        String userJson = SingleInstance.getDatabaseHelper().getValueForKey("user").getValue();
+        KeyValueData keyData = SingleInstance.getDatabaseHelper().getValueForKey("user");
+
+        if (keyData == null)
+            return;
+
+        String userJson = keyData.getValue();
         ObjectMapper mapper = new ObjectMapper();
         List<SensorData> sensors;
 
