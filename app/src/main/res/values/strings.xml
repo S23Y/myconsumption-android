@@ -47,13 +47,12 @@
     <string name="navdrawer_status_attending_remotely">Attending I/O remotely</string>
     <string name="title_helloworld">Hello World Activity</string>
     <string name="description_refresh">Refresh</string>
+    <string name="description_disconnect">Disconnect</string>
 
 
 
     <!--From the old strings.xml-->
 
-
-    <!--    <string name="action_disconnect">Disconnect</string>-->
     <string name="action_delete">Delete</string>
     <string name="action_edit_sensor">Edit sensor</string>
     <!--    <string name="action_add_sensor">Add sensor</string>-->

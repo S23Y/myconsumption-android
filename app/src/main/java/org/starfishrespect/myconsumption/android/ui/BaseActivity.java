@@ -702,6 +702,10 @@ public abstract class BaseActivity extends ActionBarActivity implements SensorVa
         if (refreshItem != null) {
             refreshItem.setVisible(true);
         }
+        MenuItem disconnectItem = menu.findItem(R.id.menu_disconnect);
+        if (disconnectItem != null) {
+            disconnectItem.setVisible(true);
+        }
     }
 
     @Override
@@ -711,6 +715,10 @@ public abstract class BaseActivity extends ActionBarActivity implements SensorVa
             case R.id.menu_refresh:
                 refreshData();
                 LOGD(TAG, "menu refresh clicked");
+                return true;
+            case R.id.menu_disconnect:
+                SingleInstance.disconnect();
+                LOGD(TAG, "menu disconnect clicked");
                 return true;
         }
         return super.onOptionsItemSelected(item);

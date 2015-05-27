@@ -8,4 +8,10 @@
         android:orderInCategory="1"
         android:title="@string/description_refresh"
         myconsumption:showAsAction="always" />
+    <item
+        android:id="@+id/menu_disconnect"
+        android:icon="@drawable/ic_disconnect"
+        android:orderInCategory="1"
+        android:title="@string/description_disconnect"
+        myconsumption:showAsAction="always" />
 </menu>
