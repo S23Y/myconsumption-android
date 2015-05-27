@@ -117,7 +117,7 @@
     <string name="pref_user_profile_consumption_edit">My annual consumption is (kWh):</string>
     <string name="pref_user_profile_consumption">Tap to enter your annual consumption</string>
     <string name="pref_user_profile_consumption_sum">Annual consumption</string>
-    <string name="pref_user_profile_choose_sum">Consumption profile</string>
+    <string name="pref_user_profile_choose_sum">Select your consumption profile</string>
     <string name="pref_user_profile_choose">Tap to choose your consumption profile</string>
     <string name="pref_user_profile_choose_list">My electricity consumption profile is best described as follows:</string>
 
