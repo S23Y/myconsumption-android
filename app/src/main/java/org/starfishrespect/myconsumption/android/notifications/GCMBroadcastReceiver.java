@@ -7,6 +7,7 @@ import android.content.Intent;
 import android.support.v4.content.WakefulBroadcastReceiver;
 
 import org.starfishrespect.myconsumption.android.GCMIntentService;
+import org.starfishrespect.myconsumption.android.util.PrefUtils;
 
 /**
  * Receiver for push notifications
@@ -14,6 +15,10 @@ import org.starfishrespect.myconsumption.android.GCMIntentService;
 public class GCMBroadcastReceiver extends WakefulBroadcastReceiver {
     @Override
     public void onReceive(Context context, Intent intent) {
+        // If the user don't want to receive notifications
+        if (!(PrefUtils.getSyncNotification(context)))
+            return;
+
         // Explicitly specify that GcmIntentService will handle the intent.
         ComponentName comp = new ComponentName(context.getPackageName(),
                 GCMIntentService.class.getName());
