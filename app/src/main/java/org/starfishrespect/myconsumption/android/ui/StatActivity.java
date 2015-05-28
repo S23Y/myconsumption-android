@@ -33,7 +33,6 @@ import java.util.List;
 import de.greenrobot.event.EventBus;
 
 import static org.starfishrespect.myconsumption.android.util.LogUtils.LOGD;
-import static org.starfishrespect.myconsumption.android.util.LogUtils.LOGE;
 import static org.starfishrespect.myconsumption.android.util.LogUtils.makeLogTag;
 
 /**

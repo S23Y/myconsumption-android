@@ -16,7 +16,6 @@ import org.springframework.http.converter.json.MappingJacksonHttpMessageConverte
 import org.springframework.web.client.RestTemplate;
 import org.starfishrespect.myconsumption.android.util.CryptoUtils;
 
-import java.lang.reflect.ParameterizedType;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.Date;
@@ -80,7 +79,7 @@ public class SensorValuesUpdater {
                         Log.d(TAG, "Inserted values to " + last);
                     }
                 } catch (SQLException e) {
-
+                    Log.e(TAG, "Error:" + e.toString());
                 }
                 return null;
             }

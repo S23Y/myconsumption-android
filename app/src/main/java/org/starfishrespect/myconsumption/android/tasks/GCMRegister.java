@@ -2,7 +2,6 @@ package org.starfishrespect.myconsumption.android.tasks;
 
 import android.content.Context;
 import android.os.AsyncTask;
-import android.util.Log;
 
 import com.google.android.gms.gcm.GoogleCloudMessaging;
 
@@ -13,21 +12,16 @@ import org.springframework.http.HttpMethod;
 import org.springframework.http.ResponseEntity;
 import org.springframework.http.converter.FormHttpMessageConverter;
 import org.springframework.http.converter.StringHttpMessageConverter;
-import org.springframework.http.converter.json.MappingJacksonHttpMessageConverter;
-import org.springframework.util.LinkedMultiValueMap;
-import org.springframework.util.MultiValueMap;
 import org.springframework.web.client.RestTemplate;
 import org.starfishrespect.myconsumption.android.Config;
 import org.starfishrespect.myconsumption.android.SingleInstance;
 import org.starfishrespect.myconsumption.android.util.CryptoUtils;
 import org.starfishrespect.myconsumption.android.util.PrefUtils;
 import org.starfishrespect.myconsumption.server.api.dto.SimpleResponseDTO;
-import org.starfishrespect.myconsumption.server.api.dto.UserDTO;
 
 import java.io.IOException;
 import java.util.List;
 
-import static org.starfishrespect.myconsumption.android.util.LogUtils.LOGD;
 import static org.starfishrespect.myconsumption.android.util.LogUtils.LOGI;
 import static org.starfishrespect.myconsumption.android.util.LogUtils.makeLogTag;
 

@@ -16,7 +16,6 @@ import org.starfishrespect.myconsumption.android.data.SensorData;
 import org.springframework.http.converter.json.MappingJacksonHttpMessageConverter;
 import org.springframework.web.client.RestTemplate;
 import org.starfishrespect.myconsumption.android.util.CryptoUtils;
-import org.starfishrespect.myconsumption.server.api.dto.SimpleResponseDTO;
 import org.starfishrespect.myconsumption.server.api.dto.StatDTO;
 
 import java.io.IOException;

@@ -1,29 +1,11 @@
 <resources>
     <string name="app_name">MyConsumption</string>
 
-    <!-- Menu item to open the Experts screen [CHAR_LIMIT=20] -->
-    <string name="navdrawer_item_experts_directory">Experts</string>
-
-    <!-- Accessibility description for menu item to open the Experts screen. -->
-    <string name="navdrawer_item_experts_directory_a11y">Experts Directory</string>
-
     <!-- Menu item to open the Chart screen [CHAR_LIMIT=20] -->
     <string name="navdrawer_item_chart">Chart</string>
 
-    <!-- Accessibility description for menu item to open the Explore screen. -->
-    <string name="navdrawer_item_explore_a11y">Explore Google I/O</string>
-
     <!-- Menu item to open the Stats screen [CHAR_LIMIT=20] -->
     <string name="navdrawer_item_stat">Stats</string>
-
-    <!-- Menu item to open the My Schedule screen [CHAR_LIMIT=20] -->
-    <string name="navdrawer_item_my_schedule">My Schedule</string>
-
-    <!-- Menu item to open the People I've Met screen [CHAR_LIMIT=20] -->
-    <string name="navdrawer_item_people_ive_met">People I\'ve Met</string>
-
-    <!-- Accessibility description of item to open the People I've Met screen -->
-    <string name="navdrawer_item_people_ive_met_a11y">People I\'ve Met</string>
 
     <!-- Menu item to open the Settings screen [CHAR_LIMIT=20] -->
     <string name="navdrawer_item_settings">Settings</string>
@@ -31,27 +13,8 @@
     <!-- Menu item to start the Sign In flow [CHAR_LIMIT=20] -->
     <string name="navdrawer_item_sign_in">Sign in</string>
 
-    <!-- Menu item to open a screen that lists I/O related hashtags. Each hashtag, when clicked, will
-    open Google+ stream of posts that uses the hashtag [CHAR_LIMIT=20] -->
-    <string name="navdrawer_item_social">Social</string>
-
-    <!-- Menu item to open a list of current and past I/O videos [CHAR_LIMIT=20] -->
-    <string name="navdrawer_item_video_library">Video library</string>
-
-    <!-- Text indicator that appears below the user's name, showing that they are
-    attending the conference in person in San Francisco. -->
-    <string name="navdrawer_status_attending_in_person">Attending I/O in person</string>
-
-    <!-- Text indicator that appears below the user's name, showing that they are
-    attending the conference remotely via live streaming. -->
-    <string name="navdrawer_status_attending_remotely">Attending I/O remotely</string>
-    <string name="title_helloworld">Hello World Activity</string>
     <string name="description_refresh">Refresh</string>
     <string name="description_disconnect">Disconnect</string>
-
-
-
-    <!--From the old strings.xml-->
 
     <string name="action_delete">Delete</string>
     <string name="action_edit_sensor">Edit sensor</string>
@@ -99,12 +62,10 @@
     <string name="login_login">Login</string>
     <string name="login_username">Username</string>
     <string name="login_pwd">Password</string>
-    <string name="login_no_account">You don\'t have an account?</string>
     <string name="login_create_account">Create account</string>
 
     <string name="textview_display_interval">Display interval</string>
     <string name="textview_date">Date</string>
-    <string name="textview_precision">Precision</string>
     <string name="textview_user_name">User Name</string>
     <string name="textview_smoothing">Smoothing</string>
     <string name="text_warning">Warning</string>
@@ -117,7 +78,6 @@
     <string name="pref_user_profile_consumption">Tap to enter your annual consumption</string>
     <string name="pref_user_profile_consumption_sum">Annual consumption</string>
     <string name="pref_user_profile_choose_sum">Select your consumption profile</string>
-    <string name="pref_user_profile_choose">Tap to choose your consumption profile</string>
     <string name="pref_user_profile_choose_list">My electricity consumption profile is best described as follows:</string>
 
     <string name="textview_stat_consumption">Consumption over this period:</string>

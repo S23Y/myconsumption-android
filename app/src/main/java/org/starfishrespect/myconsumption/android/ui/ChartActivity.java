@@ -1,12 +1,9 @@
 package org.starfishrespect.myconsumption.android.ui;
 
 import android.os.Bundle;
-import android.view.View;
-import android.widget.Toast;
 
 import org.starfishrespect.myconsumption.android.Config;
 import org.starfishrespect.myconsumption.android.R;
-import org.starfishrespect.myconsumption.android.SingleInstance;
 import org.starfishrespect.myconsumption.android.events.FragmentsReadyEvent;
 import org.starfishrespect.myconsumption.android.events.ReloadUserEvent;
 import de.greenrobot.event.EventBus;

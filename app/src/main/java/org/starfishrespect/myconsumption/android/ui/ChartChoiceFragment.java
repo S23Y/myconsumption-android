@@ -13,11 +13,9 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.*;
 
-import org.codehaus.jackson.map.ObjectMapper;
 import org.springframework.http.HttpEntity;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpMethod;
-import org.springframework.http.ResponseEntity;
 import org.starfishrespect.myconsumption.android.R;
 import org.starfishrespect.myconsumption.android.SingleInstance;
 import org.starfishrespect.myconsumption.android.adapters.SensorListAdapter;
@@ -36,7 +34,6 @@ import org.starfishrespect.myconsumption.android.events.ReloadUserEvent;
 import org.starfishrespect.myconsumption.android.events.UpdateMovingAverageEvent;
 import org.starfishrespect.myconsumption.android.util.CryptoUtils;
 import org.starfishrespect.myconsumption.android.util.MiscFunctions;
-import org.starfishrespect.myconsumption.server.api.dto.SimpleResponseDTO;
 
 import java.sql.SQLException;
 import java.text.SimpleDateFormat;

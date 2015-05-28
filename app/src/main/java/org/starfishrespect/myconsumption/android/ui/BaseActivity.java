@@ -82,8 +82,6 @@ public abstract class BaseActivity extends ActionBarActivity implements SensorVa
     // A Runnable that we should execute when the navigation drawer finishes its closing animation
     private Runnable mDeferredOnDrawerClosedRunnable;
 
-    private boolean mAccountBoxExpanded = false;
-
     // variables that control the Action Bar auto hide behavior (aka "quick recall")
     private boolean mActionBarAutoHideEnabled = false;
     private boolean mActionBarShown = true;
@@ -107,7 +105,6 @@ public abstract class BaseActivity extends ActionBarActivity implements SensorVa
 
     // Durations for certain animations we use:
     private static final int HEADER_HIDE_ANIM_DURATION = 300;
-    private static final int ACCOUNT_BOX_EXPAND_ANIM_DURATION = 200;
 
     // symbols for navdrawer items (indices must correspond to array below). This is
     // not a list of items that are necessarily *present* in the Nav Drawer; rather,
@@ -115,7 +112,6 @@ public abstract class BaseActivity extends ActionBarActivity implements SensorVa
     protected static final int NAVDRAWER_ITEM_CHART = 0;
     protected static final int NAVDRAWER_ITEM_STATS = 1;
     protected static final int NAVDRAWER_ITEM_COMPARISON = 2;
-    protected static final int NAVDRAWER_ITEM_SIGN_IN = 3;
     protected static final int NAVDRAWER_ITEM_ADD_SENSOR = 4;
     protected static final int NAVDRAWER_ITEM_SETTINGS = 5;
     protected static final int NAVDRAWER_ITEM_INVALID = -1;
