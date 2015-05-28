@@ -13,7 +13,7 @@ This repository contains the source code for the S23Y MyConsumption Android app.
 ### With Gradle and Android Studio
 
 The easiest way to build is to install [Android Studio](https://developer.android.com/sdk/index.html) v1.+
-with [Gradle](https://www.gradle.org/) v2.+. You will need the Android SDK API 21.
+with [Gradle](https://www.gradle.org/) v2.+. You will need the Android SDK API 21 and my-consumption-api available at [Github MyConsumption Server](https://github.com/S23Y/myconsumption-server/).
 Once installed, then you can import the project into Android Studio:
 
 1. Open `File`
