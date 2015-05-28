@@ -4,9 +4,6 @@
 
     <!-- Immediate parent theme to specify base values for custom attributes -->
     <style name="Theme" parent="FrameworkRoot.Theme">
-        <!--&lt;!&ndash; Only needed for pre-L &ndash;&gt;-->
-        <!--<item name="android:editTextBackground">@drawable/edit_text</item>-->
-        <!--<item name="android:editTextStyle">@style/Widget.IOSched.EditText</item>-->
     </style>
 
     <style name="Theme.MyConsumption.Base" parent="Theme">
