@@ -32,7 +32,7 @@ public class SingleInstance {
 
     public static void init(Context c) {
         if (init)
-            context = c; // TODO check this. Context might point to smthg not useful after screen rotation
+            context = c;
         init = false;
 
         // Init database helper

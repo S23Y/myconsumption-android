@@ -40,10 +40,7 @@ public class LoginActivity extends Activity implements View.OnClickListener, Use
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-
-        // todo: not sure that this code belongs here with the MVC and DAO stuffs...
-        // plus, database helper should be accessed through single instance...
-        DatabaseHelper db = new DatabaseHelper(this);
+        DatabaseHelper db = new DatabaseHelper(this); // database helper should be accessed through single instance...
         KeyValueData userJson = db.getValueForKey("user");
         if (userJson != null) {
             startMainActivity(false);

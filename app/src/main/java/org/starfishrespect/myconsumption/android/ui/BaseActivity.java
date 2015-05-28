@@ -193,10 +193,6 @@ public abstract class BaseActivity extends ActionBarActivity implements SensorVa
     protected void onPostCreate(Bundle savedInstanceState) {
         super.onPostCreate(savedInstanceState);
         setupNavDrawer();
-        setupAccountBox();
-
-        trySetupSwipeRefresh();
-        updateSwipeRefreshProgressBarTop();
 
         View mainContent = findViewById(R.id.main_content);
         if (mainContent != null) {
@@ -213,34 +209,6 @@ public abstract class BaseActivity extends ActionBarActivity implements SensorVa
 
         // Verifies the proper version of Google Play Services exists on the device.
         PlayServicesUtils.checkGooglePlaySevices(this);
-    }
-
-    private void trySetupSwipeRefresh() {
-        // TODO
-    }
-
-    /**
-     * Sets up the account box. The account box is the area at the top of the nav drawer that
-     * shows which account the user is logged in as, and lets them switch accounts. It also
-     * shows the user's Google+ cover photo as background.
-     */
-    private void setupAccountBox() {
-        // TODO
-    }
-
-    public LUtils getLUtils() {
-        return mLUtils;
-    }
-
-    public int getThemedStatusBarColor() {
-        return mThemedStatusBarColor;
-    }
-
-    public void setNormalStatusBarColor(int color) {
-        mNormalStatusBarColor = color;
-        if (mDrawerLayout != null) {
-            mDrawerLayout.setStatusBarBackgroundColor(mNormalStatusBarColor);
-        }
     }
 
     /**
@@ -307,10 +275,6 @@ public abstract class BaseActivity extends ActionBarActivity implements SensorVa
                     mDeferredOnDrawerClosedRunnable.run();
                     mDeferredOnDrawerClosedRunnable = null;
                 }
-                if (mAccountBoxExpanded) {
-                    mAccountBoxExpanded = false;
-                    setupAccountBoxToggle();
-                }
                 onNavDrawerStateChanged(false, false);
             }
 
@@ -335,7 +299,7 @@ public abstract class BaseActivity extends ActionBarActivity implements SensorVa
         // populate the nav drawer with the correct items
         populateNavDrawer();
 
-        // TODO
+        // TODO could be interesting
 //        // When the user runs the app for the first time, we want to land them with the
 //        // navigation drawer open. But just the first time.
 //        if (!PrefUtils.isWelcomeDone(this)) {
@@ -367,53 +331,20 @@ public abstract class BaseActivity extends ActionBarActivity implements SensorVa
         return mDrawerLayout != null && mDrawerLayout.isDrawerOpen(Gravity.START);
     }
 
-    private void setupAccountBoxToggle() {
-        // TODO
-    }
-
     /** Populates the navigation drawer with the appropriate items. */
     private void populateNavDrawer() {
-        //boolean attendeeAtVenue = PrefUtils.isAttendeeAtVenue(this);
         mNavDrawerItems.clear();
 
         // decide which items will appear in the nav drawer
-
-        // TODO
-//        if (AccountUtils.hasActiveAccount(this)) {
-//            // Only logged-in users can save sessions, so if there is no active account,
-//            // there is no My Schedule
-//            mNavDrawerItems.add(NAVDRAWER_ITEM_MY_SCHEDULE);
-//        } else {
-//            // If no active account, show Sign In
-//            mNavDrawerItems.add(NAVDRAWER_ITEM_SIGN_IN);
-//        }
 
         // Chart is always shown
         mNavDrawerItems.add(NAVDRAWER_ITEM_CHART);
         mNavDrawerItems.add(NAVDRAWER_ITEM_STATS);
         mNavDrawerItems.add(NAVDRAWER_ITEM_COMPARISON);
 
-//        // If the attendee is on-site, show Map on the nav drawer
-//        if (attendeeAtVenue) {
-//            mNavDrawerItems.add(NAVDRAWER_ITEM_STATS);
-//        }
         mNavDrawerItems.add(NAVDRAWER_ITEM_SEPARATOR);
         mNavDrawerItems.add(NAVDRAWER_ITEM_ADD_SENSOR);
 
-//        // If attendee is on-site, show the People I've Met item
-//        if (attendeeAtVenue) {
-//            mNavDrawerItems.add(NAVDRAWER_ITEM_PEOPLE_IVE_MET);
-//        }
-
-//        // If the experts directory hasn't expired, show it
-//        if (!Config.hasExpertsDirectoryExpired()) {
-//            mNavDrawerItems.add(NAVDRAWER_ITEM_EXPERTS_DIRECTORY);
-//        }
-
-//        // Other items that are always in the nav drawer irrespective of whether the
-//        // attendee is on-site or remote:
-//        mNavDrawerItems.add(NAVDRAWER_ITEM_SOCIAL);
-//        mNavDrawerItems.add(NAVDRAWER_ITEM_VIDEO_LIBRARY);
         mNavDrawerItems.add(NAVDRAWER_ITEM_SEPARATOR_SPECIAL);
         mNavDrawerItems.add(NAVDRAWER_ITEM_SETTINGS);
 
@@ -553,10 +484,6 @@ public abstract class BaseActivity extends ActionBarActivity implements SensorVa
         }
     }
 
-    private void signInOrCreateAnAccount() {
-        // TODO
-    }
-
     private boolean isSpecialItem(int itemId) {
         return itemId == NAVDRAWER_ITEM_SETTINGS;
     }
@@ -640,8 +567,6 @@ public abstract class BaseActivity extends ActionBarActivity implements SensorVa
         mStatusBarColorAnimator.setEvaluator(ARGB_EVALUATOR);
         mStatusBarColorAnimator.start();
 
-        updateSwipeRefreshProgressBarTop();
-
         for (View view : mHideableHeaderViews) {
             if (shown) {
                 view.animate()
@@ -657,10 +582,6 @@ public abstract class BaseActivity extends ActionBarActivity implements SensorVa
                         .setInterpolator(new DecelerateInterpolator());
             }
         }
-    }
-
-    private void updateSwipeRefreshProgressBarTop() {
-        // TODO
     }
 
     @Override

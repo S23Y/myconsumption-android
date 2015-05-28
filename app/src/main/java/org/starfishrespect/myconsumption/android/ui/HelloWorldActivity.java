@@ -23,7 +23,7 @@ public class HelloWorldActivity extends BaseActivity {
     @Override
     protected int getSelfNavDrawerItem() {
         // set this to have a nav drawer associated with this activity
-        // TODO: change this
+        // TODO: change this when you use this template to create a new activity
         return NAVDRAWER_ITEM_CHART;
     }
 
