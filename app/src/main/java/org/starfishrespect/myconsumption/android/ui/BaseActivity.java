@@ -41,7 +41,6 @@ import org.starfishrespect.myconsumption.android.events.ReloadConfigEvent;
 import org.starfishrespect.myconsumption.android.events.ReloadStatEvent;
 import org.starfishrespect.myconsumption.android.events.ReloadUserEvent;
 import org.starfishrespect.myconsumption.android.ui.widget.ScrimInsetsScrollView;
-import org.starfishrespect.myconsumption.android.util.LUtils;
 import org.starfishrespect.myconsumption.android.util.MiscFunctions;
 import org.starfishrespect.myconsumption.android.util.PlayServicesUtils;
 import org.starfishrespect.myconsumption.android.util.PrefUtils;
@@ -52,7 +51,6 @@ import java.util.ArrayList;
 import de.greenrobot.event.EventBus;
 
 import static org.starfishrespect.myconsumption.android.util.LogUtils.LOGD;
-import static org.starfishrespect.myconsumption.android.util.LogUtils.LOGE;
 import static org.starfishrespect.myconsumption.android.util.LogUtils.LOGI;
 import static org.starfishrespect.myconsumption.android.util.LogUtils.LOGW;
 import static org.starfishrespect.myconsumption.android.util.LogUtils.makeLogTag;
