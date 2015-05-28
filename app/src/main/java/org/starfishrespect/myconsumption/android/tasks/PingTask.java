@@ -9,6 +9,7 @@ import java.net.UnknownHostException;
 
 /**
  * Task that checks if a server is alive
+ * S23Y (2015). Licensed under the Apache License, Version 2.0.
  */
 public class PingTask extends AsyncTask<Void, Void, Boolean> {
 

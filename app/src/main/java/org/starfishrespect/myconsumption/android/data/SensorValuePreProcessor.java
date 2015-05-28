@@ -4,6 +4,7 @@ import java.util.*;
 
 /**
  * Class that contains useful methods to adapt the data to a given precision
+ * S23Y (2015). Licensed under the Apache License, Version 2.0.
  */
 public class SensorValuePreProcessor {
 

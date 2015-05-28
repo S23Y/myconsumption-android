@@ -35,7 +35,7 @@ import android.widget.ImageView;
 import org.starfishrespect.myconsumption.android.R;
 
 /**
- * An {@link android.widget.ImageView} that draws its contents inside a mask and draws a border
+ * An ImageView that draws its contents inside a mask and draws a border
  * drawable on top. This is useful for applying a beveled look to image contents, but is also
  * flexible enough for use with other desired aesthetics.
  */

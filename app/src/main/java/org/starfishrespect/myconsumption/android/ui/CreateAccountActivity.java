@@ -38,6 +38,7 @@ import static org.starfishrespect.myconsumption.android.util.LogUtils.makeLogTag
 
 /**
  * Create account activity
+ * S23Y (2015). Licensed under the Apache License, Version 2.0.
  */
 public class CreateAccountActivity extends Activity {
 

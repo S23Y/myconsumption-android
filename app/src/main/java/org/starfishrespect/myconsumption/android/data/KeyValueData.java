@@ -5,6 +5,7 @@ import com.j256.ormlite.table.DatabaseTable;
 
 /**
  * Key-Value data pair for the database
+ * S23Y (2015). Licensed under the Apache License, Version 2.0.
  */
 @DatabaseTable(tableName = "keyvalue")
 public class KeyValueData {

@@ -29,20 +29,20 @@ import java.text.DecimalFormat;
 import java.util.ArrayList;
 
 /**
-* Created by thibaud on 30.03.15.
+ * Fragment used to display one tab of StatActivity
+ * S23Y (2015). Licensed under the Apache License, Version 2.0.
+ * Author: Thibaud Ledent
 */
 public class SlidingStatFragment extends Fragment {
 
     private static final String STATDTO_KEY = "statdto_key";
 
     private StatDTO mStat;
-    //private int position;
     private PieChart mChart;
 
     public static SlidingStatFragment newInstance(StatDTO stat) {
         SlidingStatFragment f = new SlidingStatFragment();
         Bundle b = new Bundle();
-        //b.putInt(ARG_POSITION, position);
         b.putSerializable(STATDTO_KEY, stat);
         f.setArguments(b);
         return f;
@@ -148,8 +148,6 @@ public class SlidingStatFragment extends Fragment {
         xVals.add("PEAK TIME: " + StatUtils.wh2kWh(mStat.getConsumptionDay()) + " " + getString(R.string.textview_stat_kWh));
         xVals.add("OFF-PEAK TIME: " + StatUtils.wh2kWh(mStat.getConsumptionNight()) + " " + getString(R.string.textview_stat_kWh));
 
-        //xVals.add("entry" + (1));
-        //xVals.add("entry" + (2));
         entries1.add(new Entry((float) StatUtils.wh2kWh(mStat.getConsumptionDay()), 0));
         entries1.add(new Entry((float) StatUtils.wh2kWh(mStat.getConsumptionNight()), 1));
 

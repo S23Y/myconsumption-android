@@ -10,6 +10,7 @@ import java.util.Date;
 
 /**
  * Object used to store sensor information on database
+ * S23Y (2015). Licensed under the Apache License, Version 2.0.
  */
 @DatabaseTable(tableName = "sensors")
 public class SensorData implements Serializable, Comparable<SensorData> {

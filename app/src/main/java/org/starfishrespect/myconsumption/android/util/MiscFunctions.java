@@ -9,8 +9,8 @@ import android.net.NetworkInfo;
 import org.starfishrespect.myconsumption.android.R;
 
 /**
- * Class that contains many static functions that may be useful anywhere on
- * the app
+ * Class that contains static functions that may be useful anywhere on the app
+ * S23Y (2015). Licensed under the Apache License, Version 2.0.
  */
 public class MiscFunctions {
 

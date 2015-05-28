@@ -8,6 +8,8 @@ import com.google.android.gms.common.GooglePlayServicesUtil;
 
 /**
  * Helper for Google Play services-related operations.
+ * S23Y (2015). Licensed under the Apache License, Version 2.0.
+ * Author: Thibaud Ledent
  */
 public class PlayServicesUtils {
 

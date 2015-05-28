@@ -47,7 +47,9 @@ import java.util.*;
 import de.greenrobot.event.EventBus;
 
 /**
- * Fragment that display the data
+ * Fragment that displays the chart of ChartActivity
+ * S23Y (2015). Licensed under the Apache License, Version 2.0.
+ * Adapted from Patrick by Thibaud Ledent
  */
 public class ChartViewFragment extends Fragment {
 

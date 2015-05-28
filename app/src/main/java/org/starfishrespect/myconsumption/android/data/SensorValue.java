@@ -2,6 +2,7 @@ package org.starfishrespect.myconsumption.android.data;
 
 /**
  * Object used to store sensor values
+ * S23Y (2015). Licensed under the Apache License, Version 2.0.
  */
 public class SensorValue implements Comparable<SensorValue> {
     private int timestamp;

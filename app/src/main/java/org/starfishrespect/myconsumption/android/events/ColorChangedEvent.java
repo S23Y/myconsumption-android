@@ -3,7 +3,9 @@ package org.starfishrespect.myconsumption.android.events;
 import org.starfishrespect.myconsumption.android.data.SensorData;
 
 /**
- * Created by thibaud on 30.04.15.
+ * Event triggered when color is changed (ChartActivity)
+ * S23Y (2015). Licensed under the Apache License, Version 2.0.
+ * Author: Thibaud Ledent
  */
 public class ColorChangedEvent {
     private final SensorData sensor;

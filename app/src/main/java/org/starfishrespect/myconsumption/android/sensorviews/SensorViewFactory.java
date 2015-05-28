@@ -4,6 +4,7 @@ import android.content.Context;
 
 /**
  * Factory for Sensor Views
+ * S23Y (2015). Licensed under the Apache License, Version 2.0.
  */
 public class SensorViewFactory {
     public static AbstractSensorView makeView(Context context, String sensor) {

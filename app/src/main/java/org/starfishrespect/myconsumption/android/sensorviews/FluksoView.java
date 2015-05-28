@@ -10,6 +10,7 @@ import org.starfishrespect.myconsumption.server.api.dto.FluksoSensorSettingsDTO;
 
 /**
  * View used to enter Flukso-specific settings
+ * S23Y (2015). Licensed under the Apache License, Version 2.0.
  */
 public class FluksoView extends AbstractSensorView {
 

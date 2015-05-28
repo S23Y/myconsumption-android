@@ -14,7 +14,9 @@ import java.util.List;
 import de.greenrobot.event.EventBus;
 
 /**
- * Created by thibaud on 06.02.15.
+ * Handle local database access for user
+ * S23Y (2015). Licensed under the Apache License, Version 2.0.
+ * Author: Thibaud Ledent
  */
 public class UserController {
     private static final String TAG = "UserController";

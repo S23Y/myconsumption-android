@@ -6,6 +6,7 @@ import android.widget.LinearLayout;
 
 /**
  * Base class for View used to fill sensor settings
+ * S23Y (2015). Licensed under the Apache License, Version 2.0.
  */
 public abstract class AbstractSensorView extends LinearLayout {
 

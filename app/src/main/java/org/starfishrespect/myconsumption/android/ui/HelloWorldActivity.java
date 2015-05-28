@@ -7,6 +7,11 @@ import android.support.v7.widget.Toolbar;
 
 import org.starfishrespect.myconsumption.android.R;
 
+/**
+ * Template class to use if  you want to add an activity that extends BaseActivity.
+ * S23Y (2015). Licensed under the Apache License, Version 2.0.
+ * Author: Thibaud Ledent
+ */
 public class HelloWorldActivity extends BaseActivity {
 
     @Override

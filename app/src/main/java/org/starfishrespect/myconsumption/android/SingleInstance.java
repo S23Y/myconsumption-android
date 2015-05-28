@@ -17,9 +17,10 @@ import java.util.Random;
 
 /**
  * Class used to store unique objects accessible everywhere in the app
+ * S23Y (2015). Licensed under the Apache License, Version 2.0.
+ * Author: Thibaud Ledent
  */
 public class SingleInstance {
-
     private static DatabaseHelper databaseHelper;
     private static UserController userController;
     private static int spinnerSensorPosition = 0;

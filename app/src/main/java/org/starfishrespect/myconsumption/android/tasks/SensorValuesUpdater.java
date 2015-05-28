@@ -23,7 +23,8 @@ import java.util.Date;
 import java.util.List;
 
 /**
- * Created by Patrick Herbeuval on 3/04/14.
+ * Update sensor values.
+ * S23Y (2015). Licensed under the Apache License, Version 2.0.
  */
 public class SensorValuesUpdater {
 

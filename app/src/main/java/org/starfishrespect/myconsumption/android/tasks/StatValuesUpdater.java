@@ -30,8 +30,9 @@ import static org.starfishrespect.myconsumption.android.util.LogUtils.LOGE;
 import static org.starfishrespect.myconsumption.android.util.LogUtils.makeLogTag;
 
 /**
- * Created by thibaud on 27.01.15.
  * Get statistics values from the server using an AsyncTask
+ * S23Y (2015). Licensed under the Apache License, Version 2.0.
+ * Author: Thibaud Ledent
  */
 public class StatValuesUpdater {
 

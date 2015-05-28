@@ -29,8 +29,9 @@ import org.starfishrespect.myconsumption.android.R;
 import org.starfishrespect.myconsumption.android.util.PrefUtils;
 
 /**
- * Created by thibaud on 19.03.15.
  * Activity for customizing app settings.
+ * S23Y (2015). Licensed under the Apache License, Version 2.0.
+ * Author: Thibaud Ledent
  */
 public class SettingsActivity extends BaseActivity {
     @Override

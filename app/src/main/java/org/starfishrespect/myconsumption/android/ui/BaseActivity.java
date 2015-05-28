@@ -57,6 +57,15 @@ import static org.starfishrespect.myconsumption.android.util.LogUtils.LOGI;
 import static org.starfishrespect.myconsumption.android.util.LogUtils.LOGW;
 import static org.starfishrespect.myconsumption.android.util.LogUtils.makeLogTag;
 
+/**
+ * Every important activity of the application extends the BaseActivity. It is an abstract class
+ * which purpose is to regroup the elements that are reused in every Activity. Two important widgets
+ * are defined and handle in BaseActivity: the header bar and the navigation drawer. Moreover,
+ * common features of the app, such as the reloading option, are also implemented there.
+ *
+ * S23Y (2015). Licensed under the Apache License, Version 2.0.
+ * Adapted from Google I/O 2014 Android App by Thibaud Ledent
+ */
 public abstract class BaseActivity extends ActionBarActivity implements SensorValuesUpdater.UpdateFinishedCallback,
         UserUpdater.GetUserCallback, StatValuesUpdater.StatUpdateFinishedCallback,
         ConfigUpdater.ConfigUpdateFinishedCallback{
@@ -65,9 +74,6 @@ public abstract class BaseActivity extends ActionBarActivity implements SensorVa
     private ObjectAnimator mStatusBarColorAnimator;
     private Handler mHandler;
     private Handler mReloadHandler;
-
-    // Helper methods for L APIs
-    private LUtils mLUtils;
 
     // Primary toolbar and drawer toggle
     private Toolbar mActionBarToolbar;
@@ -114,8 +120,6 @@ public abstract class BaseActivity extends ActionBarActivity implements SensorVa
     protected static final int NAVDRAWER_ITEM_SIGN_IN = 3;
     protected static final int NAVDRAWER_ITEM_ADD_SENSOR = 4;
     protected static final int NAVDRAWER_ITEM_SETTINGS = 5;
-//    protected static final int NAVDRAWER_ITEM_EXPERTS_DIRECTORY = 7;
-//    protected static final int NAVDRAWER_ITEM_PEOPLE_IVE_MET = 8;
     protected static final int NAVDRAWER_ITEM_INVALID = -1;
     protected static final int NAVDRAWER_ITEM_SEPARATOR = -2;
     protected static final int NAVDRAWER_ITEM_SEPARATOR_SPECIAL = -3;
@@ -175,7 +179,6 @@ public abstract class BaseActivity extends ActionBarActivity implements SensorVa
         mReloadHandler = new Handler();
         mReloadHandler.postDelayed(runnable, 1000 * 60 * PrefUtils.getSyncRefresh(this));
 
-        mLUtils = LUtils.getInstance(this);
         mThemedStatusBarColor = getResources().getColor(R.color.theme_primary_dark);
         mNormalStatusBarColor = mThemedStatusBarColor;
     }
@@ -551,7 +554,7 @@ public abstract class BaseActivity extends ActionBarActivity implements SensorVa
             mStatusBarColorAnimator.cancel();
         }
         mStatusBarColorAnimator = ObjectAnimator.ofInt(
-                (mDrawerLayout != null) ? mDrawerLayout : mLUtils,
+                mDrawerLayout,
                 (mDrawerLayout != null) ? "statusBarBackgroundColor" : "statusBarColor",
                 shown ? Color.BLACK : mNormalStatusBarColor,
                 shown ? mNormalStatusBarColor : Color.BLACK)
@@ -702,8 +705,6 @@ public abstract class BaseActivity extends ActionBarActivity implements SensorVa
     public void onUpdateFinished() {
         SingleInstance.getUserController().loadUser();
         showReloadLayout(false);
-        //SingleInstance.getUserController().loadUser(false);
-        //SingleInstance.getUserController().reloadUser(false);
         EventBus.getDefault().post(new ReloadUserEvent(false));
     }
 

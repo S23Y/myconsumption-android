@@ -3,6 +3,7 @@ package org.starfishrespect.myconsumption.android.data;
 /**
  * Class used to store frequencies that are displayed on
  * spinners and transferred to the chart fragment
+ * S23Y (2015). Licensed under the Apache License, Version 2.0.
  */
 public class FrequencyData {
     private String name;

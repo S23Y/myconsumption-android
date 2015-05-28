@@ -3,12 +3,10 @@ package org.starfishrespect.myconsumption.android.ui;
 import android.app.Activity;
 import android.app.AlertDialog;
 import android.app.ProgressDialog;
-import android.content.ComponentName;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.AsyncTask;
 import android.os.Bundle;
-import android.support.v4.content.IntentCompat;
 import android.util.Log;
 import android.view.Menu;
 import android.view.View;
@@ -48,6 +46,7 @@ import java.sql.SQLException;
 
 /**
  * Add sensor Activity
+ * S23Y (2015). Licensed under the Apache License, Version 2.0.
  */
 public class AddSensorActivity extends BaseActivity {
 

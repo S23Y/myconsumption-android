@@ -16,6 +16,8 @@ import static org.starfishrespect.myconsumption.android.util.LogUtils.makeLogTag
 
 /**
  * Utilities and constants related to app preferences.
+ * S23Y (2015). Licensed under the Apache License, Version 2.0.
+ * Author: Thibaud Ledent
  */
 public class PrefUtils  {
     private static final String TAG = makeLogTag("PrefUtils");

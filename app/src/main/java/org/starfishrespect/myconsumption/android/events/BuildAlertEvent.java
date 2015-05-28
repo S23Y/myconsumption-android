@@ -1,7 +1,9 @@
 package org.starfishrespect.myconsumption.android.events;
 
 /**
- * Created by thibaud on 19.05.15.
+ * Event that triggers an alert in a specific activity.
+ * S23Y (2015). Licensed under the Apache License, Version 2.0.
+ * Author: Thibaud Ledent
  */
 public class BuildAlertEvent {
     private final boolean buildAlert;

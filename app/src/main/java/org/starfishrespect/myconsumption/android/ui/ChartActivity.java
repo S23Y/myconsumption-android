@@ -14,6 +14,15 @@ import de.greenrobot.event.EventBus;
 import static org.starfishrespect.myconsumption.android.util.LogUtils.LOGD;
 import static org.starfishrespect.myconsumption.android.util.LogUtils.makeLogTag;
 
+/**
+ * Main Activity.
+ * ChartActivity is the first Activity one can see when opening the application. It is composed of
+ * two fragments: ChartChoiceFragment and CharViewFragment. The first one displays the option on
+ * the right while the second one contains the chart itself.
+ *
+ * S23Y (2015). Licensed under the Apache License, Version 2.0.
+ * Adapted from Patrick by Thibaud Ledent
+ */
 public class ChartActivity extends BaseActivity {
 
     private static final String TAG = makeLogTag(ChartActivity.class);
@@ -66,7 +75,6 @@ public class ChartActivity extends BaseActivity {
             this.chartViewReady = true;
 
         if (chartChoiceReady && chartViewReady) {
-            //Toast.makeText(this, "Both are ready", Toast.LENGTH_SHORT).show();
             init();
             this.chartChoiceReady = false;
             this.chartViewReady = false;

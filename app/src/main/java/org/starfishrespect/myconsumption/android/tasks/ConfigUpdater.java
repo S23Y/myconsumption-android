@@ -18,8 +18,9 @@ import static org.starfishrespect.myconsumption.android.util.LogUtils.LOGE;
 import static org.starfishrespect.myconsumption.android.util.LogUtils.makeLogTag;
 
 /**
- * Created by thibaud on 08.04.15.
  * Get basic config values from the server using an AsyncTask
+ * S23Y (2015). Licensed under the Apache License, Version 2.0.
+ * Author: Thibaud Ledent
  */
 public class ConfigUpdater {
 

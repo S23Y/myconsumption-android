@@ -13,6 +13,7 @@ import java.util.List;
 
 /**
  * Adapter used to show frequencies on a spinner
+ * S23Y (2015). Licensed under the Apache License, Version 2.0.
  */
 public class SpinnerFrequencyAdapter extends BaseAdapter {
 

@@ -13,10 +13,11 @@ import org.starfishrespect.myconsumption.android.data.SensorData;
 import java.util.List;
 
 /**
- * Created by thibaud on 09.04.15.
+ * Adapter used to show sensors on a spinner
+ * S23Y (2015). Licensed under the Apache License, Version 2.0.
+ * Author: Thibaud Ledent
  */
 public class SpinnerSensorAdapter extends BaseAdapter {
-
     private List<SensorData> sensors;
     private LayoutInflater inflater;
 
@@ -51,6 +52,4 @@ public class SpinnerSensorAdapter extends BaseAdapter {
         tv.setText(sensors.get(position).getName());
         return view;
     }
-
-
 }

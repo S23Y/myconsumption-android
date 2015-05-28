@@ -13,6 +13,7 @@ import java.util.Collections;
 import java.util.List;
 
 /**
+ * S23Y (2015). Licensed under the Apache License, Version 2.0.
  * Created by Patrick Herbeuval on 7/04/14.
  */
 public class SensorValuesDao {

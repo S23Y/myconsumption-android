@@ -20,6 +20,7 @@ import de.greenrobot.event.EventBus;
 
 /**
  * Adapter that shows the list of sensors
+ * S23Y (2015). Licensed under the Apache License, Version 2.0.
  */
 public class SensorListAdapter extends BaseAdapter {
 

@@ -10,6 +10,7 @@ import org.starfishrespect.myconsumption.android.R;
 
 /**
  * Simple dialog used to select a color, with 3 sliders
+ * S23Y (2015). Licensed under the Apache License, Version 2.0.
  */
 public class ColorDialog extends Dialog {
 

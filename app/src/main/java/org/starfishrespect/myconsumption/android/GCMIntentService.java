@@ -18,6 +18,8 @@ import static org.starfishrespect.myconsumption.android.util.LogUtils.makeLogTag
 
 /**
  * Service that manages push notifications
+ * S23Y (2015). Licensed under the Apache License, Version 2.0.
+ * Author: Thibaud Ledent
  */
 public class GCMIntentService extends IntentService {
     private static final String TAG = makeLogTag(GCMIntentService.class);

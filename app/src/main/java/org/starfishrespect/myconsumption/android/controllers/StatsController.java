@@ -15,7 +15,9 @@ import static org.starfishrespect.myconsumption.android.util.LogUtils.LOGE;
 import static org.starfishrespect.myconsumption.android.util.LogUtils.makeLogTag;
 
 /**
- * Created by thibaud on 01.03.15.
+ * Handle local database access for stats
+ * S23Y (2015). Licensed under the Apache License, Version 2.0.
+ * Author: Thibaud Ledent
  */
 public class StatsController {
     private static final String TAG = makeLogTag(StatsController.class);

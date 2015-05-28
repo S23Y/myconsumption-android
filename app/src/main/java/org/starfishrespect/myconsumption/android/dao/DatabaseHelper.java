@@ -16,7 +16,9 @@ import java.util.List;
 
 
 /**
+ * S23Y (2015). Licensed under the Apache License, Version 2.0.
  * Created by Patrick Herbeuval on 3/04/14.
+ * Adapted by: Thibaud Ledent (2015)
  */
 public class DatabaseHelper extends OrmLiteSqliteOpenHelper {
 

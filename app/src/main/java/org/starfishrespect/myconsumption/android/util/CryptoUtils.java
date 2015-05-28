@@ -14,7 +14,9 @@ import static org.starfishrespect.myconsumption.android.util.LogUtils.LOGE;
 import static org.starfishrespect.myconsumption.android.util.LogUtils.makeLogTag;
 
 /**
- * Created by thibaud on 19.05.15.
+ * Utils related to crypto and authentication things.
+ * S23Y (2015). Licensed under the Apache License, Version 2.0.
+ * Author: Thibaud Ledent
  */
 public class CryptoUtils {
     private static final String TAG = makeLogTag(CryptoUtils.class);

@@ -20,6 +20,7 @@ import org.starfishrespect.myconsumption.android.SingleInstance;
 
 /**
  * Task that retrieves all the data of an user from the server
+ * S23Y (2015). Licensed under the Apache License, Version 2.0.
  */
 public class UserUpdater extends AsyncTask<Void, UserData, Void> {
 

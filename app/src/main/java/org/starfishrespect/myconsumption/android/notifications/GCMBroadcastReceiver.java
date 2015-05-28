@@ -11,6 +11,8 @@ import org.starfishrespect.myconsumption.android.util.PrefUtils;
 
 /**
  * Receiver for push notifications
+ * S23Y (2015). Licensed under the Apache License, Version 2.0.
+ * Author: Thibaud Ledent
  */
 public class GCMBroadcastReceiver extends WakefulBroadcastReceiver {
     @Override

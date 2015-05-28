@@ -32,7 +32,9 @@ import static org.starfishrespect.myconsumption.android.util.LogUtils.LOGI;
 import static org.starfishrespect.myconsumption.android.util.LogUtils.makeLogTag;
 
 /**
- * Created by thibaud on 08.05.15.
+ * Registers the application with GCM servers asynchronously.
+ * S23Y (2015). Licensed under the Apache License, Version 2.0.
+ * Author: Thibaud Ledent
  */
 public class GCMRegister {
     private static final String TAG = makeLogTag(GCMRegister.class);

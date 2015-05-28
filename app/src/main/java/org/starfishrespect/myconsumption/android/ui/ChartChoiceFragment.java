@@ -45,8 +45,11 @@ import java.util.*;
 import de.greenrobot.event.EventBus;
 
 /**
- * Fragment that contains settings of the graph (which dataset to show, which range,
+ * Fragment that contains the settings of the graph (which dataset to show, which range,
  * colors) and allows to edit them (color, sensor settings, delete)
+ *
+ * S23Y (2015). Licensed under the Apache License, Version 2.0.
+ * Adapted from Patrick by Thibaud Ledent
  */
 public class ChartChoiceFragment extends Fragment {
 
@@ -229,8 +232,6 @@ public class ChartChoiceFragment extends Fragment {
                                         .setPositiveButton(R.string.button_ok, new DialogInterface.OnClickListener() {
                                             @Override
                                             public void onClick(DialogInterface dialog, int which) {
-                                                //SingleInstance.getUserController().loadUser(false);
-                                                //SingleInstance.getUserController().reloadUser(false);
                                                 EventBus.getDefault().post(new ReloadUserEvent(false));
                                                 dialog.dismiss();
                                             }
@@ -271,25 +272,6 @@ public class ChartChoiceFragment extends Fragment {
                 mLinearLayout.setVisibility(View.GONE);
         }
     }
-
-/*    public void setUser(TextView txtView, LinearLayout lnLayout) {
-        //this.user = user;
-        // ((TextView) getView().findViewById(R.id.textViewUsername)).setText(user.getName());
-        txtView.setText(user.getName());
-        //sensors = user.getSensors();
-        try {
-            sensors = Controller.getDatabaseHelper().getSensorDao().queryForAll();
-        } catch (SQLException e) {
-            e.printStackTrace();
-        }
-        sensorListAdapter = new SensorListAdapter(getActivity(), sensors);
-        listViewSensor.setAdapter(sensorListAdapter);
-        sensorListAdapter.setSensorChangeCallback(sensorChangeCallback);
-        if (sensors.size() == 0) {
-            //getView().findViewById(R.id.linearLayoutDateSelectionItems).setVisibility(View.GONE);
-            lnLayout.setVisibility(View.GONE);
-        }
-    }*/
 
     public void refreshSpinnerFrequencies() {
         frequencies = new ArrayList<>();

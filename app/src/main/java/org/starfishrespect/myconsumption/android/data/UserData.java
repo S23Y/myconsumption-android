@@ -8,7 +8,8 @@ import java.util.ArrayList;
 import java.util.List;
 
 /**
- * Object used to store user informations on database
+ * Object used to store user information in the database
+ * S23Y (2015). Licensed under the Apache License, Version 2.0.
  */
 public class UserData implements Serializable {
 

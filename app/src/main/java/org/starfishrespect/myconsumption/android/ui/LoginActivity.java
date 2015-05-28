@@ -29,6 +29,7 @@ import static org.starfishrespect.myconsumption.android.util.LogUtils.makeLogTag
 
 /**
  * Login Activity
+ * S23Y (2015). Licensed under the Apache License, Version 2.0.
  */
 public class LoginActivity extends Activity implements View.OnClickListener, UserUpdater.GetUserCallback {
     private static final int REQUEST_CREATE_ACCOUNT = 43;

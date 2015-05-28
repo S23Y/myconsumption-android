@@ -1,7 +1,9 @@
 package org.starfishrespect.myconsumption.android.events;
 
 /**
- * Created by thibaud on 30.04.15.
+ * Event triggered when the seekbar of the moving average is modified (ChartActivity)
+ * S23Y (2015). Licensed under the Apache License, Version 2.0.
+ * Author: Thibaud Ledent
  */
 public class UpdateMovingAverageEvent {
     private final int seekBarPosition;

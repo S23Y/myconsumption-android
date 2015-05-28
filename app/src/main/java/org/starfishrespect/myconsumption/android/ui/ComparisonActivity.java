@@ -44,7 +44,10 @@ import static org.starfishrespect.myconsumption.android.util.LogUtils.LOGD;
 import static org.starfishrespect.myconsumption.android.util.LogUtils.makeLogTag;
 
 /**
- * Created by thibaud on 19.04.15.
+ * Activity that displays the comparison.
+ *
+ * S23Y (2015). Licensed under the Apache License, Version 2.0.
+ * Author: Thibaud Ledent
  */
 public class ComparisonActivity extends BaseActivity implements OnChartValueSelectedListener {
     private static final String TAG = makeLogTag(ComparisonActivity.class);
@@ -213,11 +216,6 @@ public class ComparisonActivity extends BaseActivity implements OnChartValueSele
         // Populate spinners
         mSpinner = (Spinner) spinnerContainer.findViewById(R.id.actionbar_spinner);
 
-//        // Create an ArrayAdapter using the string array and a default spinner layout
-//        ArrayAdapter<CharSequence> spinnerAdapter = ArrayAdapter.createFromResource(this,
-//                R.array.iam_array, android.R.layout.simple_spinner_item);
-//        // Specify the layout to use when the list of choices appears
-//        spinnerAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         // Apply the adapter to the spinner
         mSpinner.setAdapter(mSpinnerAdapter);
         mSpinner.setSelection(SingleInstance.getSpinnerSensorPosition());

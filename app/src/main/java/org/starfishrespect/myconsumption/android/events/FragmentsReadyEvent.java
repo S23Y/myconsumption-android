@@ -1,7 +1,9 @@
 package org.starfishrespect.myconsumption.android.events;
 
 /**
- * Created by thibaud on 30.04.15.
+ * Event triggered by a fragment when it is ready (ChartActivity)
+ * S23Y (2015). Licensed under the Apache License, Version 2.0.
+ * Author: Thibaud Ledent
  */
 public class FragmentsReadyEvent {
     private final boolean value;

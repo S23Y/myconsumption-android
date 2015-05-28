@@ -1,7 +1,9 @@
 package org.starfishrespect.myconsumption.android.events;
 
 /**
- * Created by thibaud on 07.05.15.
+ * Event triggered when stats need to be reloaded.
+ * S23Y (2015). Licensed under the Apache License, Version 2.0.
+ * Author: Thibaud Ledent
  */
 public class ReloadStatEvent {
     private final boolean reload;
