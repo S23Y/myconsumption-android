@@ -42,6 +42,9 @@
 
         <activity android:name=".ui.ChartActivity" />
         <activity android:name=".ui.StatActivity" />
+        <activity android:name=".ui.ComparisonActivity" />
+        <activity android:name=".ui.HelloWorldActivity" />
+
         <activity android:name=".ui.SettingsActivity"
             android:parentActivityName=".ui.ChartActivity" >
             <!-- Parent activity meta-data to support 4.0 and lower -->
@@ -49,9 +52,6 @@
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value=".ui.ChartActivity" />
         </activity>
-        <activity android:name=".ui.ComparisonActivity" />
-        <activity android:name=".ui.HelloWorldActivity" />
-
 
         <activity
             android:name=".ui.AddSensorActivity"

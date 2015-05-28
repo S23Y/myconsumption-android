@@ -40,8 +40,6 @@ import org.starfishrespect.myconsumption.server.api.dto.SimpleResponseDTO;
 import org.codehaus.jackson.map.ObjectMapper;
 import org.springframework.http.converter.FormHttpMessageConverter;
 import org.springframework.http.converter.StringHttpMessageConverter;
-import org.springframework.util.LinkedMultiValueMap;
-import org.springframework.util.MultiValueMap;
 import org.springframework.web.client.HttpClientErrorException;
 import org.springframework.web.client.RestTemplate;
 
