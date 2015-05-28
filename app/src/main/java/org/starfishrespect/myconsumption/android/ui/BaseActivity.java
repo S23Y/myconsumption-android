@@ -527,11 +527,6 @@ public abstract class BaseActivity extends ActionBarActivity implements SensorVa
     private void goToNavDrawerItem(int item) {
         Intent intent;
         switch (item) {
-//            case NAVDRAWER_ITEM_MY_SCHEDULE:
-//                intent = new Intent(this, HelloWorldActivity.class);
-//                startActivity(intent);
-//                finish();
-//                break;
             case NAVDRAWER_ITEM_CHART:
                 intent = new Intent(this, ChartActivity.class);
                 startActivity(intent);
@@ -551,28 +546,10 @@ public abstract class BaseActivity extends ActionBarActivity implements SensorVa
                 intent = new Intent(this, AddSensorActivity.class);
                 startActivity(intent);
                 break;
-//            case NAVDRAWER_ITEM_EXPERTS_DIRECTORY:
-//                intent = new Intent(this, HelloWorldActivity.class);
-//                startActivity(intent);
-//                finish();
-//                break;
-//            case NAVDRAWER_ITEM_PEOPLE_IVE_MET:
-//                intent = new Intent(this, HelloWorldActivity.class);
-//                startActivity(intent);
-//                finish();
-//                break;
-            case NAVDRAWER_ITEM_SIGN_IN:
-                signInOrCreateAnAccount();
-                break;
             case NAVDRAWER_ITEM_SETTINGS:
                 intent = new Intent(this, SettingsActivity.class);
                 startActivity(intent);
                 break;
-//            case NAVDRAWER_ITEM_VIDEO_LIBRARY:
-//                intent = new Intent(this, HelloWorldActivity.class);
-//                startActivity(intent);
-//                finish();
-//                break;
         }
     }
 

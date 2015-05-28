@@ -74,9 +74,9 @@ public class AddSensorActivity extends BaseActivity {
         toolbar.setNavigationOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                navigateUpToFromChild(AddSensorActivity.this,
-                        IntentCompat.makeMainActivity(new ComponentName(AddSensorActivity.this,
-                                ChartActivity.class)));
+                Intent intent = getParentActivityIntent();
+                startActivity(intent);
+                finish();
             }
         });
 
