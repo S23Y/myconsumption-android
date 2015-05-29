@@ -4,6 +4,10 @@
 
 This repository contains the source code for the S23Y MyConsumption Android app.
 
+## App
+A mobile application for real-time energy consumption monitoring!
+![Demo](https://dl.dropboxusercontent.com/u/22987083/demo-myconsumption.gif)
+
 ## License
 
 * [Apache Version 2.0](http://www.apache.org/licenses/LICENSE-2.0.html)
