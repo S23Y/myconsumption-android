@@ -4,17 +4,22 @@
 
 This repository contains the source code for the S23Y MyConsumption Android app.
 
+## App
+A mobile application for real-time energy consumption monitoring!
+![Demo](https://dl.dropboxusercontent.com/u/22987083/demo-myconsumption.gif)
+
 ## License
 
 * [Apache Version 2.0](http://www.apache.org/licenses/LICENSE-2.0.html)
 
 ## Building
 
-### With Gradle
+### With Gradle and Android Studio
 
 The easiest way to build is to install [Android Studio](https://developer.android.com/sdk/index.html) v1.+
-with [Gradle](https://www.gradle.org/) v2.2.1.
-Once installed, then you can import the project into Android Studio:
+with [Gradle](https://www.gradle.org/) v2.+. You will need the Android SDK API 21 and `my-consumption-api` available at [Github MyConsumption Server](https://github.com/S23Y/myconsumption-server/) (run `mvn clean install` from the root directory of the server to install the API on your machine).
+
+Once installed, you can import the project into Android Studio:
 
 1. Open `File`
 2. Import Project

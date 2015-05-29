@@ -1,7 +1,5 @@
 package org.starfishrespect.myconsumption.android.ui;
-/**
- * Created by thibaud on 19.03.15.
- */
+
 import android.os.Bundle;
 
 import org.starfishrespect.myconsumption.android.R;
