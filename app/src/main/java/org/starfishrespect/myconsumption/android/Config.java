@@ -16,7 +16,8 @@ public class Config {
     public static final String SENDER_ID = "225408614844";
 
     // IP address of the server
-    public static final String serverAddress = "212.166.22.110"; // public vm address // TODO
+    public static final String serverAddress = "myconsumption.s23y.com";
+    //public static final String serverAddress = "212.166.22.110"; // public vm address
     //public static final String serverAddress = "172.20.1.75"; // @manex (bridged)
     //public static final String serverAddress = "192.168.1.9"; // @ans (bridged ethernet)
     //public static final String serverAddress = "192.168.1.32";   // @lw (bridged)
