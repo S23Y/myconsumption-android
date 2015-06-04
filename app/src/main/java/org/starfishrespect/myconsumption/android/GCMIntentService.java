@@ -13,6 +13,7 @@ import org.starfishrespect.myconsumption.android.ui.LoginActivity;
 
 import com.google.android.gms.gcm.GoogleCloudMessaging;
 
+import static org.starfishrespect.myconsumption.android.util.LogUtils.LOGE;
 import static org.starfishrespect.myconsumption.android.util.LogUtils.LOGI;
 import static org.starfishrespect.myconsumption.android.util.LogUtils.makeLogTag;
 
@@ -54,9 +55,13 @@ public class GCMIntentService extends IntentService {
                     LOGI(TAG, "Deleted messages on server: " + extras.toString());
                     break;
                 case GoogleCloudMessaging.MESSAGE_TYPE_MESSAGE: // If it's a regular GCM message
-                    // Post notification of received message.
-                    sendNotification(extras.get("sensor").toString(), extras.get("message").toString());
-                    LOGI(TAG, "Received: " + extras.toString());
+                    try {
+                        // Post notification of received message.
+                        sendNotification(extras.get("sensor").toString(), extras.get("message").toString());
+                        LOGI(TAG, "Received: " + extras.toString());
+                    } catch(Exception e) {
+                        LOGE(TAG, "Error while sending notification: " + e.toString());
+                    }
                     break;
             }
         }
