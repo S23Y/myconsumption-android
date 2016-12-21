@@ -1,12 +1,12 @@
 # MyConsumption Android app
 
-[![MyConsumption Android](https://dl.dropboxusercontent.com/u/22987083/banner-myconsumption-android%20v2.png)](http://s23y.org)
+[![MyConsumption Android](https://raw.githubusercontent.com/S23Y/myconsumption-android/master/banner-myconsumption-android%20v2.png)](http://s23y.org)
 
 This repository contains the source code for the S23Y MyConsumption Android app.
 
 ## App
 A mobile application for real-time energy consumption monitoring!
-![Demo](https://dl.dropboxusercontent.com/u/22987083/demo-myconsumption.gif)
+![Demo](https://raw.githubusercontent.com/S23Y/myconsumption-android/master/demo-myconsumption.gif)
 
 ## License
 
